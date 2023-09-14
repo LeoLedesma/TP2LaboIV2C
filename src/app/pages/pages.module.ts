@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 
 import { PagesRoutingModule } from './pages-routing.module';
 import { QuienSoyComponent } from './quien-soy/quien-soy.component';
-import { Router, RouterModule } from '@angular/router';
-
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
-  declarations: [QuienSoyComponent],
+  declarations: [
+    QuienSoyComponent,
+    HomeComponent
+  ],
   imports: [
     CommonModule,
     PagesRoutingModule,
-    RouterModule
+    RouterModule    
   ]
 })
 export class PagesModule { }

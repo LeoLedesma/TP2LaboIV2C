@@ -5,15 +5,14 @@ import { QuienSoyComponent } from './quien-soy/quien-soy.component';
 import { ErrorComponent } from '../shared/error/error.component';
 
 const routes: Routes = [
-  {
-    path: '', component: HomeComponent,
-    children: [   
-      //{ path: '', component: HomeComponent},
-      { path: 'quien-soy', component: QuienSoyComponent },      
-      { path: '**', component: ErrorComponent },
-    ]
-  }
-];
+
+  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
+  //{ path: 'home', component: HomeComponent,pathMatch: 'full'},
+  { path: 'quien-soy', component: QuienSoyComponent, pathMatch: 'full' },
+  { path: '**', component: ErrorComponent },
+]
+
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
