@@ -16,7 +16,8 @@ export class AuthComponent implements OnInit,OnChanges {
 
   ngAfterViewChecked(){   
     let modoTemp = this.route.routeConfig?.path || '';          
-    if(modoTemp !== this.modo || modoTemp !== '**'){     
+    modoTemp = modoTemp === '**' ? this.modo : modoTemp;
+    if(modoTemp !== this.modo){     
       this.modo = modoTemp;      
       this.toggleSignupClass();  
     }    
