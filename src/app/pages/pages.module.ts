@@ -4,12 +4,10 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { QuienSoyComponent } from './quien-soy/quien-soy.component';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
-    QuienSoyComponent,
-    HomeComponent
+    QuienSoyComponent    
   ],
   imports: [
     CommonModule,
