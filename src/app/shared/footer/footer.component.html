@@ -8,27 +8,32 @@
     <div class="col-6 col-md">
       <h5>Juegos</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Ahorcado</a></li>
-        <li><a class="text-muted" href="#">Mayor o Menor</a></li>
-        <li><a class="text-muted" href="#">Preguntados</a></li>        
-        <li><a class="text-muted" href="#">Por definir</a></li>   
+        <li><a class="text-muted" routerLink="juegos/ahorcado">Ahorcado</a></li>
+        <li><a class="text-muted" routerLink="juegos/mayormenor">Mayor o Menor</a></li>
+        <li><a class="text-muted" routerLink="juegos/preguntados">Preguntados</a></li>        
+        <li><a class="text-muted" routerLink="juegos/otro">Por definir</a></li>   
       </ul>
     </div>
     <div class="col-6 col-md">
       <h5>Sobre mi</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" href="#">Quien soy</a></li>
-        <li><a class="text-muted" href="#">Github</a></li>
-        <li><a class="text-muted" href="#">LinkedIn</a></li>        
+        <li><a class="text-muted" routerLink="quien-soy">Quien soy</a></li>
+        <li><a class="text-muted" href="https://github.com/LeoLedesma/" target="_blank">Github</a></li>
+        <li><a class="text-muted" href="https://www.linkedin.com/in/leoledesma/" target="_blank">LinkedIn</a></li>        
       </ul>
     </div>
     <div class="col-6 col-md">
       <h5>Otros</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" routerLink="auth/login">Iniciar sesion</a></li>
-        <li><a class="text-muted" routerLink="auth/register">Registrarse</a></li>
-        <li><a class="text-muted" href="#">Chat</a></li>
-        <li><a class="text-muted" href="#">Historial partidas</a></li>
+        <ng-container *ngIf="this.usuarioLogueado === undefined; else elseTemplate">
+          <li><a class="text-muted" routerLink="auth/login">Iniciar sesion</a></li>
+          <li><a class="text-muted" routerLink="auth/register">Registrarse</a></li>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <li><a class="text-muted" (click)="logout()">Cerrar sesion</a></li>
+          <li><a class="text-muted" routerLink="chat">Chat</a></li>
+          <li><a class="text-muted" routerLink="historial">Historial partidas</a></li>
+        </ng-template>       
       </ul>
     </div>    
   </div>

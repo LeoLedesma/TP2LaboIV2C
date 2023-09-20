@@ -2,14 +2,14 @@
   <div class="form sign-in">
     <h2>Bienvenido!</h2>
     <label>
-      <span>Email</span>
-      <input type="email" />
+      <span>Correo electronico</span>
+      <input type="email" [(ngModel)]=email/>
     </label>
     <label>
       <span>Contraseña</span>
-      <input type="password" />
-    </label>    
-    <button type="button" class="submit">Iniciar Sesion</button>    
+      <input type="password" [(ngModel)]=password/>
+    </label>
+    <button type="button" class="submit" (click)="iniciarSesion()">Iniciar Sesion</button>
   </div>
   <div class="sub-cont">
     <div class="img">
@@ -20,24 +20,28 @@
       <div class="img__text m--in">
         <h2>¿Ya eres parte?</h2>
         <p>Si ya tienes cuenta, inicia sesion.</p>
-             <p>Te extrañamos!</p>
+        <p>Te extrañamos!</p>
       </div>
       <div class="img__btn" (click)="toggleSignupClass()">
         <span class="m--up">Registrarse</span>
         <span class="m--in">Loguearse</span>
       </div>
-    </div>
-    <div class="form sign-up">
-      <h2>Tiempo de divertirse!</h2>      
-      <label>
-        <span>Email</span>
-        <input type="email" />
-      </label>
-      <label>
-        <span>Contraseña</span>
-        <input type="password" />
-      </label>
-      <button type="button" class="submit" routerLink="register">Registarse</button>      
-    </div>
+    </div>    
+      <div class="form sign-up">
+        <h2>Tiempo de divertirse!</h2>
+        <label>
+          <span>Correo electronico</span>
+          <input type="email" [(ngModel)]=email/>
+        </label>
+        <label>
+          <span>Usuario:</span>
+          <input type="text" [(ngModel)]=username/>
+        </label>
+        <label>
+          <span>Contraseña</span>
+          <input type="password" [(ngModel)]=password/>
+        </label>
+        <button class="submit" (click)="registrarUsuario()">Registrarse</button>
+      </div>    
   </div>
 </div>

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "laboiv2c-salajuegos"
+  },
+  "targets": {
+    "laboiv2c-salajuegos": {
+      "hosting": {
+        "SalaJuegos": [
+          "laboiv2c-salajuegos"
+        ]
+      }
+    }
+  }
+}
