@@ -17,6 +17,8 @@ export class FooterComponent implements OnInit{
     this.auth.onUserLogged.subscribe(user=> {     
       this.usuarioLogueado=user;
     });
+
+    this.auth.getUserFromStorage();  
   }
 
   logout(){
