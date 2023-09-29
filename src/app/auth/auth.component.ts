@@ -20,7 +20,7 @@ export class AuthComponent implements OnInit, OnChanges {
 
   constructor(private route: ActivatedRoute, private auth: AuthService, private router: Router, private fb:FormBuilder) { }
   ngOnInit() {
-    //this.registrarUsuarioForm = this.fb.group()
+    //this.registrarUsuarioForm = this.fb.group() 
 
    }
   ngOnChanges(changes: SimpleChanges) { }
