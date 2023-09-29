@@ -8,9 +8,15 @@
     <label>
       <span>Contraseña</span>
       <input type="password" [(ngModel)]=password/>
-    </label>
+    </label>    
     <button type="button" class="submit" (click)="iniciarSesion()">Iniciar Sesion</button>
+
+    <div class="fastLoginDiv">
+      <button class="submit fastLogin" (click)="loginAdministrador()">Administrador</button>
+      <button class="submit fastLogin" (click)="loginJuan()">Juan</button>
+    </div>
   </div>
+  
   <div class="sub-cont">
     <div class="img">
       <div class="img__text m--up">
@@ -40,8 +46,10 @@
         <label>
           <span>Contraseña</span>
           <input type="password" [(ngModel)]=password/>
-        </label>
+        </label>        
         <button class="submit" (click)="registrarUsuario()">Registrarse</button>
-      </div>    
+      </div> 
+      
+      
   </div>
 </div>

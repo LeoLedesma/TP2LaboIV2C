@@ -62,13 +62,8 @@ export class UsuariosService {
 
   async getOne(id: string): Promise<Usuario> {
     let user!: Usuario;
-    let users = query(collection(this._firestore, "usuarios"), where("id_auth", "==", id));   
-    
-    console.log(users);
+    let users = query(collection(this._firestore, "usuarios"), where("id_auth", "==", id));       
     user = await getDocs(users).then(res => res.docs[0].data() as Usuario)
-
-    console.log(user);
-
     return user;
   }
 

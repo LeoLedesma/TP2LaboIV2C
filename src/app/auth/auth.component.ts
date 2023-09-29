@@ -2,6 +2,7 @@ import { AfterContentInit, Component, ElementRef, OnChanges, OnInit, SimpleChang
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -15,9 +16,13 @@ export class AuthComponent implements OnInit, OnChanges {
   email: string = "";
   username:string = "";
   password: string = "";
+  registrarUsuarioForm!:FormGroup;
 
-  constructor(private route: ActivatedRoute, private auth: AuthService, private router: Router) { }
-  ngOnInit() { }
+  constructor(private route: ActivatedRoute, private auth: AuthService, private router: Router, private fb:FormBuilder) { }
+  ngOnInit() {
+    //this.registrarUsuarioForm = this.fb.group()
+
+   }
   ngOnChanges(changes: SimpleChanges) { }
 
   ngAfterViewChecked() {
@@ -42,7 +47,7 @@ export class AuthComponent implements OnInit, OnChanges {
           title:'Registro exitoso!',        
           text: "Redirigiendo al inicio...",
           timer:1500  
-        }).then(result=>{          
+        }).then(r=>{          
           this.iniciarSesion(true);          
           this.limpiarFormulario();
         })        
@@ -67,11 +72,12 @@ export class AuthComponent implements OnInit, OnChanges {
             icon:'success',
             title:'Inicio de sesion exitoso!',                  
             text: "Redirigiendo al inicio...",
-            timer:1500
-          }).then(result=>{
-            this.limpiarFormulario();
-            
-          })
+            timer:1500,
+            didDestroy: () => { 
+              this.limpiarFormulario();
+              this.router.navigate(["home"]);}
+            });
+          
         }else{
           this.router.navigate(["home"]);
         }
@@ -82,6 +88,7 @@ export class AuthComponent implements OnInit, OnChanges {
           title:'Error en el inicio de sesion!',        
           text:result.error
         })
+        this.limpiarFormulario();
       }      
     }
     );
@@ -91,5 +98,15 @@ export class AuthComponent implements OnInit, OnChanges {
     this.email = "";
     this.password = "";
     this.username = "";
+  }
+
+  loginAdministrador(){
+    this.email = "admin@admin.com"
+    this.password = "administrador"
+  }
+
+  loginJuan(){
+    this.email = "juan@juan.com"
+    this.password = "juan1234"
   }
 }
