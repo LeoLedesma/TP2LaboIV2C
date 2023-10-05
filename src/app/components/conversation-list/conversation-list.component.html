@@ -1,0 +1,46 @@
+<div class="conversation-list-container">
+    <div class="card">
+        <button type="button" class="btn btn-primary" (click)="newChatOp = !newChatOp">
+            Nueva conversación
+        </button>
+    </div>
+  <ng-container *ngIf="newChatOp; else elseTemplate">
+      <form class="card">
+          <app-search (onEnter)="searchUser($event)" (onDebounce)="searchUser($event)"
+              placeholder="Buscar usuario"></app-search>    
+      </form>    
+      
+      <ul *ngIf="userList.length>0" class="list-group">
+        <li *ngFor="let user of userList" (click)="openChatSearched(user)"
+            class="list-group-item list-group-item-action">
+            <a class="nav-link">{{user}}
+        </a>
+        <!-- [routerLink]="newChat(user)">                 -->
+        </li>                   
+        
+    </ul>
+  </ng-container>
+  <ng-template #elseTemplate>
+      <form class="card">
+          <app-search (onEnter)="searchConversations($event)" (onDebounce)="searchConversations($event)"
+              placeholder="Buscar conversación..."></app-search>
+      </form>    
+  </ng-template>  
+    
+    <div class="card" *ngFor="let conversation of conversationList" (click)="openChat(conversation.id)">
+        <div class="chat-card-body">
+            <div class="row">
+                <h6>{{ showOtherUser(conversation) }}</h6>
+            </div>
+            <div class="row d-flex">
+            <div class="col-10 justify-content-start">
+                <p>{{ conversation.lastMessage | chatMessageList}} </p> <!--truncar mensaje-->
+            </div>
+            <div class="col-2 justify-content-end">
+                <span >{{conversation.lastMessage_date| chatDate }}</span>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</div>

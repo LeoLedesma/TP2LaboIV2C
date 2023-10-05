@@ -1,0 +1,10 @@
+<form role="form"  [formGroup]="form" (ngSubmit)="send()"> 
+    <div class="chat-box">
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escriba su mensaje..."
+            (keydown.enter)="send()" formControlName="message">
+            </textarea>
+        <button type="submit" class="btn btn-primary btn-lg" [ngClass]="{'disabled':!this.message!.value}">
+            <i class="tim-icons icon-send"></i>Enviar
+        </button>
+    </div>
+</form>

@@ -1,0 +1,45 @@
+.card-body {
+    cursor: pointer
+}
+
+.chat-container {
+    display: flex;
+    height: 100vh;
+}
+
+.conversation-list {
+    width: 25%;
+    padding: 20px;
+    background-color: #302f63;
+    color: #fff;
+}
+
+.conversation-list-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.search-box {
+    margin-bottom: 20px;
+}
+
+.conversation-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.conversation-list li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.chat-area {
+    flex: 1;    
+    background-color: #1f2251;
+}
+
+nav .navbar-brand{
+    color:white
+}
+

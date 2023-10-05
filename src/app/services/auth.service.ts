@@ -4,6 +4,7 @@ import { UsuariosService } from './usuarios-service.service';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { Logger } from './logger.service';
 import { Log_type } from '../models/log';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthService {
    }
 
   async RegistrarUsuario(email: string, username: string, password: string):Promise<{result:boolean,error:string}>{    
-    const nuevoUsuario = <Usuario>{ email: email, id_auth: '', username: username, fec_registro: new Date };
+    const nuevoUsuario = <Usuario>{ email: email, id_auth: '', username: username, fec_registro: Timestamp.now() };
     return this.usuariosService.exists(nuevoUsuario).then(exists => {
       if (exists)      
         return {result: false, error: "El usuario ya existe"};

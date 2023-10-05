@@ -1,0 +1,13 @@
+
+<div class="chat-container">
+    <div class="conversation-list" #chatMessagesContainer>
+        <app-conversation-list (onChatListClick)="chatListClickHandler($event)"></app-conversation-list>
+    </div>
+    <div class="chat-area">
+        <nav class="navbar navbar-expand-lg bg-dark">
+            <a class="navbar-brand">{{currentChatUser}}</a>
+        </nav>
+        <app-chat-area [currentChatId]="currentChatId" [currentChatUser]="currentChatUser" [messagesObs]="eventsSubject.asObservable()" (onSendMessage)="sendMessage($event)">
+        </app-chat-area>
+    </div>
+</div>

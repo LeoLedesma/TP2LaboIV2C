@@ -67,4 +67,12 @@ export class UsuariosService {
     return user;
   }
 
+  searchUsers(userQuery:string): Promise<Usuario[]> {
+
+    let users = query(collection(this._firestore, "usuarios"), where("username", ">=", userQuery));
+    getDocs(users);
+  
+    return getDocs(users).then(res => res.docs.map(doc => doc.data() as Usuario));
+  }
+
 }

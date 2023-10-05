@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc,collection,collectionData,CollectionReference,doc,DocumentData,DocumentReference,Firestore,getDoc,getDocs,query,setDoc,updateDoc, where} from '@angular/fire/firestore';
+import { addDoc,collection,collectionData,CollectionReference,doc,DocumentData,DocumentReference,Firestore,getDoc,getDocs,query,setDoc,Timestamp,updateDoc, where} from '@angular/fire/firestore';
 import { Log, Log_type } from '../models/log';
 import { Observable } from 'rxjs';
 import { Usuario } from '../models/usuario';
@@ -18,7 +18,7 @@ export class Logger {
  
    log(collection: string,log_type:Log_type,log_result_detail:string,email?:string){    
     const documentoNuevo = doc(this.loggerCollection);    
-    let log = <Log>{ id_log: documentoNuevo.id, collection: collection, fec_log: new Date(), email: email || this.getEmailFromStorage(), log_type: log_type, log_result_detail: log_result_detail};
+    let log = <Log>{ id_log: documentoNuevo.id, collection: collection, fec_log: Timestamp.now(), email: email || this.getEmailFromStorage(), log_type: log_type, log_result_detail: log_result_detail};
       
     setDoc(documentoNuevo,{...log});
    }
