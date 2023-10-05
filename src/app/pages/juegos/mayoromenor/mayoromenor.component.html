@@ -1,27 +1,29 @@
 <mat-card class="example-card">
-    <div class="d-flex align-items-center flex-column">
-        <div class="row">
-            <h1 >{{message}}</h1>
-        </div>
-        <div class="row text-center">            
-                <h1 *ngIf="actionsBtn">Tu carta es:</h1>
+    <div class="d-flex align-items-center flex-column">     
+        <div class="row text-center">
+            <h1 class="mt-2 text-white">{{message}}</h1>
             <div class="flex-row col-12">
-                <button md-button md-raised-button color="accent" *ngIf="actionsBtn"
-                    (click)="changeCard(true)">Mayor</button>
-                <button md-button md-raised-button color="primary" *ngIf="actionsBtn"
-                    (click)="changeCard(false)">Menor</button>
-                <button class="col-12" color="primary" *ngIf="!actionsBtn"
-                    (click)="onSelectTryAgain()">Reintentar</button>
+                <button mat-fab extended color="accent" class="ml-5" *ngIf="actionsBtn" (click)="changeCard(true)">
+                    <mat-icon fontSet="material-icons-outlined">arrow_upward</mat-icon>
+                    Mayor
+                </button>
+                <button mat-fab extended color="warn" *ngIf="actionsBtn" (click)="changeCard(false)">
+                    <mat-icon fontSet="material-icons-outlined">arrow_downward</mat-icon>
+                    Menor
+                </button>
+                <button mat-fab extended color="primary" *ngIf="!actionsBtn"  (click)="onSelectTryAgain()">
+                    <mat-icon>favorite</mat-icon>
+                    Reintentar
+                  </button>                
             </div>
-
         </div>
-        <div class="row justify-content-around flex-row">
+        <div class="row justify-content-around flex-row mt-5">
             <div *ngFor="let card of cartasActuales" class="col-6">
                 <img [src]="card.image" [height]="314" [width]="226">
             </div>
         </div>
 
-        <div class="row justify-content-around flex-row">            
+        <div class="row justify-content-around flex-row text-white mt-5">
             <h1>Puntos: {{puntos}}</h1>
         </div>
     </div>
