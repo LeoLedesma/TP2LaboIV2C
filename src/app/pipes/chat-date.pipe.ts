@@ -10,7 +10,7 @@ export class ChatDatePipe implements PipeTransform {
     if (value.toDate().getDate() == (new Date).getDate() && value.toDate().getMonth() == (new Date).getMonth() && value.toDate().getFullYear() == (new Date).getFullYear()) {
       return this.getHour(value.toDate())
     } else {
-      return this.getHour(value.toDate())
+      return this.getDate(value.toDate()) + ' '+ this.getHour(value.toDate())
     }
   }
 
@@ -23,7 +23,7 @@ export class ChatDatePipe implements PipeTransform {
   }
 
   getDate(value: Date) {
-    return value.getDate() + '/' + (value.getMonth() + 1) + '/' + value.getFullYear();
+    return value.getDate() + '/' + (value.getMonth() + 1);
   }
 }
 
@@ -33,8 +33,8 @@ export class ChatDatePipe implements PipeTransform {
 })
 export class ChatMessageList implements PipeTransform {
   transform(value: string): any {
-    if (value.length > 40) {
-      return value.slice(0, 40) + '...'
+    if (value.length > 35) {
+      return value.slice(0, 35) + '...'
     }
     else{
       return value
