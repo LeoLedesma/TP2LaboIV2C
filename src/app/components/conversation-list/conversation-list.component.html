@@ -30,7 +30,7 @@
     <div class="card" *ngFor="let conversation of conversationList" (click)="openChat(conversation.id)">
         <div class="chat-card-body">
             <div class="row">
-                <h6>{{ showOtherUser(conversation) }}</h6>
+                <label class="userChat fw-bold">{{ showOtherUser(conversation) }}</label>
             </div>
             <div class="row d-flex">
             <div class="col-10 justify-content-start">

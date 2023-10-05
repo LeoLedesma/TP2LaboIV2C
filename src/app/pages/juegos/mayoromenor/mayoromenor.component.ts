@@ -5,7 +5,8 @@ import { CartasService } from 'src/app/services/cartas.service';
 @Component({
   selector: 'app-mayoromenor',
   templateUrl: './mayoromenor.component.html',
-  styleUrls: ['./mayoromenor.component.scss']
+  styleUrls: ['./mayoromenor.component.scss'],
+
 })
 export class MayoromenorComponent implements OnInit {
   public actionsBtn = true;

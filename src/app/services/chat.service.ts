@@ -12,7 +12,8 @@ import {
   query,
   setDoc,
   where,
-  or 
+  or, 
+  updateDoc
 } from '@angular/fire/firestore';
 import { ChatList, ChatMessage } from '../models/chat';
 import { UsuariosService } from './usuarios-service.service';
@@ -55,8 +56,8 @@ export class ChatService {
 
   updateLastMessage(chatId: string, message: string): Promise<void> {
     const chatRef = doc(this.firestore, 'chats', chatId);
-
-    return setDoc(chatRef, { lastMessage: message }, { merge: true });
+    
+    return updateDoc(chatRef, { "lastMessage_date":Timestamp.now(),"lastMessage": message});
   }
 
   sendMessage(chatId: string, userTo: string, message: string): Promise<void> {
