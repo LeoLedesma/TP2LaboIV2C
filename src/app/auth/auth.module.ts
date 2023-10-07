@@ -5,19 +5,21 @@ import { RouterModule } from '@angular/router';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { FormsModule } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
   declarations: [
-    AuthComponent,    
+    AuthComponent,
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
-  exports:[    
+  exports: [
   ]
 })
 export class AuthModule { }

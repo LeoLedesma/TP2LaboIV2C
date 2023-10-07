@@ -109,8 +109,7 @@ export class ChatService {
         querySnapshot.forEach(doc => {
           
           const chatListObj = { id: doc.id, ...doc.data() } as ChatList;
-          chatList.push(chatListObj);
-          console.log(chatList)
+          chatList.push(chatListObj);          
         });
 
         subscriber.next(chatList);

@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { LoaderService } from '../services/loader.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -17,11 +19,12 @@ export class AuthComponent implements OnInit, OnChanges {
   username:string = "";
   password: string = "";
   registrarUsuarioForm!:FormGroup;
+  mostrarSpinner:boolean = false;
+  mostrarSpinnerSub!:Subscription;
 
-  constructor(private route: ActivatedRoute, private auth: AuthService, private router: Router, private fb:FormBuilder) { }
+  constructor(private route: ActivatedRoute, private auth: AuthService, private router: Router, private fb:FormBuilder,private loader: LoaderService) { }
   ngOnInit() {
-    //this.registrarUsuarioForm = this.fb.group() 
-
+    this.mostrarSpinnerSub = this.loader.loaderState$.subscribe(state => this.mostrarSpinner = state)
    }
   ngOnChanges(changes: SimpleChanges) { }
 
@@ -39,8 +42,10 @@ export class AuthComponent implements OnInit, OnChanges {
   }
 
   registrarUsuario() {
+    this.loader.show()
    
     this.auth.RegistrarUsuario(this.email,this.username, this.password).then(result => {
+      this.loader.hide()
       if (result.result) {
         Swal.fire({
           icon:'success',
@@ -64,7 +69,9 @@ export class AuthComponent implements OnInit, OnChanges {
   }
 
   iniciarSesion(registro:boolean = false) {
+    this.loader.show()
     this.auth.IniciarSesion(this.email, this.password).then(result => {      
+      this.loader.hide()
       if (result.result) {
         if(!registro)
         {

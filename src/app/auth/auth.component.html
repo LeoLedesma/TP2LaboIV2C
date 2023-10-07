@@ -15,6 +15,9 @@
       <button class="submit fastLogin" (click)="loginAdministrador()">Administrador</button>
       <button class="submit fastLogin" (click)="loginJuan()">Juan</button>
     </div>
+    <div class="fastLoginDiv justify-content-center">
+      <mat-spinner *ngIf="mostrarSpinner"></mat-spinner>
+    </div>
   </div>
   
   <div class="sub-cont">

@@ -19,11 +19,10 @@ export class ChatComponent implements OnInit {
   eventsSubject: Subject<string> = new Subject<string>();
 
   ngOnInit(): void {
-    if(this.auth.usuarioLogueado==undefined){
-      console.log("hola");
+    if(this.auth.usuarioLogueado==undefined){      
       this.route.navigate(['../home']);
     }
-  }
+  } 
   
 
   constructor(private chatService: ChatService,private auth:AuthService,private route: Router) { }

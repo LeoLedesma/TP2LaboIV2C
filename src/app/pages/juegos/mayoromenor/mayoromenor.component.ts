@@ -54,8 +54,7 @@ export class MayoromenorComponent implements OnInit {
   }
 
   drawCards(deck_id: string) {
-    this.deck_id = deck_id;
-    console.log(this.proxima);
+    this.deck_id = deck_id;    
     let cantidad = this.proxima === undefined ? 2 : 1;
 
     this.cartasService.drawCard(deck_id,cantidad).subscribe((cds: CardDTO) => {
@@ -69,8 +68,7 @@ export class MayoromenorComponent implements OnInit {
         this.proxima = { ...cds.cards[1] }   
       }
       let proxima = {...this.proxima}
-      proxima.image = this.BlankCard;
-      console.log(this.proxima);
+      proxima.image = this.BlankCard;      
 
       this.cartasActuales.push(this.actual);
       this.cartasActuales.push(proxima);

@@ -62,7 +62,7 @@ export class ConversationListComponent {
       this.reloadChatList()
       this.searchInput = '';
     })
-      .catch(err => console.log(err));
+      .catch(err => err);
   }
 
   searchUser(search: string) {
@@ -85,8 +85,7 @@ export class ConversationListComponent {
     return chat.user1
   }
 
-  openChatSearched(username: string) {
-    console.log(username);
+  openChatSearched(username: string) {    
     this.chatService.searchChatList(username).subscribe(chatList => {      
       let result = chatList.filter(chat => chat.user1 === username || chat.user2 === username)
       

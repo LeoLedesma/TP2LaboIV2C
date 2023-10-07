@@ -1,0 +1,19 @@
+.ahorcado {
+    display: flex;
+    // max-width: 500px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.timerNumber{
+  font-size: 50px;
+  background-color: rgb(61, 61, 61);
+  color:white;
+  text-align: center;
+  margin-top:5px
+}
+
+.separator{
+  font-size: 50px;
+  padding: 5px;  ;
+}
