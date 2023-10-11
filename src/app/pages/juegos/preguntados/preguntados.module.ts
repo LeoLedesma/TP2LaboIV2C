@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
-import { MatCardModule } from '@angular/material/card';
+import { PreguntadosRoutingModule } from './preguntados-routing.module';
+import { PreguntadosComponent } from './preguntados.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
-import { MayoromenorRoutingModule } from './mayoromenor-routing.module';
-import { MayoromenorComponent } from './mayoromenor.component';
 import { PuntuacionModule } from 'src/app/components/puntuacion/puntuacion.module';
+import { LifesModule } from 'src/app/components/lifes/lifes.module';
 
 
 @NgModule({
   declarations: [
-    MayoromenorComponent
+    PreguntadosComponent
   ],
   imports: [
     CommonModule,
-    MatCardModule,
-    MayoromenorRoutingModule,
+    PreguntadosRoutingModule,
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
-    PuntuacionModule
+    PuntuacionModule,
+    LifesModule
   ]
 })
-export class MayoromenorModule { }
+export class PreguntadosModule { }

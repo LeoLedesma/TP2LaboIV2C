@@ -22,6 +22,7 @@ export class MayoromenorComponent implements OnInit {
   public message: string = "";
   public actual!: Card;
   public proxima: Card | undefined;
+  public correctas:number = 0;
   public cartasActuales: Card[] = [];
   public puntos: number = 0;
 
@@ -48,6 +49,7 @@ export class MayoromenorComponent implements OnInit {
     this.actual = undefined!
     this.proxima = undefined!
     this.puntos = 0;
+    this.correctas = 0;
     this.cartasService.newGame(this.deck_id).subscribe((decks: CardDTO) => {
       this.drawCards(decks.deck_id);
     })
@@ -110,7 +112,8 @@ export class MayoromenorComponent implements OnInit {
     if (resultado===1) {
       this.message = "Ganaste!";
       this.loader = true;
-      this.puntos++;
+      this.correctas ++;;
+      this.puntos += Math.pow(2,this.correctas);
       this.actual = {...this.proxima} as Card;
       setTimeout(() => {this.drawCards(this.deck_id);},500);
 

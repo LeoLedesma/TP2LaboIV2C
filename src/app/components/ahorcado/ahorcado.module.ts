@@ -5,6 +5,7 @@ import { AhorcadoVidasComponent } from './ahorcado-vidas/ahorcado-vidas.componen
 import { AhorcadoTecladoComponent } from './ahorcado-teclado/ahorcado-teclado.component';
 import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { LifesModule } from '../lifes/lifes.module';
 
 
 
@@ -17,7 +18,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    LifesModule
   ],
   exports:[
     AhorcadoPalabraComponent,    

@@ -1,90 +1,88 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, interval } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { TimerComponent } from 'src/app/components/timer/timer.component';
 import { AhorcadoService } from 'src/app/services/ahorcado.service';
+import { PuntuacionService } from '../../../services/puntuacion.service';
 
 @Component({
   selector: 'app-ahorcado',
   templateUrl: './ahorcado.component.html',
   styleUrls: ['./ahorcado.component.scss']
 })
-export class AhorcadoComponent implements OnInit,OnDestroy {
-
+export class AhorcadoComponent implements OnInit, OnDestroy {
+  @ViewChild(TimerComponent) timerComponent!: TimerComponent;
   private timerSubscription!: Subscription;
-  public totalSeconds: number = 0;
+  puntos: number = 0;  
   word: string = '';
   words: string[] = [];
   guesses: string[] = [];
   restartGameBtnShown = false;
-  
-  constructor(private hangmanService: AhorcadoService) { }
+  time: number = 0;
+
+  constructor(private hangmanService: AhorcadoService,private puntuacion:PuntuacionService) { }
   ngOnDestroy(): void {
-    if(this.timerSubscription)
-    {
+    if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
   }
 
   ngOnInit(): void {
-    this.hangmanService.getWords().subscribe((response) => {            
-      this.words = response.map((word) => word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase());            
-      this.pickNewWord();
-    });
+    this.pickNewWord();
   }
 
-  guess(letter: string) {    
-    
-    if(this.guesses.length==0)
-    {
-      this.startTimer();          
+
+  guess(obj: { keyValue: string, score: number }) {
+    let letter = obj.keyValue;
+    this.puntos = obj.score;
+
+    if (this.guesses.length == 0) {
+      this.timerComponent.startTimer();      
     }
 
     if (!letter || this.guesses.includes(letter)) {
       return;
     }
+
     this.guesses = [...this.guesses, letter];
   }
 
-  reset() {    
-    this.resetTimer();
+  reset() {
+    this.timerComponent.resetTimer();
     this.words.splice(this.words.indexOf(this.word), 1);
     this.pickNewWord();
     this.restartGameBtnShown = false;
   }
 
-  pickNewWord() {        
-    const randomIndex = Math.floor(Math.random() * this.words.length);    
-    this.word = this.words[randomIndex];   
-    this.guesses = [];
+  pickNewWord() {
+    this.hangmanService.getWords().subscribe((response) => {
+      this.words = response.map((word) => word.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase());
+      const randomIndex = Math.floor(Math.random() * this.words.length);
+      this.puntos = 0;
+      this.word = this.words[randomIndex];
+      this.guesses = [];      
+    });   
   }
 
-  onGameFinished() {
-    if(this.timerSubscription)    
-      this.timerSubscription.unsubscribe();
+  onGameFinished(win: boolean) {
+    this.time = this.timerComponent.stopTimer();
     
+
+    if(win)    
+    {
+      this.calculatePoints()
+      this.puntuacion.saveScore("Ahorcado",this.puntos,this.word)    
+    }else{
+      this.puntos = 0;
+    }
+      
+
     this.restartGameBtnShown = true;
   }
 
-  startTimer(){    
-    this.timerSubscription = interval(1000).subscribe(() => {
-      this.totalSeconds++;
-    });
+  calculatePoints(){
+    if(this.puntos>0)    
+    this.puntos = parseInt((this.puntos * (this.word.length*20)/this.time).toFixed(0));
+    console.log(this.puntos);
+    return 0
   }
-
-  resetTimer(){
-    if(this.timerSubscription)    
-    this.timerSubscription.unsubscribe();
-
-    this.totalSeconds = 0;    
-  }
-
-  getMinutes(): string {
-    let value = Math.floor(this.totalSeconds / 60);
-    return value < 10 ? '0' + value : value.toString();
-  }
-
-  getSeconds(): string {
-    let value = this.totalSeconds % 60
-    return value < 10 ? '0' + value : value.toString();
-  }
-
 }

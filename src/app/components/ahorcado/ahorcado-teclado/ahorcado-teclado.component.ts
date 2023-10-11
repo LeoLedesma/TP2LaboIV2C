@@ -10,7 +10,8 @@ import KEY_CHARS from 'src/app/constants/keyCharacters.const';
 })
 export class AhorcadoTecladoComponent implements OnInit, OnChanges {
   @Input() word = '';
-  @Output() keyPressed = new EventEmitter<string>();
+  @Input() @Output() puntos:number = 0;
+  @Output() keyPressed = new EventEmitter<{keyValue:string,score:number}>();
   keys: IKey[] = [];
   constructor() {
     this.setKeys();
@@ -30,7 +31,7 @@ export class AhorcadoTecladoComponent implements OnInit, OnChanges {
     }
   }
 
-  addMissingKeys(): void {
+  addMissingKeys(): void {    
     for (let i = 0; i < this.word.length; i++) {
       const keyExists = this.keys.find((key) => {
         return key.value.toLowerCase() === this.word[i].toLowerCase();
@@ -47,15 +48,15 @@ export class AhorcadoTecladoComponent implements OnInit, OnChanges {
     }
   }
 
-  onKeyClick(key: IKey): void {
-    
+  onKeyClick(key: IKey): void {    
     if (key.guessed) {
       return;
     }
     key.guessed = true;
     key.error = this.word.toLowerCase().indexOf(key.value.toLowerCase()) === -1;
-
-    this.keyPressed.emit(key.value);
+    this.puntos += key.error? -3 : 5;    
+    
+    this.keyPressed.emit({keyValue:key.value,score:this.puntos});
   }
 
   setKeys()

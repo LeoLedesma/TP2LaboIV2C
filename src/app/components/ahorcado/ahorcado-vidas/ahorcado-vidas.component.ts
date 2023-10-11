@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { LifesComponent } from '../../lifes/lifes.component';
 
 @Component({
   selector: 'app-ahorcado-vidas',
@@ -9,6 +10,7 @@ export class AhorcadoVidasComponent implements OnInit, OnChanges {
   @Input() guesses: string[] = [];
   @Input() word: string = '';
   @Output() gameFinished = new EventEmitter<boolean>();
+  @ViewChild(LifesComponent) lifes!: LifesComponent;
   MAX_MISTAKES = 7;
   mistakesRemaining;
   success: boolean = false;
@@ -22,7 +24,7 @@ export class AhorcadoVidasComponent implements OnInit, OnChanges {
       changes?.['word']?.currentValue &&
       changes?.['word'].currentValue !== changes?.['word'].previousValue
     ) {
-      this.mistakesRemaining = this.MAX_MISTAKES;
+      this.lifes.restartMistakesRemaining();
       this.success = false;
     }
     const guessesCurrentValue = changes?.['guesses']?.currentValue;
@@ -38,7 +40,7 @@ export class AhorcadoVidasComponent implements OnInit, OnChanges {
 
   checkGuess(letter: string) {
     let didWin = true;
-    this.mistakesRemaining -= this.wasGuessAMistake(letter);
+    this.lifes.decreaseMistakesRemaining(this.wasGuessAMistake(letter))
     for (let i = 0; i < this.word.length; i++) {
       if (
         !this.guesses.find(
@@ -58,15 +60,13 @@ export class AhorcadoVidasComponent implements OnInit, OnChanges {
   wasGuessAMistake(letter: string) {
     for (let i = 0; i < this.word.length; i++) {
       if (this.word[i].toLowerCase() === letter.toLowerCase()) {
-        return 0;
+        return false;
       }
     }
-    return 1;
+    return true
   }
 
-  get mistakeArray(): any[] {
-    return new Array(this.mistakesRemaining);
-  }
+ 
 
   ngOnInit(): void {}
 }

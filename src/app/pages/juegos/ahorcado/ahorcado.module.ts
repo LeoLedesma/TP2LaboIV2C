@@ -7,6 +7,8 @@ import { AhorcadoComponentsModule } from 'src/app/components/ahorcado/ahorcado.m
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
+import { PuntuacionModule } from 'src/app/components/puntuacion/puntuacion.module';
+import { TimerModule } from 'src/app/components/timer/timer.module';
 
 
 
@@ -21,6 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatTooltipModule,
     MatButtonModule,
+    PuntuacionModule,
+    TimerModule
   ]
 })
 export class AhorcadoModule { }

@@ -1,19 +1,19 @@
 <div class="d-flex justify-content-center">
 
   <div class="ahorcado">
-    <div class="timer d-flex align-items-center">      
-        <div class="timerNumber">
-          {{ getMinutes() }}</div>
-        <h1 class="separator">:</h1>
-        <div class="timerNumber">
-          {{ getSeconds() }}
-        </div>      
-    </div>
-    <app-ahorcado-vidas class="m-2" (gameFinished)="onGameFinished()" [guesses]="guesses" [word]="word"></app-ahorcado-vidas>
+    <app-timer>
+
+    </app-timer>
+
+    <app-ahorcado-vidas class="m-2" (gameFinished)="onGameFinished($event)" [guesses]="guesses"
+      [word]="word"></app-ahorcado-vidas>
     <ng-container *ngIf="!restartGameBtnShown else restartGameBtn">
       <app-ahorcado-palabra class="m-2" [guesses]="guesses" [word]="word"></app-ahorcado-palabra>
-      <app-ahorcado-teclado class="m-2"(keyPressed)="guess($event)" [word]="word"></app-ahorcado-teclado>
-    </ng-container>
+      <app-ahorcado-teclado class="m-2" (keyPressed)="guess($event)" [word]="word" ></app-ahorcado-teclado>
+    </ng-container>  
+    <!-- <div class="d-flex align-items-center flex-column"> -->
+      <app-puntuacion [puntos]="puntos" [text_white]="false"></app-puntuacion>
+    <!-- </div>   -->
   </div>
   <ng-template #restartGameBtn>
     <h1>La palabra era: {{word}}</h1>
@@ -22,5 +22,6 @@
       Jugar de nuevo
     </button>
   </ng-template>
+  
 
 </div>

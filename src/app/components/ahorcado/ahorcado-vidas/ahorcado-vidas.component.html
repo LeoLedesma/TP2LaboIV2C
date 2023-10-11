@@ -334,7 +334,4 @@
   </g>
   <!--end happy group-->
 </svg>
-<div class="mistakes-count">
-    <button mat-mini-fab color="warn" *ngFor="let _ of mistakeArray; let i = index">
-    <mat-icon>favorite</mat-icon>
-  </button></div>
+<app-lifes [maxMistakes]="MAX_MISTAKES"></app-lifes>
