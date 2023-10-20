@@ -40,7 +40,10 @@ export class AhorcadoVidasComponent implements OnInit, OnChanges {
 
   checkGuess(letter: string) {
     let didWin = true;
-    this.lifes.decreaseMistakesRemaining(this.wasGuessAMistake(letter))
+    
+    this.lifes.decreaseMistakesRemaining(this.wasGuessAMistake(letter));
+    this.mistakesRemaining = this.lifes.mistakesRemaining;
+    
     for (let i = 0; i < this.word.length; i++) {
       if (
         !this.guesses.find(

@@ -13,16 +13,18 @@ export class PuntuacionService {
 
   saveScore(juego:string, puntaje:number, resultado:string):boolean{
 
-    const currentUser = this.authService.usuarioLogueado!.username;
+    // const currentUser = this.authService.usuarioLogueado!.username;
 
-    let puntuacion: Puntuacion = {id:"",game:juego, score:puntaje, result:resultado, date:Timestamp.now(), username: currentUser}
+    // let puntuacion: Puntuacion = {id:"",game:juego, score:puntaje, result:resultado, date:Timestamp.now(), username: currentUser}
 
-    try{
-      this.collectionService.addOne("puntuaciones",puntuacion);
-      return true;
-    }
-    catch{
-      return false;
-    }
+    // try{
+    //   this.collectionService.addOne("puntuaciones",puntuacion);
+    //   return true;
+    // }
+    // catch{
+    //   return false;
+    // }
+
+    return true
   }
 }

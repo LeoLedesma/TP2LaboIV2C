@@ -6,7 +6,7 @@ import { JuegosComponent } from './juegos.component';
 
 @NgModule({
   declarations: [
-    JuegosComponent
+    JuegosComponent,
   ],
   imports: [
     CommonModule,

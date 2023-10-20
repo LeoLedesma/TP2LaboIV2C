@@ -10,7 +10,7 @@ export class TimerComponent implements OnInit {
   @Input() maxSeconds: number = 0;
   @Output() onTimerEnd: EventEmitter<any> = new EventEmitter();
 
-  @Output() totalSeconds:number = 0;
+  @Output() totalSeconds: number = 0;
 
   constructor() { }
 
@@ -18,31 +18,29 @@ export class TimerComponent implements OnInit {
   }
 
   private timerSubscription!: Subscription;
-  
-  startTimer(){    
-    console.log("Start timer")
+
+  startTimer() {
     this.timerSubscription = interval(1000).subscribe(() => {
-      if(this.maxSeconds === 0 || (this.maxSeconds !== 0 && this.totalSeconds<this.maxSeconds))
-      {
+      if (this.maxSeconds === 0 || (this.maxSeconds !== 0 && this.totalSeconds < this.maxSeconds)) {
         this.totalSeconds++;
-      }else{
+      } else {
         this.onTimerEnd.emit();
       }
     });
   }
 
-  stopTimer(){
+  stopTimer() {
     this.timerSubscription.unsubscribe();
 
     return this.totalSeconds;
   }
-  
-  resetTimer(){
-    console.log("resetTimer")
-    if(this.timerSubscription)    
-    this.timerSubscription.unsubscribe();
 
-    this.totalSeconds = 0;    
+  resetTimer() {
+    console.log("resetTimer")
+    if (this.timerSubscription)
+      this.timerSubscription.unsubscribe();
+
+    this.totalSeconds = 0;
   }
 
   getMinutes(): string {

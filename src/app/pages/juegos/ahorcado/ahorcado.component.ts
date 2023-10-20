@@ -66,7 +66,6 @@ export class AhorcadoComponent implements OnInit, OnDestroy {
   onGameFinished(win: boolean) {
     this.time = this.timerComponent.stopTimer();
     
-
     if(win)    
     {
       this.calculatePoints()
