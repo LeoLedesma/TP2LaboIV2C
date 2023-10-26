@@ -16,5 +16,5 @@ export class AppComponent {
     this.modalService.open(modal);
 
   }
-  title = 'SalaJuegos';
+  title = 'Clinica';
 }

@@ -6,18 +6,15 @@
       <small class="d-block mb-3 text-muted">© 2023-2023</small>
     </div>
     <div class="col-6 col-md">
-      <h5>Juegos</h5>
+      <h5>Varios</h5>
       <ul class="list-unstyled text-small">
-        <li><a class="text-muted" routerLink="juegos/ahorcado">Ahorcado</a></li>
-        <li><a class="text-muted" routerLink="juegos/mayormenor">Mayor o Menor</a></li>
-        <li><a class="text-muted" routerLink="juegos/preguntados">Preguntados</a></li>        
-        <li><a class="text-muted" routerLink="juegos/otro">Por definir</a></li>   
+        <li><a class="text-muted" routerLink="prueba">Prueba</a></li>
+      
       </ul>
     </div>
     <div class="col-6 col-md">
       <h5>Sobre mi</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" routerLink="quien-soy">Quien soy</a></li>
+      <ul class="list-unstyled text-small">        
         <li><a class="text-muted" href="https://github.com/LeoLedesma/" target="_blank">Github</a></li>
         <li><a class="text-muted" href="https://www.linkedin.com/in/leoledesma/" target="_blank">LinkedIn</a></li>        
       </ul>
@@ -31,8 +28,6 @@
         </ng-container>
         <ng-template #elseTemplate>
           <li><a class="text-muted" (click)="logout()">Cerrar sesion</a></li>
-          <li><a class="text-muted" routerLink="chat">Chat</a></li>
-          <li><a class="text-muted" routerLink="historial">Historial partidas</a></li>
         </ng-template>       
       </ul>
     </div>    

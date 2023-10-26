@@ -4,7 +4,8 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": [
-    {
+    {       
+      "site": "lledesmatp2",  
       "public": "public",
       "ignore": [
         "firebase.json",
@@ -13,7 +14,7 @@
       ]
     },
     {
-      "target": "SalaJuegos",
+      "target": "ClinicaMedica",
       "source": ".",
       "frameworksBackend": {}
     }
