@@ -124,7 +124,12 @@ export class RegisterComponent {
             timer: 1500
           }).then(r => {
             if (!this.formAdministrador)
+            {
               this.router.navigate(['/']);
+            }
+            else{
+              this.auth.EnviarConfirmarCorreo()
+            }
 
             this.limpiarFormulario();
           })

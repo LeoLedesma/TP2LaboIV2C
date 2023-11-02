@@ -1,8 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Usuario } from '../models/usuario';
 import { UsuariosService } from './usuarios-service.service';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut,sendEmailVerification, User } from '@angular/fire/auth';
 import { Timestamp } from '@angular/fire/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
   usuarioLogueado!: Usuario | undefined;
   onUserLogged: EventEmitter<Usuario> = new EventEmitter<Usuario>();
   onUserLogout: EventEmitter<void> = new EventEmitter<void>();
+  private userCredential!:User
 
   constructor(private usuariosService: UsuariosService, private auth: Auth) {
     this.getUserFromStorage()
@@ -25,6 +27,7 @@ export class AuthService {
       else
         return createUserWithEmailAndPassword(this.auth, usuario.email, password)
           .then((userCredential) => {
+            this.userCredential = userCredential.user
             usuario.id_auth = userCredential.user.uid;
             this.usuariosService.addOne(usuario)
             return { result: true, error: "" };
@@ -45,6 +48,10 @@ export class AuthService {
           );
     })
 
+  }
+
+  EnviarConfirmarCorreo(){
+    sendEmailVerification(this.userCredential);
   }
 
   async IniciarSesion(email: string, password: string) {
