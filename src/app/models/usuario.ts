@@ -1,11 +1,19 @@
 import { Timestamp } from "@angular/fire/firestore";
 
-export interface Usuario {
+export class Usuario {
 
-    id_auth:string,
-    id_user:string,
-    username:string,
-    email:string,
-    fec_registro:Timestamp
-
+    constructor(public id_auth:string,
+        public id_user:string,
+        public email:string,    
+        public nombre:string,
+        public apellido:string,
+        public documento:string,
+        public edad: number,    
+        public fotos:string[],    
+        public tipo:string,
+        public obraSocial: string = '',        
+        public especialidades:string[] = [],
+        public fec_registro:Timestamp = Timestamp.now()){                    
+    }
+    
 }

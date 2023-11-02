@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { LoaderService } from '../services/loader.service';
 import { Subscription } from 'rxjs';
+import { Usuario } from '../models/usuario';
 
 
 @Component({
@@ -43,8 +44,8 @@ export class AuthComponent implements OnInit, OnChanges {
 
   registrarUsuario() {
     this.loader.show()
-   
-    this.auth.RegistrarUsuario(this.email,this.username, this.password).then(result => {
+   let usuario!:Usuario;
+    this.auth.RegistrarUsuario(usuario,'').then(result => {
       this.loader.hide()
       if (result.result) {
         Swal.fire({

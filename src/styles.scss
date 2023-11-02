@@ -1,22 +1,19 @@
-.container {
-    max-width: 960px;
-  }
-  
+
   /*
    * Custom translucent site header
    */
   
   .site-header {
-    background-color: rgba(0, 0, 0, .85);
+    background-color: #36b3fcd9;
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     backdrop-filter: saturate(180%) blur(20px);
   }
   .site-header a {
-    color: #999;
+    color: black;
     transition: ease-in-out color .15s;
   }
   .site-header a:hover {
-    color: #fff;
+    color: black;
     text-decoration: none;
   }
   
@@ -30,7 +27,7 @@
     bottom: -30%;
     width: 300px;
     height: 540px;
-    background-color: #333;
+    background-color: #36b3fcd9;
     border-radius: 21px;
     -webkit-transform: rotate(30deg);
     transform: rotate(30deg);
@@ -43,7 +40,7 @@
     bottom: 10%;
     left: 10px;
     content: "";
-    background-color: rgba(255, 255, 255, .1);
+    background-color: #36b3fcd9;
     border-radius: 5px;
   }
   
@@ -54,16 +51,20 @@
     left: 5%;
     background-color: #e5e5e5;
   }
+
+  footer{
+    position: relative;
+  }
   
   
   /*
    * Extra utilities
    */
   
-  .border-top { border-top: 1px solid #e5e5e5; }
-  .border-bottom { border-bottom: 1px solid #e5e5e5; }
+  .border-top { border-top: 1px solid black; }
+  .border-bottom { border-bottom: 1px solid black; }
   
-  .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+  .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .1); }
   
   .flex-equal > * {
     -ms-flex: 1;
@@ -79,8 +80,7 @@
   }
   
   .overflow-hidden { overflow: hidden; }
-  
-html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 @import '@material-design-icons/font';

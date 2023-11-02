@@ -4,9 +4,8 @@ import { CommonModule } from '@angular/common';
 import { PagesRoutingModule } from './pages-routing.module';
 import { RouterModule } from '@angular/router';
 
-
 @NgModule({
-  declarations: [
+  declarations: [     
   ],
   imports: [
     CommonModule,

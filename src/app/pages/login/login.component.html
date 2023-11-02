@@ -1,0 +1,34 @@
+<main class="form-signin">
+    <div class="row justify-content-center text-center">
+        <form [formGroup]="loginForm" (ngSubmit)="submitForm()" novalidate class="col-3 mt-4">
+
+            <img class="mb-4" src="../../../assets/Logo_500.png" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Iniciar Sesion</h1>
+
+            <div class="form-floating">
+                <input type="email" id="email" formControlName="email" class="form-control" required>
+                <label for="email" class="form-label">Email:</label>
+                <div class="invalid-feedback">Por favor, ingrese un email.</div>
+            </div>
+
+            <div class="form-floating">
+                <input type="password" id="password" formControlName="password" class="form-control" required>
+                <label for="password" class="form-label">Contraseña:</label>
+                <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+            </div>
+
+
+            <button type="submit" [disabled]="loginForm.invalid" class="w-100 btn btn-lg btn-primary">Iniciar
+                sesión</button>
+        </form>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn btn-success btn-lg" (click)="loginAdministrador()">Administrador</button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-success btn-lg" (click)="loginJuan()">Paciente</button>
+            </div>
+        </div>
+
+    </div>
+</main>

@@ -1,0 +1,93 @@
+<div class="container">
+    <h2>Registro</h2>
+    <form [formGroup]="registroForm" (ngSubmit)="submitForm()" class="needs-validation col-12" novalidate>
+        <div class="mb-3 col-6" *ngIf="!formAdministrador">
+            <label for="tipo" class="form-label">Tipo:</label>
+            <select id="tipo" formControlName="tipo" class="form-select" required>
+                <option value="" disabled selected>Seleccione un tipo</option>
+                <option value="paciente">Paciente</option>
+                <option value="especialista">Especialista</option>
+            </select>
+            <div class="invalid-feedback">Por favor, seleccione un tipo.</div>
+        </div>
+
+        <div *ngIf="registroForm.get('tipo')!.value !== ''">
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="nombre" class="form-label">Nombre:</label>
+                    <input type="text" id="nombre" formControlName="nombre" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese un nombre.</div>
+                </div>
+
+                <div class="mb-3 col-6">
+                    <label for="apellido" class="form-label">Apellido:</label>
+                    <input type="text" id="apellido" formControlName="apellido" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese un apellido.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="edad" class="form-label">Edad:</label>
+                    <input type="number" id="edad" formControlName="edad" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese una edad válida.</div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="dni" class="form-label">DNI:</label>
+                    <input type="text" id="dni" formControlName="dni" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese un DNI.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="registroForm.get('tipo')!.value === 'paciente'" class="mb-3 col-6">
+                    <label for="obraSocial" class="form-label">Obra Social:</label>
+                    <input type="text" id="obraSocial" formControlName="obraSocial" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese una obra social.</div>
+                </div>
+
+                <div class="mb-3" [ngClass]="{'col-6': registroForm.get('tipo')!.value === 'paciente', 
+                                            'col-12': registroForm.get('tipo')!.value === 'especialista'}">
+                    <label for="email" class="form-label">Correo electrónico:</label>
+                    <input type="email" id="email" formControlName="email" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese un correo electrónico válido.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" id="password" formControlName="password" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="password2" class="form-label">Repetir Contraseña:</label>
+                    <input type="password" id="password2" formControlName="password2" class="form-control" required>
+                    <div class="invalid-feedback">Por favor, ingrese una contraseña.</div>
+                </div>
+            </div>
+
+            <div *ngIf="registroForm.get('tipo')!.value === 'especialista'" class="mb-3 col-12">
+                <label for="especialidad" class="form-label">Especialidad:</label>
+                <input type="text" id="especialidad" formControlName="especialidad" class="form-control" required>
+                <div class="invalid-feedback">Por favor, ingrese una especialidad.</div>
+            </div>
+            <div class="row form-group">
+                <div class="mb-3 col-6">
+                    <label for="perfil" class="form-label">Imagen de perfil:</label>
+                    <input type="file" id="perfil" accept="image/jpg, image/jpeg" class="form-control"
+                    (change)="handleFileInput($event,'perfil')" required>
+                    <div class="invalid-feedback">Por favor, seleccione una imagen de perfil.</div>
+                </div>
+                <div class="mb-3 col-6" *ngIf="registroForm.get('tipo')!.value === 'paciente'">
+                    <label for="perfil2" class="form-label">Otra imagen perfil:</label>
+                    <input type="file" id="perfil2" accept="image/jpg, image/jpeg" class="form-control"  
+                    (change)="handleFileInput($event,'perfil2')" required>
+                    <div class="invalid-feedback">Por favor, seleccione una imagen de perfil.</div>
+                </div>
+            </div>
+            <div class="d-flex align-self-center">
+                <button type="submit" [disabled]="registroForm.invalid"
+                    class="btn btn-primary col-6 ">Registrar</button>
+            </div>
+        </div>
+    </form>
+
+</div>

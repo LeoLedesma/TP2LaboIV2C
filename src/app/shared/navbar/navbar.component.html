@@ -5,19 +5,18 @@
         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mb-2">
     </a>
     <div class="container d-flex flex-column flex-md-row justify-content-end">
-      <a class="py-2 d-none d-md-inline-block p-2" routerLink="quien-soy" routerLinkActive="text-white">Quien soy</a>
       <ng-container *ngIf="this.usuarioLogueado === undefined; else elseTemplate">
-        <a class="py-2 d-none d-md-inline-block p-2" routerLink="auth/register" routerLinkActive="text-white">Registrarse</a>
-        <a class="py-2 d-none d-md-inline-block p-2" routerLink="auth/login" routerLinkActive="text-white">Iniciar sesion</a>        
+        <a class="py-2 d-none d-md-inline-block p-2" routerLink="register" routerLinkActive="text-white">Registrarse</a>
+        <a class="py-2 d-none d-md-inline-block p-2" routerLink="login" routerLinkActive="text-white">Iniciar sesion</a>        
       </ng-container>
-      <ng-template #elseTemplate>        
+      <ng-template #elseTemplate>    
+        <a class="py-2 d-none d-md-inline-block p-2" routerLink="listados/usuarios" routerLinkActive="text-white" *ngIf="this.usuarioLogueado?.tipo=='administrador'">Usuarios</a>        
         <li class="nav-item dropdown">
-          <a class="npy-2 d-none d-md-inline-block p-2" href="#" data-bs-toggle="dropdown" aria-expanded="true">{{this.usuarioLogueado?.email}}</a>
-          <ul class="dropdown-menu" data-bs-popper="static">
-            <li><a class="dropdown-item" routerLink="chat">Chat</a></li>         
-            <li><a class="dropdown-item" routerLink="historial">Historial partidas</a></li>         
+          <a class="npy-2 d-none d-md-inline-block p-2"  data-bs-toggle="dropdown" aria-expanded="true">{{this.usuarioLogueado?.nombre | titlecase}} {{this.usuarioLogueado?.apellido | titlecase}}</a>
+          <ul class="dropdown-menu" data-bs-popper="static">    
             <li><a class="dropdown-item" (click)="logout()">Cerrar sesion</a></li>      
           </ul>
+          <a class="npy-2 d-none d-md-inline-block p-2" aria-expanded="true">{{this.usuarioLogueado?.tipo | titlecase }}</a>
         </li>       
       </ng-template>
       
