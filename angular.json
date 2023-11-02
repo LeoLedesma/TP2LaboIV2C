@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/clinica",
+            "outputPath": "dist/clinica-medica",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -103,14 +103,7 @@
             ],
             "scripts": []
           }
-        },
-        "deploy": {
-          "builder": "@angular/fire:deploy",
-          "options": {
-            "version": 2,
-            "browserTarget": "ClinicaMedica:build:production"
-          }
-        }
+        }        
       }
     }
   }
