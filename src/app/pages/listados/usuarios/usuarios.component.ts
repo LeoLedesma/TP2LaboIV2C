@@ -4,7 +4,7 @@ import { EstadoUsuario } from 'src/app/enums/EstadoUsuario.enum';
 import { Usuario } from 'src/app/models/usuario';
 import Swal from 'sweetalert2';
 import { TipoUsuario } from '../../../enums/TipoUsuario.enum';
-import { UsuariosService } from '../../../services/usuarios-service.service';
+import { UsuariosService } from '../../../services/usuarios.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -24,7 +24,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     { property: 'edad', nameToShow: 'Edad' },
     { property: 'tipo', nameToShow: 'Tipo' },
     { property: 'obraSocial', nameToShow: 'Obra Social' },
-    { property: 'especialidades', nameToShow: 'Especialidades' },
+    { property: 'especialidad', nameToShow: 'Especialidad' },
     { property: 'email', nameToShow: 'Correo electrónico' },
     { property: 'estado', nameToShow: 'Estado' },
     { property: 'email_confirmado', nameToShow:'Email Confirmado'}
@@ -54,10 +54,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     this.usuariosSub = this.usuarios.getAllUsers().subscribe(users => { this.usuariosArr = users; console.log(users) })
   }
 
-  onListClick(usuario: Usuario) {
-    if (usuario.tipo == 'Especialista') {
-      this.usuario = usuario;
-    }
+  onListClick(usuario: Usuario) {    
+      this.usuario = usuario;    
   }
 
   //todo revisar onActionClick
@@ -67,8 +65,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
       icon: 'success',
       title: 'Cambio de estado',
       html: this.getMesaggeOnAction(estado),
-      confirmButtonText: `<i class="fa fa-thumbs-up"></i> Great!`,
-      cancelButtonText: `<i class="fa fa-thumbs-down"></i>`,
+      confirmButtonText: `<i class="fa fa-thumbs-up"></i> Aceptar!`,      
     }).then(r => {
       this.usuarios.update(this.usuario);
     })
@@ -81,13 +78,13 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
     switch (estado) {
       case EstadoUsuario.Habilitado:
-        accion = "<b>habilitar</b>";
+        accion = this.usuario.tipo + " habilitado";
         break;
       case EstadoUsuario.Rechazado:
-        accion = "rechazar";
+        accion = this.usuario.tipo + " rechazado";
         break;
       case EstadoUsuario.Inhabilitado:
-        accion = "inhabilitar";
+        accion = this.usuario.tipo + " inhabilitado";
     }
 
     mensaje.appendChild(document.createTextNode(accion));

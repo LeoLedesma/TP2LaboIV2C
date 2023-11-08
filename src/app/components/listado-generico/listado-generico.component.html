@@ -5,10 +5,10 @@
         <ng-container *ngIf="column.property == 'actions' else elseTemplate">
             <td mat-cell *matCellDef="let element">
                 <ng-container *ngFor="let action of actions">
-                <button mat-mini-fab [color]="action.class" (click)="onActionClick($event,element,action.action)">
-                    <mat-icon>{{action.icon}}</mat-icon>
-                  </button>
-                </ng-container>                
+                    <button mat-mini-fab [color]="action.class" (click)="onActionClick($event,element,action.action)">
+                        <mat-icon>{{action.icon}}</mat-icon>
+                    </button>
+                </ng-container>
             </td>
         </ng-container>
         <ng-template #elseTemplate>
@@ -20,13 +20,12 @@
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumnsName"></tr>
-    <tr mat-row [class.demo-row-is-clicked]="clickedRows.has(row)"
-        (click)="onClick(row)"
+    <tr mat-row [class.demo-row-is-clicked]="clickedRows.has(row)" (click)="onClick(row)"
         *matRowDef="let row; columns: displayedColumnsName"></tr>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Seleccione pagina">
-    </mat-paginator>
 </table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" #showFirstLastButtons aria-label="Seleccione pagina" *ngIf="paginator && !isLoading">
+</mat-paginator>
 
 <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">
     <mat-progress-spinner color="primary" mode="indeterminate">

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDoc, getDocs, onSnapshot, orderBy, query, QueryCompositeFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
-import { ICollection } from '../models/i-collection';
+import { collection, doc, DocumentData, DocumentReference, Firestore, getDocs, onSnapshot, orderBy, query, QueryCompositeFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { ICollection } from '../models/i-collection';
 
 @Injectable({
   providedIn: 'root'
@@ -70,9 +70,7 @@ export class CollectionsService {
     return !(await getDocs(docs)).empty;
   }
 
-  getAllSnapshot<T = ICollection>(collectionName: string,order:string): Observable<T[]> {
-
-
+  getAllSnapshot<T = ICollection>(collectionName: string,order:string): Observable<T[]> {    
     let docs = query(collection(this._firestore, collectionName), orderBy(order))
     return new Observable(subscriber => {
       const unsubscribe = onSnapshot(docs, querySnapshot => {

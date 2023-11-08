@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -6,26 +8,30 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './listado-generico.component.html',
   styleUrls: ['./listado-generico.component.scss']
 })
-export class ListadoGenericoComponent implements OnInit,OnDestroy {
+export class ListadoGenericoComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  _dataSource: any[] = []
+  _dataSource: any;
   _dataSubscription!: Subscription;
 
   displayedColumnsName: string[] = []
   @Input() displayedColumns: { property: string, nameToShow: string }[] = [{ property: '', nameToShow: '' }];
   @Input() dataSource!: Observable<any[]>;
   @Input() actions!: {class:string,icon:string,action:string}[];
+  @Input() paginator: boolean = false
   @Output() onClicked: EventEmitter<any> = new EventEmitter();
   @Output() onActionClicked: EventEmitter<{element:any,action:string}> = new EventEmitter();
+  @ViewChild('showFirstLastButtons') _paginator!: MatPaginator;
   isLoading:boolean=true;
   
   clickedRows = new Set<string>();
 
   ngOnInit(): void {
+
     this._dataSubscription = this.dataSource.subscribe(x => 
       {
         this.isLoading = false;
-        this._dataSource = x
+        this._dataSource = new MatTableDataSource<any>(x);
+        this._dataSource.paginator = this._paginator;
       },
       error => this.isLoading = false
       );
@@ -39,6 +45,9 @@ export class ListadoGenericoComponent implements OnInit,OnDestroy {
     this._dataSubscription?.unsubscribe;
   }
 
+  ngAfterViewInit() {
+      
+  }
 
 
   getValue(element:any,column:any){  

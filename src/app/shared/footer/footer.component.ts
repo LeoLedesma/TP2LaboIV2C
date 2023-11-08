@@ -18,6 +18,10 @@ export class FooterComponent implements OnInit{
       this.usuarioLogueado=user;
     });
 
+    this.auth.onUserLogout.subscribe(e =>{
+      this.usuarioLogueado=undefined;
+    })
+
     this.auth.getUserFromStorage();  
   }
 

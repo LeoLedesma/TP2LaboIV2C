@@ -1,0 +1,13 @@
+<mat-list>
+    <a mat-list-item (click)="openLink(usuario)" *ngFor="let usuario of usuarios">
+        <div class="row">
+            <div class="col-2">
+                <img [src]="getImagen(usuario.tipo)" class="img-thumbnail" alt="...">
+            </div>
+            <div class="col-9">
+                <div matListItemTitle>{{usuario.nombreCompleto}} - {{usuario.tipo}}</div>
+                <div matListItemLine>{{usuario.email}}</div>
+            </div>
+        </div>
+    </a>
+</mat-list>

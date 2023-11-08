@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { EstadoUsuario } from '../enums/EstadoUsuario.enum';
 import { TipoUsuario } from '../enums/TipoUsuario.enum';
 import { Usuario } from '../models/usuario';
-import { UsuariosService } from './usuarios-service.service';
+import { UsuariosService } from './usuarios.service';
 
 
 @Injectable({

@@ -14,7 +14,7 @@ export class Usuario {
         public fotos:string[],    
         public tipo:TipoUsuario,
         public obraSocial: string = '',        
-        public especialidades:string[] = [],
+        public especialidad:string = '',
         public fec_registro:Timestamp = Timestamp.now(),
         public estado:EstadoUsuario = EstadoUsuario.Inhabilitado,
         public email_confirmado:boolean = false,

@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  MatBottomSheet
+} from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
+import { AccesosRapidoComponent } from 'src/app/components/accesos-rapido/accesos-rapido.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
-import { UsuariosService } from 'src/app/services/usuarios-service.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,13 +17,14 @@ import Swal from 'sweetalert2';
 export class LoginComponent {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private auth:AuthService,private loader: LoaderService,private router:Router) {}
+  constructor(private formBuilder: FormBuilder,private auth:AuthService,private loader: LoaderService,private router:Router,private _bottomSheet: MatBottomSheet) {}
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],      
     });
+   
   }
 
   submitForm() {
@@ -64,5 +68,22 @@ export class LoginComponent {
   loginJuan(){
     this.loginForm.get('email')?.setValue('juan@juan.com');
     this.loginForm.get('password')?.setValue("juan1234");
+  }
+
+  abrirAccesosRapidoSheet(): void {
+    this._bottomSheet.open(AccesosRapidoComponent);
+    
+    this._bottomSheet._openedBottomSheetRef?.afterDismissed().subscribe((result) =>{
+      if (result) {       
+        this.loginForm.get('email')?.setValue(result.email);
+        this.loginForm.get('password')?.setValue(result.contraseña);
+      }
+    })
+  }
+
+  
+
+  openLink(hola:any){
+
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/models/usuario';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { LoaderService } from '../../services/loader.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -24,6 +24,10 @@ export class NavbarComponent implements OnInit{
     this.auth.onUserLogged.subscribe(user=> {     
       this.usuarioLogueado=user;
     });
+
+    this.auth.onUserLogout.subscribe(e =>{
+      this.usuarioLogueado=undefined;
+    })
 
     this.auth.getUserFromStorage();    
   }
