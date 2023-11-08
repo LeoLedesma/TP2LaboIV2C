@@ -1,12 +1,12 @@
 <div class="container">
-    <h2>Registro</h2>
+    <h2>{{titulo}}</h2>
     <form [formGroup]="registroForm" (ngSubmit)="submitForm()" class="needs-validation col-12" novalidate>
         <div class="mb-3 col-6" *ngIf="!formAdministrador">
             <label for="tipo" class="form-label">Tipo:</label>
             <select id="tipo" formControlName="tipo" class="form-select" required>
                 <option value="" disabled selected>Seleccione un tipo</option>
-                <option value="paciente">Paciente</option>
-                <option value="especialista">Especialista</option>
+                <option [value]="TipoUsuario.Paciente">{{TipoUsuario.Paciente}}</option>
+                <option [value]="TipoUsuario.Especialista">{{TipoUsuario.Especialista}}</option>
             </select>
             <div class="invalid-feedback">Por favor, seleccione un tipo.</div>
         </div>
@@ -38,14 +38,14 @@
                 </div>
             </div>
             <div class="row">
-                <div *ngIf="registroForm.get('tipo')!.value === 'paciente'" class="mb-3 col-6">
+                <div *ngIf="registroForm.get('tipo')!.value === TipoUsuario.Paciente" class="mb-3 col-6">
                     <label for="obraSocial" class="form-label">Obra Social:</label>
                     <input type="text" id="obraSocial" formControlName="obraSocial" class="form-control" required>
                     <div class="invalid-feedback">Por favor, ingrese una obra social.</div>
                 </div>
 
-                <div class="mb-3" [ngClass]="{'col-6': registroForm.get('tipo')!.value === 'paciente', 
-                                            'col-12': registroForm.get('tipo')!.value === 'especialista'}">
+                <div class="mb-3" [ngClass]="{'col-6': registroForm.get('tipo')!.value === TipoUsuario.Paciente, 
+                                            'col-12': registroForm.get('tipo')!.value === TipoUsuario.Especialista}">
                     <label for="email" class="form-label">Correo electrónico:</label>
                     <input type="email" id="email" formControlName="email" class="form-control" required>
                     <div class="invalid-feedback">Por favor, ingrese un correo electrónico válido.</div>
@@ -64,19 +64,19 @@
                 </div>
             </div>
 
-            <div *ngIf="registroForm.get('tipo')!.value === 'especialista'" class="mb-3 col-12">
+            <div *ngIf="registroForm.get('tipo')!.value === TipoUsuario.Especialista" class="mb-3 col-12">
                 <label for="especialidad" class="form-label">Especialidad:</label>
                 <input type="text" id="especialidad" formControlName="especialidad" class="form-control" required>
                 <div class="invalid-feedback">Por favor, ingrese una especialidad.</div>
             </div>
             <div class="row form-group">
-                <div class="mb-3 col-6">
+                <div class="mb-3 col-lg-6 col-md-6">
                     <label for="perfil" class="form-label">Imagen de perfil:</label>
                     <input type="file" id="perfil" accept="image/jpg, image/jpeg" class="form-control"
                     (change)="handleFileInput($event,'perfil')" required>
                     <div class="invalid-feedback">Por favor, seleccione una imagen de perfil.</div>
                 </div>
-                <div class="mb-3 col-6" *ngIf="registroForm.get('tipo')!.value === 'paciente'">
+                <div class="mb-3 col-6" *ngIf="registroForm.get('tipo')!.value === TipoUsuario.Paciente">
                     <label for="perfil2" class="form-label">Otra imagen perfil:</label>
                     <input type="file" id="perfil2" accept="image/jpg, image/jpeg" class="form-control"  
                     (change)="handleFileInput($event,'perfil2')" required>

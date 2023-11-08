@@ -3,4 +3,21 @@
     <h1 class="display-4 font-weight-normal">Bienvenidos a Clinica Ledesma!</h1>
     <p class="lead font-weight-normal fw-bold">Porque siempre volves a donde te tratan bien.</p>    
   </div> 
+ <div class="d-flex justify-content-center" *ngIf="!auth.usuarioLogueado">
+  <div class="card text-center m-2">    
+    <div class="card-body">
+      <h1 class="card-title">¿Aún no te has registrado?</h1>
+      <p class="card-text">Registrate para poder acceder a las mejores prestaciones.</p>
+      <a href="#" class="btn btn-dark" routerLink="register">Registrarse</a>
+    </div>    
+  </div>
+  <div class="card text-center m-2">    
+    <div class="card-body">
+      <h1 class="card-title">Iniciar sesion</h1>
+      <p class="card-text">Inicia sesion para poder obtener toda tu informacion.</p>
+      <a href="#" class="btn btn-dark" routerLink="login">Iniciar sesion</a>
+    </div>    
+  </div>
+
+ </div>
 </div>

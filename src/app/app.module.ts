@@ -14,9 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoaderInterceptor } from './interceptors/loader/loader.interceptor';
 
+
 @NgModule({
   declarations: [
-    AppComponent     
+    AppComponent    
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,6 @@
 import { Timestamp } from "@angular/fire/firestore";
+import { EstadoUsuario } from "../enums/EstadoUsuario.enum";
+import { TipoUsuario } from "../enums/TipoUsuario.enum";
 
 export class Usuario {
 
@@ -10,10 +12,14 @@ export class Usuario {
         public documento:string,
         public edad: number,    
         public fotos:string[],    
-        public tipo:string,
+        public tipo:TipoUsuario,
         public obraSocial: string = '',        
         public especialidades:string[] = [],
-        public fec_registro:Timestamp = Timestamp.now()){                    
+        public fec_registro:Timestamp = Timestamp.now(),
+        public estado:EstadoUsuario = EstadoUsuario.Inhabilitado,
+        public email_confirmado:boolean = false,
+        public fec_confirmacion:Timestamp = Timestamp.now(),
+        ){                    
     }
     
 }

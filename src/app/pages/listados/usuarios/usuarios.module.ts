@@ -6,6 +6,7 @@ import { ListadoGenericoModule } from 'src/app/components/listado-generico/lista
 import { UsuariosComponent } from './usuarios.component';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { RegisterModule } from '../../register/register.module';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { RegisterModule } from '../../register/register.module';
     CommonModule,
     UsuariosRoutingModule,
     ListadoGenericoModule,
-    RegisterModule
+    RegisterModule,
+    MatButtonModule
   ]
 })
 export class UsuariosModule { }

@@ -1,12 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { Timestamp } from '@angular/fire/firestore';
-import { FormBuilder, FormControl, FormGroup, MinLengthValidator, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
+import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
-import { UsuariosService } from '../../services/usuarios-service.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import Swal from 'sweetalert2';
-import { Usuario } from 'src/app/models/usuario';
-import { Router } from '@angular/router';
+import { UsuariosService } from '../../services/usuarios-service.service';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent {
   registroForm!: FormGroup;
   tipo: string = '';
+  titulo: string = 'Registro'
   @Input() formAdministrador: boolean = false;
 
 
@@ -39,11 +40,13 @@ export class RegisterComponent {
     });
 
     this.registroForm.get('tipo')!.valueChanges.subscribe((value) => {
+      console.log(value)
       this.updateValidators(value);
     });
 
     if (this.formAdministrador) {
       this.setAdministradorForm();
+      this.titulo += ' de Administrador'
 
     }
   }
@@ -56,8 +59,7 @@ export class RegisterComponent {
   }
 
   setAdministradorForm() {
-    this.registroForm.get('tipo')!.setValue('administrador');
-
+    this.registroForm.get('tipo')!.setValue('Administrador');
   }
 
 
@@ -65,16 +67,16 @@ export class RegisterComponent {
     const obraSocialControl = this.registroForm.get('obraSocial');
     const especialidadControl = this.registroForm.get('especialidad');
 
-    if (tipo === 'paciente') {
+    if (tipo === TipoUsuario.Paciente) {
       obraSocialControl!.setValidators(Validators.required);
       especialidadControl!.clearValidators();
       this.perfil2!.setValidators(Validators.required);
 
-    } else if (tipo === 'especialista') {
+    } else if (tipo === TipoUsuario.Especialista) {
       obraSocialControl!.clearValidators();
       especialidadControl!.setValidators(Validators.required);
       this.perfil2!.clearValidators();
-    } else if (tipo === 'administrador') {
+    } else if (tipo === TipoUsuario.Administrador) {
       obraSocialControl!.clearValidators();
       especialidadControl!.clearValidators();
       this.perfil2!.clearValidators();
@@ -90,7 +92,7 @@ export class RegisterComponent {
     if (this.registroForm.valid) {
       let usuario: Usuario;
       let contraseña = this.registroForm.get('password')!.value;
-      if (this.registroForm.get('tipo')!.value === 'paciente') {
+      if (this.registroForm.get('tipo')!.value === TipoUsuario.Paciente) {
         usuario = new Usuario('', '',
           this.registroForm.get('email')!.value,
           this.registroForm.get('nombre')!.value,
@@ -110,6 +112,7 @@ export class RegisterComponent {
           this.registroForm.get('edad')!.value,
           [this.perfil?.value, this.perfil2?.value],
           this.registroForm.get('tipo')!.value,
+          '',
           this.registroForm.get('especialidad')!.value,
         )
       }
@@ -123,12 +126,12 @@ export class RegisterComponent {
             text: !this.formAdministrador ? "Redirigiendo al inicio..." : "Registro exitoso!",
             timer: 1500
           }).then(r => {
-            if (!this.formAdministrador)
-            {
+            this.auth.enviarConfirmarCorreo()
+            if (!this.formAdministrador) {
               this.router.navigate(['/']);
             }
-            else{
-              this.auth.EnviarConfirmarCorreo()
+            else {   
+              console.log('enviar')           
             }
 
             this.limpiarFormulario();
@@ -169,11 +172,14 @@ export class RegisterComponent {
     this.registroForm.get('dni')!.setValue('');
     this.registroForm.get('especialidad')!.setValue('');
     this.registroForm.get('email')!.setValue('');
-    this.registroForm.get('password')!.setValue('');    
+    this.registroForm.get('password')!.setValue('');
     this.registroForm.get('tipo')!.setValue('');
 
-    if(this.formAdministrador)
-    this.setAdministradorForm()
+    if (this.formAdministrador)
+      this.setAdministradorForm()
+  }
 
+  public get TipoUsuario(): typeof TipoUsuario {
+    return TipoUsuario;
   }
 }
