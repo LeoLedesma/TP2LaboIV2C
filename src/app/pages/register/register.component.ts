@@ -131,13 +131,15 @@ export class RegisterComponent implements OnInit {
   submitForm() {
     this.registroForm.markAllAsTouched();
     if (this.registroForm.valid) {
+      
       this.loader.show();
       let contraseña = this.password?.value
       let usuario = this.armarUsuario();
       this.auth.RegistrarUsuario(usuario, contraseña).then(result => {
+        this.registroExistoso(result);
         this.loader.hide()
 
-      }).catch(() => this.loader.hide());
+      }).catch((e) => {this.loader.hide(); console.log(e)});
       return;
     }
   }
