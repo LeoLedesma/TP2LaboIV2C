@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class ListadoGenericoComponent implements OnInit,OnDestroy,AfterViewInit {
 
-  _dataSource: any;
+  _dataSource!: MatTableDataSource<any>;
   _dataSubscription!: Subscription;
 
   displayedColumnsName: string[] = []

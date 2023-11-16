@@ -1,0 +1,108 @@
+<div class="container">
+    <h2>Solicitar turno</h2>
+    <form [formGroup]="form" (ngSubmit)="submitForm()" class="needs-validation col-12" novalidate>
+        <div class="mb-3 col-6">
+            <label for="tipoBusqueda" class="form-label">Buscar por:</label>
+            <button (click)="onTipoBusquedaClick('Especialista')">Especialista</button>
+            <button (click)="onTipoBusquedaClick('Especialidad')">Especialidad</button>                       
+        </div>
+
+        <div *ngIf="tipoBusqueda?.value !== ''">
+
+            <div class="row" *ngIf="tipoBusqueda?.value == 'Especialista'">
+                <div class="mb-3 col-6">
+                    <label for="nombre" class="form-label">Especialistas:</label>
+                    <input type="text" id="especialista" formControlName="especialista" class="form-control" required>                    
+                </div>
+            </div>
+            <div class="row" *ngIf="tipoBusqueda?.value == 'Especialidad'">
+                <div class="mb-3 col-6">
+                    <label for="nombre" class="form-label">Especialidades:</label>
+                    <input type="text" id="especialidad" formControlName="especialidad" class="form-control" required>                    
+                </div>
+            </div>
+<!-- 
+
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="edad" class="form-label">Edad:</label>
+                    <input type="number" id="edad" formControlName="edad" class="form-control" required>
+                    <small class="text-danger" *ngIf="edad?.errors && edad?.touched">Por favor, ingrese edad.</small>            
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="dni" class="form-label">DNI:</label>
+                    <input type="text" id="dni" formControlName="dni" class="form-control" required>
+                    <small class="text-danger" *ngIf="dni?.errors && dni?.touched">Por favor, ingrese dni valido.</small>            
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="tipoUsuario?.value === TipoUsuario.Paciente" class="mb-3 col-6">
+                    <label for="obraSocial" class="form-label">Obra Social:</label>
+                    <input type="text" id="obraSocial" formControlName="obraSocial" class="form-control" required>
+                    <small class="text-danger" *ngIf="obraSocial?.errors && obraSocial?.touched">Por favor, ingrese obra social.</small>    
+                </div>
+                <div *ngIf="tipoUsuario?.value === TipoUsuario.Especialista" class="mb-3 col-6">
+                    <label for="especialidad" class="form-label">Especialidad:</label>
+                    <div class="d-flex">
+                        <select class="input-group form-select" formControlName="especialidad">
+                            <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{especialidad}}</option>                           
+                        </select>
+                        <button mat-flat-button color="accent" class="addButton" (click)="addEspecialidad()">
+                            <mat-icon>add</mat-icon>
+                        </button>                        
+                    </div>
+                    <small class="text-danger" *ngIf="especialidad?.errors && especialidad?.touched">Por favor, ingrese una especialidad.</small>    
+                </div>
+
+                <div class="mb-3" [ngClass]="{'col-12': tipoUsuario?.value === TipoUsuario.Administrador, 
+                                            'col-6': tipoUsuario?.value !== TipoUsuario.Administrador}">
+                    <label for="email" class="form-label">Correo electrónico:</label>
+                    <input type="email" id="email" formControlName="email" class="form-control" required>
+                    <ng-container *ngIf="email?.hasError('email')">
+                        <small class="text-danger">Formato inválido</small>
+                    </ng-container>  
+                    <small class="text-danger" *ngIf="email?.errors && email?.touched && !email?.hasError('email')">Por favor, ingrese un correo electrónico.</small>                      
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password" id="password" formControlName="password" class="form-control" required>
+                    <ng-container *ngIf="password?.hasError('minlength')">
+                        <small class="text-danger">
+                          La clave debe tener mínimo {{password?.getError('minlength').requiredLength}} caracteres
+                        </small>
+                      </ng-container>                    
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="password2" class="form-label">Repetir Contraseña:</label>
+                    <input type="password" id="password2" formControlName="password2" class="form-control" required>
+                    <small class="text-danger">
+                        {{password2?.getError('noCoincide')}}
+                      </small>
+                </div>
+            </div>           
+            <div class="row form-group">
+                <div class="mb-3"
+                [ngClass]="{'col-12': tipoUsuario?.value !== TipoUsuario.Paciente, 
+                             'col-lg-6 col-md-6': tipoUsuario?.value === TipoUsuario.Paciente}">                    
+                    <label for="perfil" class="form-label">Imagen de perfil:</label>
+                    <input type="file" id="perfil" accept="image/jpg, image/jpeg" class="form-control"
+                        (change)="handleFileInput($event,'perfil')" required>
+                        <small class="text-danger" *ngIf="perfil?.errors && perfil?.touched">Por favor, ingrese foto.</small>    
+                </div>
+                <div class="mb-3 col-6" *ngIf="tipoUsuario?.value === TipoUsuario.Paciente">
+                    <label for="perfil2" class="form-label">Otra imagen perfil:</label>
+                    <input type="file" id="perfil2" accept="image/jpg, image/jpeg" class="form-control"
+                        (change)="handleFileInput($event,'perfil2')" required>
+                        <small class="text-danger" *ngIf="perfil2?.errors && perfil2?.touched">Por favor, ingrese segunda foto.</small>    
+                </div>
+            </div> -->
+            <div class="d-flex align-self-center">
+                <button type="submit"
+                    class="btn btn-primary col-6 ">Registrar</button>
+            </div>
+        </div>
+    </form>
+
+</div>

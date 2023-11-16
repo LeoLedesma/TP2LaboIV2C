@@ -9,11 +9,12 @@
         <a class="py-2 d-none d-md-inline-block p-2" routerLink="register" routerLinkActive="text-white">Registrarse</a>
         <a class="py-2 d-none d-md-inline-block p-2" routerLink="login" routerLinkActive="text-white">Iniciar sesion</a>        
       </ng-container>
-      <ng-template #elseTemplate>    
-        <a class="py-2 d-none d-md-inline-block p-2" routerLink="listados/usuarios" routerLinkActive="text-white" *ngIf="this.usuarioLogueado?.tipo=='Administrador'">Usuarios</a>        
+      <ng-template #elseTemplate>  
+        <a *ngFor="let pagina of paginas" class="py-2 d-none d-md-inline-block p-2" [routerLink]="pagina.path" routerLinkActive="text-white">{{pagina.nombre}}</a>                  
         <li class="nav-item dropdown">
           <a class="npy-2 d-none d-md-inline-block p-2"  data-bs-toggle="dropdown" aria-expanded="true">{{this.usuarioLogueado?.nombre | titlecase}} {{this.usuarioLogueado?.apellido | titlecase}}</a>
           <ul class="dropdown-menu" data-bs-popper="static">    
+            <li><a class="dropdown-item" routerLink="perfil">Perfil</a></li>      
             <li><a class="dropdown-item" (click)="logout()">Cerrar sesion</a></li>      
           </ul>
           <a class="npy-2 d-none d-md-inline-block p-2" aria-expanded="true">{{this.usuarioLogueado?.tipo | titlecase }}</a>

@@ -23,7 +23,7 @@ export class AuthService {
     this.getUserFromStorage()
   }
 
-  async RegistrarUsuario(usuario: Usuario, password: string): Promise<{ result: boolean, error: string }> {
+  async RegistrarUsuario(usuario: Usuario, password: string,fotos?:File[]): Promise<{ result: boolean, error: string }> {
     usuario.fec_registro = Timestamp.now();
     if(usuario.tipo === TipoUsuario.Administrador)
       usuario.email_confirmado = true;
@@ -35,7 +35,7 @@ export class AuthService {
           .then((userCredential) => {
             this.userCredential = userCredential.user
             usuario.id_auth = userCredential.user.uid;
-            this.usuariosService.addOne(usuario)                        
+            this.usuariosService.addOne(usuario,fotos)
             return { result: true, error: "" };
           })
           .catch((error: any) => {
@@ -71,7 +71,7 @@ export class AuthService {
       }).then(r => {               
           this.router.navigate(['/login']);          
       })
-
+      console.log(this.auth.currentUser?.uid)
       this.usuariosService.getOne(this.auth.currentUser!.uid).then(user => {
         user.email_confirmado = true;
         user.fec_confirmacion = Timestamp.now();

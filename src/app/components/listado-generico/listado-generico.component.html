@@ -24,7 +24,8 @@
         *matRowDef="let row; columns: displayedColumnsName"></tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" #showFirstLastButtons aria-label="Seleccione pagina" *ngIf="paginator && !isLoading">
+<mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" #showFirstLastButtons aria-label="Seleccione pagina" 
+[ngClass]="{'hidden': paginator && !isLoading}">
 </mat-paginator>
 
 <div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; background: white;">

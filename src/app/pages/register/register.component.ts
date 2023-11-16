@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { FilesService } from 'src/app/services/files.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import { confirmarContraseñaValidator } from 'src/app/validators/contraseña.validator';
 import Swal from 'sweetalert2';
@@ -23,8 +24,14 @@ export class RegisterComponent implements OnInit {
   @Input() formAdministrador: boolean = false;
   especialidades: string[] = [];
   especialidadesSub!: Subscription
-
-  constructor(private formBuilder: FormBuilder, private auth: AuthService, private usuariosService: UsuariosService, private loader: LoaderService, private router: Router, private especialidadesService: EspecialidadesService) { }
+  resultOfCaptchaFromUser!:number;
+  num1 = Math.floor(Math.random() * 10);
+  num2 = Math.floor(Math.random() * 10);
+  result = this.num1 +this.num2;
+  captchaValid:boolean= false;
+  captchaValidated:boolean = false;
+  images:any[]=[]
+  constructor(private filesService:FilesService, private formBuilder: FormBuilder, private auth: AuthService, private usuariosService: UsuariosService, private loader: LoaderService, private router: Router, private especialidadesService: EspecialidadesService) { }
 
   ngOnInit() {
 
@@ -130,11 +137,11 @@ export class RegisterComponent implements OnInit {
 
   submitForm() {
     this.registroForm.markAllAsTouched();
-    if (this.registroForm.valid) {
+    if (this.registroForm.valid && this.validateCaptcha()) {
       this.loader.show();
       let contraseña = this.password?.value
       let usuario = this.armarUsuario();
-      this.auth.RegistrarUsuario(usuario, contraseña).then(result => {
+      this.auth.RegistrarUsuario(usuario, contraseña,this.images).then(result => {
         this.loader.hide()
 
       }).catch(() => this.loader.hide());
@@ -226,19 +233,6 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-
-  handleFileInput(event: any, input: string) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      const base64String = e.target.result;
-      this.registroForm.get(input)?.setValue(base64String);
-    };
-
-    reader.readAsDataURL(file);
-  }
-
   limpiarFormulario() {
     this.registroForm.reset();
     
@@ -261,4 +255,24 @@ export class RegisterComponent implements OnInit {
   public get TipoUsuario(): typeof TipoUsuario {
     return TipoUsuario;
   }
+
+  validateCaptcha() {
+    const expectedCaptchaResult = this.result; 
+    this.captchaValidated = true  
+    if (Number(this.resultOfCaptchaFromUser) === expectedCaptchaResult) {
+      this.captchaValid = true;      
+    } else {
+      this.captchaValid = false;      
+    }
+    return this.captchaValid;
+  }
+
+  handleFileInput($event: any, input: string) {
+    const files = Array.from($event.target.files);
+    this.images.push(...files);
+    this.registroForm.get(input)?.setValue(files);
+    // this.filesService.saveImage(Array.from($event.target.files),',123')
+    console.log(this.images)
+  }
+
 }

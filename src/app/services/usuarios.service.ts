@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { collection,collectionData,CollectionReference,doc,DocumentData,DocumentReference,Firestore,getDoc,getDocs,query,setDoc,updateDoc, where} from '@angular/fire/firestore';
-import { Usuario } from '../models/usuario';
+import { and, collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDocs, query, QueryFieldFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { EstadoUsuario } from '../enums/EstadoUsuario.enum';
+import { TipoUsuario } from '../enums/TipoUsuario.enum';
+import { Usuario } from '../models/usuario';
 import { CollectionsService } from './collections.service';
+import { FilesService } from './files.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +16,7 @@ export class UsuariosService {
   userList!: Observable<Usuario[]>;
   db!: Firestore;
 
-  constructor(private _firestore: Firestore,private collections:CollectionsService) {
+  constructor(private _firestore: Firestore,private collections:CollectionsService,private filesService:FilesService) {
    this.userCollection = collection(this._firestore, 'usuarios');   
    this.userList = collectionData(this.userCollection) as Observable<Usuario[]>;    
   }
@@ -37,10 +40,25 @@ export class UsuariosService {
 
   getAll(): Observable<Usuario[]> {return this.userList;}
 
-  addOne(user: Usuario): boolean {
+  
+
+  async addOne(user: Usuario,images?:File[]): Promise<boolean> {
       console.log(user);    
       if (this.userList) {        
         let docRef: DocumentReference<DocumentData> = doc(this.userCollection);    
+
+        let getImagesUrl: any = [];
+      // guardo las imagenes
+        this.filesService.saveImages(images!, docRef.id);
+        getImagesUrl = await this.filesService.getImagesById(docRef.id)
+
+        if(user.tipo == TipoUsuario.Especialista){
+          user.fotos.push(getImagesUrl[0]);        
+        }else{
+          user.fotos.push(getImagesUrl[0]); 
+          user.fotos.push(getImagesUrl[1]); 
+        }
+
         user.id_user = docRef.id;  
         setDoc(docRef, { ...user });
         return true;
@@ -61,6 +79,20 @@ export class UsuariosService {
 
   getAllUsers(): Observable<Usuario[]> {
     return this.collections.getAllSnapshot(this.collection,'fec_registro');
+  }
+
+  getEspecialistasHabilitados(query:QueryFieldFilterConstraint[]){
+    let querys = [where('tipo','==','Especialista')]
+    return this.collections.getAllWhere
+  }
+
+  getEspecialistasByEspecialidad(especialidad:string){
+    let querys = [where('tipo','==','Especialista'),
+                  where('especialidad','==',especialidad),
+                  where('estado','==',EstadoUsuario.Habilitado),
+                  where('email_confirmado','==',true)]
+    return this.collections.getAllWhereSnapshot(this.collection,and(...querys),'apellido');   
+
   }
 
 }

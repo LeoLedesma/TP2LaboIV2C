@@ -58,6 +58,11 @@ export class CollectionsService {
     return getDocs(docs).then(res => res.docs.map(doc => doc.data() as ICollection));
   }
 
+  getAllWhereQuery(collectionName: string, querys: QueryCompositeFilterConstraint) {
+    let docs = query(collection(this._firestore, collectionName), querys)
+    return getDocs(docs).then(res => res.docs.map(doc => doc.data() as ICollection));
+  }
+
   async exists(collectionName: string, column: string, value: any) {
     let docs = query(collection(this._firestore, collectionName), where(column, '==', value))
 
@@ -90,7 +95,6 @@ export class CollectionsService {
   }
 
   getAllWhereSnapshot<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint,order:string): Observable<T[]> {
-
 
     let docs = query(collection(this._firestore, collectionName), querys, orderBy(order))
     return new Observable(subscriber => {

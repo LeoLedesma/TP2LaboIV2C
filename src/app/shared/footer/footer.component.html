@@ -5,14 +5,7 @@
         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="d-block mb-2">
       <small class="d-block mb-3 text-muted">© 2023-2023</small>
     </div>
-    <!-- <div class="col-6 col-md">
-      <h5>Varios</h5>
-      <ul class="list-unstyled text-small">
-        <li><a class="text-muted" routerLink="prueba">Prueba</a></li>
-      
-      </ul>
-    </div> -->
-    <div class="col-6 col-md">
+     <div class="col-6 col-md">
       <h5>Sobre mi</h5>
       <ul class="list-unstyled text-small">        
         <li><a class="text-muted" href="https://github.com/LeoLedesma/" target="_blank">Github</a></li>
@@ -27,6 +20,8 @@
           <li><a class="text-muted" routerLink="register">Registrarse</a></li>
         </ng-container>
         <ng-template #elseTemplate>
+          <li *ngFor="let pagina of paginas"><a [routerLink]="pagina.path" class="text-muted">{{pagina.nombre}}</a></li>   
+          <li><a routerLink="perfil" class="text-muted">Perfil</a></li>   
           <li><a class="text-muted" (click)="logout()">Cerrar sesion</a></li>
         </ng-template>       
       </ul>
