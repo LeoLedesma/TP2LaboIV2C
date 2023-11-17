@@ -1,1 +1,44 @@
-<p>perfil works!</p>
+<div class="container mt-5 d-flex">
+    <div class="col-4">
+        <div class="d-flex">
+            <div *ngFor="let foto of usuario.fotos">
+                <img [src]="foto" style='max-height: 250px;'>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <h5 class="card-title text-center">Detalles del Perfil</h5>
+            <div class="card-body row row-cols-3">
+                <div class="form-group">
+                    <label class="fw-bold">Email:</label>
+                    <p>{{ usuario.email }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="fw-bold">Nombre:</label>
+                    <p>{{ usuario.nombre }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="fw-bold">Apellido:</label>
+                    <p>{{ usuario.apellido }}</p>
+                </div>
+
+                <div class="form-group">
+                    <label class="fw-bold">Edad:</label>
+                    <p>{{ usuario.edad }}</p>
+                </div>
+
+                <div class="form-group" *ngIf="usuario.tipo == 'Especialista'">
+                    <label class="fw-bold">Especialidad:</label>
+                    <p>{{ usuario.especialidad }}</p>
+                </div>
+                <div class="form-group" *ngIf="usuario.tipo == 'Paciente'">
+                    <label class="fw-bold">Obra social:</label>
+                    <p>{{ usuario.obraSocial }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

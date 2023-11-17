@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { and, collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDocs, query, QueryFieldFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { EstadoUsuario } from '../enums/EstadoUsuario.enum';
-import { TipoUsuario } from '../enums/TipoUsuario.enum';
 import { Usuario } from '../models/usuario';
 import { CollectionsService } from './collections.service';
 import { FilesService } from './files.service';
@@ -44,26 +43,19 @@ export class UsuariosService {
 
   async addOne(user: Usuario,images?:File[]): Promise<boolean> {
       console.log(user);    
-      if (this.userList) {        
+            
         let docRef: DocumentReference<DocumentData> = doc(this.userCollection);    
 
-        let getImagesUrl: any = [];
+        let getImagesUrl: string[] = [];
       // guardo las imagenes
-        this.filesService.saveImages(images!, docRef.id);
-        getImagesUrl = await this.filesService.getImagesById(docRef.id)
-
-        if(user.tipo == TipoUsuario.Especialista){
-          user.fotos.push(getImagesUrl[0]);        
-        }else{
-          user.fotos.push(getImagesUrl[0]); 
-          user.fotos.push(getImagesUrl[1]); 
-        }
-
+        getImagesUrl = await this.filesService.saveImages(images!, docRef.id);
+        user.fotos.push(...getImagesUrl);  
+        
         user.id_user = docRef.id;  
+
+        console.log(56,user);
         setDoc(docRef, { ...user });
         return true;
-      }
-      return false;
   }
   update(item: Usuario) {
     const usuario = doc(this.userCollection, item.id_user);

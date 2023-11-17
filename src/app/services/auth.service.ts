@@ -26,16 +26,16 @@ export class AuthService {
   async RegistrarUsuario(usuario: Usuario, password: string,fotos?:File[]): Promise<{ result: boolean, error: string }> {
     usuario.fec_registro = Timestamp.now();
     if(usuario.tipo === TipoUsuario.Administrador)
-      usuario.email_confirmado = true;
+      usuario.email_confirmado = true;     
     return this.usuariosService.exists(usuario).then(exists => {
       if (exists)
         return { result: false, error: "La persona ya existe" };
       else
         return createUserWithEmailAndPassword(this.auth, usuario.email, password)
-          .then((userCredential) => {
+          .then(async (userCredential) => {
             this.userCredential = userCredential.user
             usuario.id_auth = userCredential.user.uid;
-            this.usuariosService.addOne(usuario,fotos)
+            await this.usuariosService.addOne(usuario,fotos)
             return { result: true, error: "" };
           })
           .catch((error: any) => {

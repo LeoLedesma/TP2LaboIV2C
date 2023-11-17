@@ -141,11 +141,12 @@ export class RegisterComponent implements OnInit {
       this.loader.show();
       let contraseña = this.password?.value
       let usuario = this.armarUsuario();
-      this.auth.RegistrarUsuario(usuario, contraseña,this.images).then(result => {
-        this.loader.hide()
 
-      }).catch(() => this.loader.hide());
-      return;
+      this.auth.RegistrarUsuario(usuario, contraseña,this.images).then(result => {
+        console.log(result);
+        this.registroExistoso(result);
+        this.loader.hide()
+      }).catch((err) =>{ this.loader.hide();console.log(err)});      
     }
   }
 
@@ -159,7 +160,7 @@ export class RegisterComponent implements OnInit {
         this.apellido?.value,
         this.dni?.value,
         this.edad?.value,
-        [this.perfil?.value, this.perfil2?.value],
+        [],
         this.tipoUsuario?.value,
         this.obraSocial?.value,
       )
@@ -170,7 +171,7 @@ export class RegisterComponent implements OnInit {
         this.apellido?.value,
         this.dni?.value,
         this.edad?.value,
-        [this.perfil?.value, this.perfil2?.value],
+        [],
         this.tipoUsuario?.value,
         '',
         this.especialidad?.value,
