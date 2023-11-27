@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, doc, DocumentData, DocumentReference, Firestore, getDocs, onSnapshot, orderBy, query, QueryCompositeFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, DocumentData, DocumentReference, Firestore, getDocs, onSnapshot, orderBy, Query, query, QueryCompositeFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ICollection } from '../models/i-collection';
 
@@ -42,6 +42,12 @@ export class CollectionsService {
     return getDocs(document)
   }
 
+  removeOne(collectionName: string, id: string) {
+    let collectionRef = collection(this._firestore, collectionName);
+    const document = doc(collectionRef, id);
+    return deleteDoc(document);
+  }
+
   getFirstQuery<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint) {
     let docs = query(collection(this._firestore, collectionName), querys)
 
@@ -58,9 +64,9 @@ export class CollectionsService {
     return getDocs(docs).then(res => res.docs.map(doc => doc.data() as ICollection));
   }
 
-  getAllWhereQuery(collectionName: string, querys: QueryCompositeFilterConstraint) {
+  getAllWhereQuery<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint) {
     let docs = query(collection(this._firestore, collectionName), querys)
-    return getDocs(docs).then(res => res.docs.map(doc => doc.data() as ICollection));
+    return getDocs(docs).then(res => res.docs.map(doc => doc.data() as T));
   }
 
   async exists(collectionName: string, column: string, value: any) {
@@ -96,9 +102,19 @@ export class CollectionsService {
 
   getAllWhereSnapshot<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint,order:string): Observable<T[]> {
 
-    let docs = query(collection(this._firestore, collectionName), querys, orderBy(order))
+    let queryNew!: Query<DocumentData>;
+
+    
+    if(order == '')
+    {
+      queryNew = query(collection(this._firestore, collectionName), querys)
+    }else{
+      queryNew = query(collection(this._firestore, collectionName), querys, orderBy(order))
+    }
+    
+
     return new Observable(subscriber => {
-      const unsubscribe = onSnapshot(docs, querySnapshot => {
+      const unsubscribe = onSnapshot(queryNew, querySnapshot => {
         const collection: T[] = [];
 
         querySnapshot.forEach(doc => {
@@ -115,4 +131,4 @@ export class CollectionsService {
   }
 
 
-}
+} 

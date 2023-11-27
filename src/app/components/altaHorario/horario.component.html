@@ -1,0 +1,51 @@
+<div class="container">
+    <h1 class="text-center">Alta horario</h1>
+    <h2 class="mb-2 text-center">Seleccione un día:</h2>
+    <div class="mb-3 d-flex justify-content-evenly">
+        <button *ngFor="let dia of arrayDiaSemana" 
+            mat-raised-button [color]="diaSeleccionado === dia? 'accent' : 'primary'"
+            (click)="seleccionarDia(dia)">{{dia}}</button>        
+    </div>
+
+    <div *ngIf="diaSeleccionado!= null">
+        <h2 class="mb-2 text-center">Duración de turnos</h2>
+        <div class="row ">
+            <div class="d-flex justify-content-evenly">
+                <button mat-raised-button [color]="duracionTurno === 10? 'accent' : 'primary'"
+                    (click)="seleccionarDuracion(10)">10min</button>
+                <button mat-raised-button [color]="duracionTurno === 15? 'accent' : 'primary'"
+                    (click)="seleccionarDuracion(15)">15min</button>
+                <button mat-raised-button [color]="duracionTurno === 20? 'accent' : 'primary'"
+                    (click)="seleccionarDuracion(20)">20min</button>
+                <button mat-raised-button [color]="duracionTurno === 25? 'accent' : 'primary'"
+                    (click)="seleccionarDuracion(25)">25min</button>
+                <button mat-raised-button [color]="duracionTurno === 30? 'accent' : 'primary'"
+                    (click)="seleccionarDuracion(30)">30min</button>
+            </div>
+        </div>
+
+        <div *ngIf="duracionTurno != 0">
+            <h2 class="text-center">Horario de atencion:</h2>
+            <div class="row">
+                <h3>Hora de inicio</h3>
+                <div class="d-flex flex-wrap">
+                    <div class="m-1 justify-content-center" *ngFor="let item of getPosiblesHorasInicio()">
+                        <button mat-raised-button [color]="horaInicioSeleccionada === item? 'accent' : 'primary'"
+                            (click)="seleccionarHoraInicio(item)">{{formatLabel(item)}}</button>
+                    </div>
+                </div>
+                <h3 *ngIf="horaInicioSeleccionada>0">Hora de finalización</h3>
+                <div class="d-flex flex-wrap"  *ngIf="horaInicioSeleccionada>0">
+                    <div class="m-1 justify-content-center" *ngFor="let item of getPosiblesHorasFin()">
+                        <button mat-raised-button [color]="horaFinSeleccionada === item? 'accent' : 'primary'"
+                            (click)="seleccionarHoraFin(item)">{{formatLabel(item)}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center m-3">
+            <button type="submit" class="btn btn-primary col-6 " (click)="enviarHorario()" *ngIf="this.horario == undefined">Agregar horario</button>
+            <button type="submit" class="btn btn-primary col-6 " (click)="editarHorario()" *ngIf="this.horario != undefined">Editar horario</button>
+        </div>
+    </div>

@@ -1,13 +1,12 @@
-<mat-list>
-    <a mat-list-item (click)="openLink(usuario)" *ngFor="let usuario of usuarios">
-        <div class="row">
-            <div class="col-2">
-                <img [src]="getImagen(usuario.tipo)" class="img-thumbnail" alt="...">
-            </div>
-            <div class="col-9">
-                <div matListItemTitle>{{usuario.nombreCompleto}} - {{usuario.tipo}}</div>
-                <div matListItemLine>{{usuario.email}}</div>
-            </div>
+<!-- <mat-list> -->
+<div class="d-flex  justify-content-center fixed-bottom">
+    <div (click)="openLink(usuario)" *ngFor="let usuario of usuarios" class="d-flex flex-column access">
+        <div>
+            <img [src]="getImagen(usuario.tipo)" class="img-thumbnail" alt="...">
         </div>
-    </a>
-</mat-list>
+        <div>
+            <div class="fw-bold">{{usuario.tipo}}</div>
+            <div>{{usuario.nombreCompleto}}</div>
+        </div>
+    </div>
+</div>

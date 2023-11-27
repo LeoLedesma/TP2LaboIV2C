@@ -1,19 +1,20 @@
 <div class="container">
-    <h2>Solicitar turno</h2>
+    <h1 class="text-center title">Solicitar turno</h1>
     <form [formGroup]="form" (ngSubmit)="submitForm()" class="needs-validation col-12" novalidate>
-        <div class="mb-3 col-6">
-            <label for="tipoBusqueda" class="form-label">Buscar por:</label>
-            <button (click)="onTipoBusquedaClick('Especialista')">Especialista</button>
-            <button (click)="onTipoBusquedaClick('Especialidad')">Especialidad</button>                       
+        <h1 for="tipoBusqueda" class="form-label text-center">Buscar por:</h1>
+        <div class="mb-3 col-6 d-flex justify-content-evenly" style="width: 100%;" >
+            <button (click)="onTipoBusquedaClick('Especialista')" class="d-flex flex-column align-items-center">
+                <img src="../../../../assets/img/especialista.png" style="max-height: 150px;" >
+                Especialista</button>
+            <button (click)="onTipoBusquedaClick('Especialidad')" class="d-flex flex-column align-items-center">
+                <img src="../../../../assets/img/especialidades.png" style="max-height: 150px;">
+                Especialidades</button>            
         </div>
 
         <div *ngIf="tipoBusqueda?.value !== ''">
 
             <div class="row" *ngIf="tipoBusqueda?.value == 'Especialista'">
-                <div class="mb-3 col-6">
-                    <label for="nombre" class="form-label">Especialistas:</label>
-                    <input type="text" id="especialista" formControlName="especialista" class="form-control" required>                    
-                </div>
+               <app-seleccionar-especialistas (onSelectEspecialista)="buscarTurnos($event)"></app-seleccionar-especialistas>
             </div>
             <div class="row" *ngIf="tipoBusqueda?.value == 'Especialidad'">
                 <div class="mb-3 col-6">

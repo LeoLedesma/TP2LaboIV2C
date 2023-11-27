@@ -4,7 +4,6 @@ import {
   MatBottomSheet
 } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
-import { AccesosRapidoComponent } from 'src/app/components/accesos-rapido/accesos-rapido.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoaderService } from 'src/app/services/loader.service';
 import Swal from 'sweetalert2';
@@ -59,31 +58,8 @@ export class LoginComponent {
     this.loginForm.get('email')?.setValue('');
     this.loginForm.get('password')?.setValue('');
   }
-
-  loginAdministrador(){
-    this.loginForm.get('email')?.setValue('admin@admin.com');    
-    this.loginForm.get('password')?.setValue('123456');    
-  }
-
-  loginJuan(){
-    this.loginForm.get('email')?.setValue('juan@juan.com');
-    this.loginForm.get('password')?.setValue("juan1234");
-  }
-
-  abrirAccesosRapidoSheet(): void {
-    this._bottomSheet.open(AccesosRapidoComponent);
-    
-    this._bottomSheet._openedBottomSheetRef?.afterDismissed().subscribe((result) =>{
-      if (result) {       
-        this.loginForm.get('email')?.setValue(result.email);
-        this.loginForm.get('password')?.setValue(result.contraseña);
-      }
-    })
-  }
-
-  
-
-  openLink(hola:any){
-
+  cargarDatos(result:any){
+    this.loginForm.get('email')?.setValue(result.email);
+    this.loginForm.get('password')?.setValue(result.contraseña);
   }
 }

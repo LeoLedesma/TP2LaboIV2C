@@ -1,14 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 import { Subscription } from 'rxjs';
 import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
 import { FilesService } from 'src/app/services/files.service';
 import { LoaderService } from 'src/app/services/loader.service';
+import { RecaptchaService } from 'src/app/services/recaptcha.service';
 import { confirmarContraseñaValidator } from 'src/app/validators/contraseña.validator';
 import Swal from 'sweetalert2';
+import { recaptcha } from '../../../environments/environment';
 import { EspecialidadesService } from '../../services/especialidades.service';
 import { UsuariosService } from '../../services/usuarios.service';
 
@@ -18,20 +21,33 @@ import { UsuariosService } from '../../services/usuarios.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  isLoadingCaptcha = true;
   registroForm!: FormGroup;
   tipo: string = '';
   titulo: string = 'Registro'
   @Input() formAdministrador: boolean = false;
   especialidades: string[] = [];
   especialidadesSub!: Subscription
-  resultOfCaptchaFromUser!:number;
+  resultOfCaptchaFromUser!: number;
   num1 = Math.floor(Math.random() * 10);
   num2 = Math.floor(Math.random() * 10);
-  result = this.num1 +this.num2;
-  captchaValid:boolean= false;
-  captchaValidated:boolean = false;
-  images:any[]=[]
-  constructor(private filesService:FilesService, private formBuilder: FormBuilder, private auth: AuthService, private usuariosService: UsuariosService, private loader: LoaderService, private router: Router, private especialidadesService: EspecialidadesService) { }
+  result = this.num1 + this.num2;
+  captchaValid: boolean = false;
+  captchaValidated: boolean = false;
+  images: any[] = []
+
+  public robot: boolean = true;
+  public presionado: boolean = false;
+  siteKey = recaptcha.recaptcha.secret
+  constructor(private filesService: FilesService,
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private usuariosService: UsuariosService,
+    private loader: LoaderService,
+    private router: Router,
+    private especialidadesService: EspecialidadesService,
+    private recaptchaService: RecaptchaService,
+    private recaptchaV3Service: ReCaptchaV3Service) { }
 
   ngOnInit() {
 
@@ -46,8 +62,9 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       password2: new FormControl('', [Validators.required, Validators.minLength(6)]),
-      perfil: new FormControl('', [Validators.required,Validators.nullValidator]),
+      perfil: new FormControl('', [Validators.required, Validators.nullValidator]),
       perfil2: new FormControl(''),
+      recaptchaReactive: new FormControl(null, Validators.required),
     }, confirmarContraseñaValidator());
 
     this.tipoUsuario?.valueChanges.subscribe((value) => {
@@ -65,6 +82,11 @@ export class RegisterComponent implements OnInit {
 
   }
 
+
+
+  get recaptchaReactive() {
+    return this.registroForm.get('recaptchaReactive')
+  }
 
 
   get perfil2() {
@@ -142,11 +164,11 @@ export class RegisterComponent implements OnInit {
       let contraseña = this.password?.value
       let usuario = this.armarUsuario();
 
-      this.auth.RegistrarUsuario(usuario, contraseña,this.images).then(result => {
+      this.auth.RegistrarUsuario(usuario, contraseña, this.images).then(result => {
         console.log(result);
         this.registroExistoso(result);
         this.loader.hide()
-      }).catch((err) =>{ this.loader.hide();console.log(err)});      
+      }).catch((err) => { this.loader.hide(); console.log(err) });
     }
   }
 
@@ -236,7 +258,7 @@ export class RegisterComponent implements OnInit {
 
   limpiarFormulario() {
     this.registroForm.reset();
-    
+
     this.perfil?.setValue('');
     this.perfil2?.setValue('');
     this.nombre?.setValue('');
@@ -258,12 +280,12 @@ export class RegisterComponent implements OnInit {
   }
 
   validateCaptcha() {
-    const expectedCaptchaResult = this.result; 
-    this.captchaValidated = true  
+    const expectedCaptchaResult = this.result;
+    this.captchaValidated = true
     if (Number(this.resultOfCaptchaFromUser) === expectedCaptchaResult) {
-      this.captchaValid = true;      
+      this.captchaValid = true;
     } else {
-      this.captchaValid = false;      
+      this.captchaValid = false;
     }
     return this.captchaValid;
   }
@@ -276,4 +298,8 @@ export class RegisterComponent implements OnInit {
     console.log(this.images)
   }
 
+  resolved(captchaResponse: string) {
+    this.recaptchaReactive?.setValue('boo');
+  }
 }
+

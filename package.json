@@ -24,11 +24,13 @@
     "@material-design-icons/font": "^0.14.13",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.11.0",
+    "ng-recaptcha": "^11.0.0",
     "rxfire": "^6.0.3",
     "rxjs": "~7.8.0",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.7.10",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.12.0"
   },
   "devDependencies": {

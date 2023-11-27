@@ -1,8 +1,30 @@
 <div class="container text-center">
-    <div class="row row-cols-4">
-      <div class="col">Column</div>
-      <div class="col">Column</div>
-      <div class="col">Column</div>
-      <div class="col">Column</div>
+  <div class="row">
+    <div class="col-6">
+    <app-busqueda 
+    (onEnter)="buscar($event)"    
+    (onDebounce)="buscar($event)"
+    placeholder="Buscar especialista..."
+    ></app-busqueda>
+    </div>
+</div>
+<div *ngIf="isLoading" style="display: flex; justify-content: center; align-items: center; min-height: 250px;">
+  <mat-progress-spinner color="primary" mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+  <div class="row especialistas flex-nowrap overflow-auto mt-2" >
+    <div class="col-3 mb-3" *ngFor="let especialista of especialistasSrch">
+      <div class="card" appHoverCard (click)="selectEspecialista(especialista)" [ngClass]="{'selectedCard':this.especialistaSeleccionado == especialista}">
+        <img class="card-img-top card-img-bottom" [src]="especialista.fotos[0]" alt="Card image cap" style="max-height: 150px; padding-top: 5px; border-radius:5px">
+        <div class="card-body">
+          <h1 class="card-title">Dr. {{especialista.apellido}} {{especialista.nombre}}</h1>
+          <p class="card-text">Especialidad: {{especialista.especialidad}}</p>
+          <p class="card-text">Proximo turno: Proximamente...</p>
+        </div>        
+      </div>
     </div>
   </div>
+  <div *ngIf="!isLoading && especialistasSrch.length == 0" style="display: flex; justify-content: center; align-items: center; min-height: 250px;">
+   <h1>No hay ninguna coincidencia con la busqueda.</h1>
+  </div>
+</div>

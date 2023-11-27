@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { and, collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDocs, query, QueryFieldFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { and, collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { EstadoUsuario } from '../enums/EstadoUsuario.enum';
+import { HorarioAtencion } from '../models/horarioAtencion';
 import { Usuario } from '../models/usuario';
 import { CollectionsService } from './collections.service';
 import { FilesService } from './files.service';
@@ -73,9 +74,9 @@ export class UsuariosService {
     return this.collections.getAllSnapshot(this.collection,'fec_registro');
   }
 
-  getEspecialistasHabilitados(query:QueryFieldFilterConstraint[]){
+  getEspecialistasHabilitados(){
     let querys = [where('tipo','==','Especialista')]
-    return this.collections.getAllWhere
+    return this.collections.getAllWhereSnapshot<Usuario>(this.collection,and(...querys),'apellido')
   }
 
   getEspecialistasByEspecialidad(especialidad:string){
@@ -83,7 +84,19 @@ export class UsuariosService {
                   where('especialidad','==',especialidad),
                   where('estado','==',EstadoUsuario.Habilitado),
                   where('email_confirmado','==',true)]
-    return this.collections.getAllWhereSnapshot(this.collection,and(...querys),'apellido');   
+    return this.collections.getAllWhereSnapshot<Usuario>(this.collection,and(...querys),'apellido');   
+  }
+
+  // id_especialista:string,
+  // dia:DiaSemana,
+  // horaInicio:IHorarioAtencion,
+  // horaFin:IHorarioAtencion,
+  // duracionTurno:number){}
+  crearHorarioAtencion(horarioAtencion:HorarioAtencion){
+    //Todo validar que no exista algo en ese lapso
+    const horarioAtencionCollection = collection(this._firestore, 'horarioAtencion');
+    setDoc(doc(horarioAtencionCollection), { ...horarioAtencion });
+    return true;
 
   }
 

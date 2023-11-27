@@ -1,11 +1,31 @@
-.ng-valid[required], .ng-valid.required  {
-    border-left: 5px solid #42A948; /* green */
-  }
-  
-  .ng-invalid:not(form).ng-touched  {
-    border-left: 5px solid #a94442; /* red */
-  }
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid #42A948;
+  /* green */
+}
 
-  .captchaContainer{
-    margin-top: 20px;
-  }
+.ng-invalid:not(form).ng-touched {
+  border-left: 5px solid #a94442;
+  /* red */
+}
+
+.captchaContainer {
+  margin-top: 20px;
+}
+
+$imagen: 150px;
+
+.tipoImg {
+  height: 150px;
+
+}
+
+.tipo {
+  height: 230px
+}
+
+.botonTipo {
+  background-color: lightblue;
+  height: 180px;
+  cursor: pointer;
+}

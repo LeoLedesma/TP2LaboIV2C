@@ -7,6 +7,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RecaptchaModule } from 'ng-recaptcha';
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterComponent } from './register.component';
 
@@ -24,7 +26,9 @@ import { RegisterComponent } from './register.component';
     MatFormFieldModule,
     MatDatepickerModule,
     MatIconModule,
-    MatButtonModule    
+    MatButtonModule,
+    RecaptchaModule,
+    MatProgressSpinnerModule
   ],
   exports: [RegisterComponent]
 })

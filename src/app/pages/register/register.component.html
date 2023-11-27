@@ -1,15 +1,22 @@
 <div class="container">
-    <h2>{{titulo}}</h2>
+    <h1 class="text-center mt-3">{{titulo}}  {{tipoUsuario?.value}}</h1>
     <form [formGroup]="registroForm" (ngSubmit)="submitForm()" class="needs-validation col-12" novalidate>
-        <div class="mb-3 col-6" *ngIf="!formAdministrador">
-            <label for="tipo" class="form-label">Tipo:</label>
-            <select id="tipo" formControlName="tipo" class="form-select" required>
-                <option value="" disabled selected>Seleccione un tipo</option>
-                <option [value]="TipoUsuario.Paciente">{{TipoUsuario.Paciente}}</option>
-                <option [value]="TipoUsuario.Especialista">{{TipoUsuario.Especialista}}</option>
-            </select>
-            <small class="text-danger" *ngIf="tipoUsuario?.errors && tipoUsuario?.touched">Por favor, seleccione un
-                tipo.</small>
+        <div class="row">
+            <div class="mb-3 tipo" *ngIf="!formAdministrador">
+                <h2 class="text-center"> Desea registrarse como:</h2>
+                <div class="d-flex tipoImg justify-content-evenly tipo">
+                    <div class="text-center d-flex flex-column botonTipo">
+                        <img [src]="'assets/img/especialista.png'" alt="especialista" class="tipoImg"
+                            (click)="tipoUsuario?.setValue(TipoUsuario.Especialista)">
+                        <b>Especialista</b>
+                    </div>
+                    <div class="text-center d-flex flex-column botonTipo">
+                        <img [src]="'assets/img/paciente.png'" alt="paciente" class="tipoImg"
+                            (click)="tipoUsuario?.setValue(TipoUsuario.Paciente)">
+                        <b class="text-center">Paciente</b>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div *ngIf="tipoUsuario?.value !== ''">
@@ -109,25 +116,12 @@
                         foto.</small>
                 </div>
             </div>
-
-            <div class="row form-group captchaContainer">
-                <div class="d-flex align-items-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/RecaptchaLogo.svg/800px-RecaptchaLogo.svg.png"
-                        alt="Captcha Image" style="width: 50px; height: 50px;">
-                    <p class="lead" style="margin-left: 10px;" appCaptchaValidator>{{this.num1}} + {{this.num2}}</p>
-                </div>
-
-                <div class="col-6">
-                    <input type="text" pattern="[0-9]*" placeholder="Ingresa tu respuesta" class="form-control mt-3 "
-                        [(ngModel)]="resultOfCaptchaFromUser" [ngModelOptions]="{standalone:true}"
-                        (blur)="validateCaptcha()">
-                    <small class="text-danger" *ngIf="!this.captchaValid && captchaValidated">Por favor, ingrese
-                        el captcha correctamente.</small>
-                </div>
-            </div>
-
-            <div class="d-flex align-self-center mt-3">
-                <button type="submit" class="btn btn-primary col-6 ">Registrar</button>
+            <label formControlName="recaptchaReactive"></label>
+            <re-captcha (resolved)="resolved($event)" formControlName="recaptchaReactive"></re-captcha>
+            <small class="text-danger" *ngIf="recaptchaReactive?.errors && recaptchaReactive?.touched">Por favor, valide
+                si es un robot.</small>
+            <div class="d-flex  mt-3 justify-content-center mb-3">
+                <button type="submit" class="btn btn-primary col-6 align-self-center ">Registrar</button>
             </div>
         </div>
     </form>

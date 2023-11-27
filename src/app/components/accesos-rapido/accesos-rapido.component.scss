@@ -5,3 +5,16 @@
 .img-thumbnail{
     max-height: 50px;
 }
+
+.access{
+    width: 9rem;
+    background-color: lightblue;
+    margin:5px;
+    height:9rem;
+    border-radius: 10px;
+    cursor: pointer;
+
+    img{
+        margin-top: 10px;
+    }
+}

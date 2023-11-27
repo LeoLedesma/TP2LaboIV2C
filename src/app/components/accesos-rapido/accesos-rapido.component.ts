@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { TipoUsuario } from '../../enums/TipoUsuario.enum';
 
 
@@ -9,7 +8,8 @@ import { TipoUsuario } from '../../enums/TipoUsuario.enum';
   styleUrls: ['./accesos-rapido.component.scss']
 })
 export class AccesosRapidoComponent {
-  constructor(private _bottomSheetRef: MatBottomSheetRef<AccesosRapidoComponent>) {}
+@Output() onClick = new EventEmitter<{tipo:TipoUsuario,email:string,nombreCompleto:string,contraseña:string}>()
+  constructor() {}
 
   usuarios:{tipo:TipoUsuario,email:string,nombreCompleto:string,contraseña:string}[] = 
   [{
@@ -25,10 +25,28 @@ export class AccesosRapidoComponent {
     contraseña: '123456',    
   },
   {
+    tipo: TipoUsuario.Paciente,
+    email: 'gouleitreddaullu-5451@yopmail.com',
+    nombreCompleto: 'Hernan Caceres',
+    contraseña: '123456',    
+  },
+  {
+    tipo: TipoUsuario.Paciente,
+    email: 'gouleitreddaullu-5456@upc.infos.st',
+    nombreCompleto: 'Micaela Sch',
+    contraseña: '123456',    
+  },  
+  {
     tipo: TipoUsuario.Especialista,
     email: 'alt.jq-cobdpdqf@yopmail.com',
     nombreCompleto: 'Ernesto Martinez',
     contraseña: '12345678',    
+  },
+  {
+    tipo: TipoUsuario.Especialista,
+    email: 'alt.fu-5ol85thk@yopmail.com',
+    nombreCompleto: 'Mario Perez',
+    contraseña: '123456',    
   }]
 
   getImagen(tipo:TipoUsuario){
@@ -41,13 +59,11 @@ export class AccesosRapidoComponent {
       case TipoUsuario.Paciente:
         return 'assets/img/paciente.png';
       default:
-        return 'assets/images/admin.png';
-    
+        return 'assets/images/admin.png';    
     }
   }
 
-  openLink(event: any): void {
-    this._bottomSheetRef.dismiss(event);
-    this._bottomSheetRef.backdropClick();
+  openLink(event: {tipo:TipoUsuario,email:string,nombreCompleto:string,contraseña:string}): void {
+    this.onClick.emit(event)
   }
 }

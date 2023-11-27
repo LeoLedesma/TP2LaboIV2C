@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Usuario } from 'src/app/models/usuario';
 import { TipoTurno } from '../../../models/turno';
 
 @Component({
@@ -55,9 +56,8 @@ export class SolicitarComponent implements OnInit{
     return TipoTurno;
   }
 
-  
+  buscarTurnos(especialista:Usuario){
 
-
-  
+  } 
 
 }
