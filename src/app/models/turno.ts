@@ -8,17 +8,19 @@ export class Turno implements ICollection {
         public id_especialista?: string | undefined,
         public fechaTurno?: Date,        
         public estado: EstadoTurno = EstadoTurno.Pendiente,
-        public reseña: string = '') { }
+        public resenia: string = '',
+        public comentario:string = '',
+        public diagnostico:string = '') { }
 }
 
 
 export enum EstadoTurno {
-    Rechazado,
-    Cancelado,
-    Realizado,
-    Libre,
-    Pendiente,
-    Aceptado
+    Rechazado = 'Rechazado',
+    Cancelado = 'Cancelado',
+    Realizado = 'Realizado',
+    Libre = 'Libre',
+    Pendiente = 'Pendiente',
+    Aceptado = 'Aceptado'
 }
 
 

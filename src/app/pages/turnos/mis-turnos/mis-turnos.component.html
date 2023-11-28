@@ -1,1 +1,9 @@
-<p>mis-turnos works!</p>
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1>{{this.auth.usuarioLogueado?.tipo === 'Administrador' ? 'Turnos' : 'Mis turnos'}}</h1>
+    <div class="col-3 mb-2">        
+        <app-busqueda (onEnter)="buscar($event)" (onDebounce)="buscar($event)" [placeholder]="'Busqueda de turno por especialidad o especialista'"></app-busqueda>
+    </div>
+    <div class="col-9">
+        <app-listado-turnos [filtro]="filtro" [turnos]="misTurnosArr"></app-listado-turnos>
+    </div>
+</div>

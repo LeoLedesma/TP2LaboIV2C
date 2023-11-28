@@ -1,4 +1,5 @@
 <div *ngIf="horariosPorDia">
+<h1 class="text-center">Seleccione una fecha:</h1>
 <div class="row especialistas flex-nowrap overflow-auto mt-2" >
     <div class="col-3 mb-3" *ngFor="let dia of horariosPorDia">
       <div class="card" appHoverCard (click)="seleccionarDia(dia)" [ngClass]="{'selectedCard':this.diaSeleccionado == dia.fecha}">
@@ -13,6 +14,7 @@
       </div>
     </div> 
   </div> 
+<h1 *ngIf="diaSeleccionado" class="text-center">Seleccione un horario:</h1>
 <div class="row especialistas flex-wrap mt-2" *ngIf="diaSeleccionado">
     <div class="col-1 mb-3" *ngFor="let horario of horariosPosibles">
       <div class="card" appHoverCard (click)="seleccionarHorario(horario)" [ngClass]="{'selectedCard':this.horarioSeleccionado == horario}">

@@ -19,7 +19,7 @@ import { LoaderInterceptor } from './interceptors/loader/loader.interceptor';
 @NgModule({
   declarations: [
     AppComponent,    
-    CaptchaValidatorDirective,
+    CaptchaValidatorDirective
   ],
   imports: [ 
     RecaptchaV3Module,       

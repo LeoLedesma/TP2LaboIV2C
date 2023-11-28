@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 
-import { ListadoGenericoModule } from 'src/app/components/listado-generico/listado-generico.module';
-import { UsuariosComponent } from './usuarios.component';
-import { UsuariosRoutingModule } from './usuarios-routing.module';
-import { RegisterModule } from '../../register/register.module';
 import { MatButtonModule } from '@angular/material/button';
+import { BusquedaModule } from 'src/app/components/busqueda/busqueda.module';
+import { ListadoGenericoModule } from 'src/app/components/listado-generico/listado-generico.module';
+import { RegisterModule } from '../../register/register.module';
+import { UsuariosRoutingModule } from './usuarios-routing.module';
+import { UsuariosComponent } from './usuarios.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     UsuariosRoutingModule,
     ListadoGenericoModule,
     RegisterModule,
-    MatButtonModule
+    MatButtonModule,
+    BusquedaModule
   ]
 })
 export class UsuariosModule { }

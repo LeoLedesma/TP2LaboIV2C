@@ -22,7 +22,8 @@
       </div>
     </div>
   </div>
-  <div class="row flex-nowrap overflow-auto mt-2">
+  <h1 *ngIf="especialistaSeleccionado" class="text-center">Seleccione una especialidad:</h1>
+  <div class="row flex-nowrap overflow-auto mt-2" >
     <ng-container *ngIf="especialistaSeleccionado">
       <div class="col-3 mb-3" *ngFor="let especialidad of especialistaSeleccionado.especialidades">
         <div class="card" appHoverCard (click)="selectEspecialidad(especialidad)"

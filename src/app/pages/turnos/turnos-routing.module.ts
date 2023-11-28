@@ -4,7 +4,8 @@ import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { RolesGuard } from 'src/app/guards/roles.guard';
 
 const routes: Routes = [
-  { path: 'misturnos', loadChildren: () => import('./mis-turnos/mis-turnos.module').then(m => m.MisTurnosModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Paciente,TipoUsuario.Especialista], redirect: '/'  }},
+  { path: 'misturnos', loadChildren: () => import('./mis-turnos/mis-turnos.module').then(m => m.MisTurnosModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Paciente,TipoUsuario.Especialista,TipoUsuario.Administrador], redirect: '/'  }},
+  { path: 'turnos', loadChildren: () => import('./mis-turnos/mis-turnos.module').then(m => m.MisTurnosModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Administrador], redirect: '/'  }},
   { path: 'solicitar', loadChildren: () => import('./solicitar/solicitar.module').then(m => m.SolicitarModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Paciente,TipoUsuario.Administrador], redirect: '/'  }},
   { path: '**', redirectTo: 'misTurnos' }
 ];

@@ -1,0 +1,82 @@
+<table mat-table [dataSource]="listadoOrdenado()" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+
+    
+    <ng-container matColumnDef="Especialista">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Especialista </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{getEspecialista(element.id_especialista)}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="Especialidad">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Especialidad </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.especialidad}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="Paciente">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Paciente </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{getPaciente(element.id_paciente)}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Estado">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Estado </th>
+        <td class="text-center estado" mat-cell *matCellDef="let element"> {{element.estado}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="Fecha">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.fechaTurno | formatDate:true}} {{element.fechaTurno | formatDate:false}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Opciones">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Opciones </th>
+    <td class="text-center" mat-cell *matCellDef="let element">
+        <ng-container *ngIf="this.userLogged.tipo == TipoUsuario.Paciente">
+            <button mat-raised-button color="warn" (click)="cancelarTurno(element)" *ngIf="element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Rechazado && element.estado != EstadoTurno.Cancelado">
+                Cancelar turno
+            </button>            
+            <button mat-raised-button color="primary" (click)="verComentario(element)" *ngIf="element.comentario != '' && element.estado == EstadoTurno.Realizado">
+                Ver reseña
+            </button>
+            <button mat-raised-button color="primary" (click)="calificarAtencion(element)" *ngIf="element.estado == EstadoTurno.Realizado">
+                Calificar atención
+            </button>
+        </ng-container>
+        <ng-container *ngIf="this.userLogged.tipo == TipoUsuario.Especialista">
+            <button mat-raised-button color="warn" (click)="cancelarTurno(element)" *ngIf="element.estado != EstadoTurno.Aceptado && element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Rechazado  && element.estado != EstadoTurno.Cancelado">
+                Cancelar turno
+            </button>
+            <button mat-raised-button color="warn" (click)="rechazarTurno(element)" *ngIf="element.estado != EstadoTurno.Aceptado && element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Cancelado && element.estado != EstadoTurno.Rechazado">
+                Rechazar turno
+            </button>
+            <button mat-raised-button color="primary" (click)="aceptarTurno(element)" *ngIf="element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Cancelado && element.estado != EstadoTurno.Rechazado && element.estado != EstadoTurno.Aceptado">
+                Aceptar turno
+            </button>
+            <button mat-raised-button color="primary" (click)="finalizarTurno(element)" *ngIf="element.estado == EstadoTurno.Aceptado">
+                Finalizar turno
+            </button>
+            <button mat-raised-button color="primary" (click)="verComentario(element)" *ngIf="element.comentario != ''">
+                Ver reseña
+            </button>            
+        </ng-container>
+        <ng-container *ngIf="this.userLogged.tipo == TipoUsuario.Administrador">
+            <button mat-raised-button color="warn" (click)="cancelarTurno(element)" *ngIf="element.estado != EstadoTurno.Aceptado && element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Rechazado  && element.estado != EstadoTurno.Cancelado">
+                Cancelar turno
+            </button>           
+        </ng-container>
+        
+    </td>
+    </ng-container>
+    
+
+    <tr mat-header-row
+        *matHeaderRowDef="['Especialista','Especialidad','Paciente','Estado','Fecha','Opciones']"></tr>
+    <tr mat-row
+        *matRowDef="let row; columns: ['Especialista','Especialidad','Paciente','Estado','Fecha','Opciones']">
+    </tr>
+</table>

@@ -6,6 +6,10 @@ export const paginas = {
                 path: 'listados/usuarios'
             },
             {
+                nombre: 'Turnos',
+                path: 'turnos/turnos'
+            },
+            {
                 nombre: 'Solicitar turno',
                 path: 'turnos/solicitar'
             }            

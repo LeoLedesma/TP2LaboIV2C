@@ -85,9 +85,17 @@ export class CollectionsService {
   }
 
   getAllSnapshot<T = ICollection>(collectionName: string,order:string): Observable<T[]> {    
-    let docs = query(collection(this._firestore, collectionName), orderBy(order))
+    let queryNew!: Query<DocumentData>;
+
+    
+    if(order == '')
+    {
+      queryNew = query(collection(this._firestore, collectionName))
+    }else{
+      queryNew = query(collection(this._firestore, collectionName), orderBy(order))
+    }
     return new Observable(subscriber => {
-      const unsubscribe = onSnapshot(docs, querySnapshot => {
+      const unsubscribe = onSnapshot(queryNew, querySnapshot => {
         const collection: T[] = [];
 
         querySnapshot.forEach(doc => {

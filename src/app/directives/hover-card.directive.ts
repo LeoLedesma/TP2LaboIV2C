@@ -11,7 +11,7 @@ export class HoverCardDirective {
   @Input() appHighlight = '';
 
   @HostListener('mouseenter') onMouseEnter() {    
-    console.log(this.appHighlight);
+    
     this.highlight(this.appHighlight || this.defaultColor || 'red');
   }
 

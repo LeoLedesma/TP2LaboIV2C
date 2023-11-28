@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SeleccionarEspecialistasModule } from 'src/app/components/seleccionar-especialistas/seleccionar-especialistas.module';
+import { SeleccionarPacientesModule } from 'src/app/components/seleccionar-paciente/seleccionar-pacientes.module';
 import { SeleccionarTurnoModule } from 'src/app/components/seleccionar-turno/seleccionar-turno.module';
 import { SolicitarRoutingModule } from './solicitar-routing.module';
 import { SolicitarComponent } from './solicitar.component';
@@ -16,7 +17,8 @@ import { SolicitarComponent } from './solicitar.component';
     ReactiveFormsModule,
     SolicitarRoutingModule,    
     SeleccionarEspecialistasModule,
-    SeleccionarTurnoModule
+    SeleccionarTurnoModule,
+    SeleccionarPacientesModule
   ]
 })
 export class SolicitarModule { }

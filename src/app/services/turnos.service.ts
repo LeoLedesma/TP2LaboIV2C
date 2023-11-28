@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { and, where } from '@angular/fire/firestore';
-import { Turno } from '../models/turno';
+import { EstadoTurno, Turno } from '../models/turno';
 import { CollectionsService } from './collections.service';
 
 @Injectable({
@@ -11,8 +11,33 @@ export class TurnosService {
 
   constructor(private collection:CollectionsService) { }
 
-  obtenerTurnosPorEspecialista(id_especialista:string){
+  obtenerTurnos(){
+    return this.collection.getAllSnapshot<Turno>(this.collecionName,'')  
+  }
+
+  obtenerTurnosByDate(date:Date){   
+    console.log(date);
+    let querys = [where('fechaTurno','==',date),where('estado','not-in',[EstadoTurno.Cancelado,EstadoTurno.Rechazado])];
+    
+    return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))
+  }
+    
+
+  obtenerAllTurnosPorEspecialista(id_especialista:string){
     let querys = [where('id_especialista','==',id_especialista)];
+    
+    return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))
+  }
+
+  obtenerTurnosOcupadosPorEspecialista(id_especialista:string){
+    let querys = [where('id_especialista','==',id_especialista),where('estado','not-in',[EstadoTurno.Cancelado,EstadoTurno.Rechazado])];
+    
+    return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))
+  }
+
+
+  obtenerTurnosPorPaciente(id_paciente:string){
+    let querys = [where('id_paciente','==',id_paciente)];
     
     return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))
   }
@@ -29,5 +54,9 @@ export class TurnosService {
     }else{
       return false  
     }
+  }
+
+  update(turno:Turno){
+    return this.collection.update(this.collecionName,turno)  
   }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { and, collection, collectionData, CollectionReference, doc, DocumentData, DocumentReference, Firestore, getDocs, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { EstadoUsuario } from '../enums/EstadoUsuario.enum';
+import { TipoUsuario } from '../enums/TipoUsuario.enum';
 import { HorarioAtencion } from '../models/horarioAtencion';
 import { Usuario } from '../models/usuario';
 import { CollectionsService } from './collections.service';
@@ -98,6 +99,18 @@ export class UsuariosService {
     setDoc(doc(horarioAtencionCollection), { ...horarioAtencion });
     return true;
 
+  }
+
+  getUsuarios(id_user:string[]){
+
+    console.log(id_user);
+    let querys = [where('id_user','in',id_user)]
+    return this.collections.getAllWhereQuery<Usuario>(this.collection,and(...querys));     
+  }
+
+  getPacientes(){
+    let querys = [where('tipo','==',TipoUsuario.Paciente)]
+    return this.collections.getAllWhereQuery<Usuario>(this.collection,and(...querys));     
   }
 
 }

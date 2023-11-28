@@ -24,6 +24,7 @@ export class SolicitarComponent implements OnInit, OnDestroy {
   turnosPosibles: Date[] = []  
   horariosPorDia:{fecha:Date, horarios:Date[]}[] = []
   turnosSub!: Subscription
+  horarioSeleccionado:Date | undefined
 
   constructor(private horariosService: HorariosService, private turnosService: TurnosService,private auth:AuthService) { }
   ngOnDestroy(): void {
@@ -92,7 +93,7 @@ export class SolicitarComponent implements OnInit, OnDestroy {
     this.especialidad.setValue(busquedaTurno.especialidad)
 
     let horarios = await this.horariosService.obtenerHorariosEspecialistaPromise(busquedaTurno.especialista.id_user,busquedaTurno.especialidad)
-    this.turnosSub = await this.turnosService.obtenerTurnosPorEspecialista(busquedaTurno.especialista.id_user)
+    this.turnosSub = await this.turnosService.obtenerTurnosOcupadosPorEspecialista(busquedaTurno.especialista.id_user)
       .subscribe(turnos => {
         let fecha = new Date()
         this.turnosPosibles = []
@@ -169,8 +170,13 @@ export class SolicitarComponent implements OnInit, OnDestroy {
     return horasMinutos;
   }
 
-  turnoSeleccionado(turno:Date){
+  turnoSeleccionado(turno:Date){    
+    this.horarioSeleccionado = turno;      
     this.horario.setValue(turno)  
+  }
+
+  pacienteSeleccionado(paciente:Usuario){
+    this.paciente.setValue(paciente.id_user)
   }
 
 }
