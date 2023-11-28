@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DiaSemana } from 'src/app/enums/DiaSemana.enum';
 import { HorarioAtencion } from 'src/app/models/horarioAtencion';
 import Swal from 'sweetalert2';
 
@@ -18,6 +19,7 @@ export class ListadoHorariosComponent implements OnInit{
     
   }
 
+  arrayDiaSemana = Object.values(DiaSemana).filter(d => d !== 'Domingo');
   editar(event:any){
     console.log(event as HorarioAtencion)
     this.onEditHorario.emit(event as HorarioAtencion);
@@ -43,5 +45,13 @@ export class ListadoHorariosComponent implements OnInit{
           'success'
         )
       }})
+    }
+
+    listadoOrdenado(){
+      if(this.horarios){
+        return this.horarios.sort((a,b) => this.arrayDiaSemana.indexOf(a.dia)-this.arrayDiaSemana.indexOf(b.dia) )
+      }    else{
+        return []
+      }  
     }
 }

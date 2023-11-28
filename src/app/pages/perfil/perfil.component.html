@@ -1,7 +1,7 @@
 <div class="container mt-5 d-flex flex-wrap mb-5">
-    <div class="col-4">
+    <div class="col-3">
         <div class="d-flex">
-            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" *ngIf="usuario.tipo == TipoUsuario.Paciente">
                 <div class="carousel-inner">
                     <div class="carousel-item" *ngFor="let foto of usuario.fotos; let i=index"
                         [ngClass]="{'active': i==0}">
@@ -15,9 +15,12 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>                    
                 </a>
             </div>
+            <div *ngIf="usuario.tipo != TipoUsuario.Paciente">
+                <img [src]="usuario.fotos[0]" style='max-height: 250px;'>
+            </div>
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-9">
         <div class="card">
             <h5 class="card-title text-center">Detalles del Perfil</h5>
             <div class="card-body row row-cols-3">
@@ -42,8 +45,8 @@
                 </div>
 
                 <div class="form-group" *ngIf="usuario.tipo == 'Especialista'">
-                    <label class="fw-bold">Especialidad:</label>
-                    <p>{{ usuario.especialidad }}</p>
+                    <label class="fw-bold">{{usuario.especialidades.length > 0? 'Especialidades:' : 'Especialidad:'}}</label>
+                    <p>{{ usuario.especialidades.join(', ')}}</p>
                 </div>
                 <div class="form-group" *ngIf="usuario.tipo == 'Paciente'">
                     <label class="fw-bold">Obra social:</label>

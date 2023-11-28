@@ -18,6 +18,13 @@ export class HorariosService {
     return this.collection.getAllWhereSnapshot<HorarioAtencion>(this.collectionName, and(...query),'');
   }
 
+  obtenerHorariosEspecialistaPromise(id_especialista: string,especialidad:string) {
+    let query: QueryFilterConstraint[] = [];
+
+    query.push(where('id_especialista', '==', id_especialista),where('especialidad','==',especialidad))
+    return this.collection.getAllWhereQuery<HorarioAtencion>(this.collectionName, and(...query));
+  }
+
   obtenerTurnosDisponibles() {
 
   }

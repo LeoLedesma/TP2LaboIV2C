@@ -5,3 +5,7 @@ mat-slider {
   h3{
     font-size: 1.4rem;
   }
+
+  button[disabled]{
+    background-color: grey;
+  }

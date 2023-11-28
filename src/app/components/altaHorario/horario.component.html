@@ -1,9 +1,18 @@
 <div class="container">
     <h1 class="text-center">Alta horario</h1>
-    <h2 class="mb-2 text-center">Seleccione un día:</h2>
-    <div class="mb-3 d-flex justify-content-evenly">
+
+    <h2 class="mb-2 text-center">Especialidad</h2>
+        <div class="row ">
+            <div class="d-flex justify-content-evenly ">
+                <button mat-raised-button [color]="especialidadSeleccionada === especialidad? 'accent' : 'primary'" *ngFor="let especialidad of especialista.especialidades"
+                    (click)="seleccionarEspecialidad(especialidad)">{{especialidad}}</button>                                
+            </div>
+        </div>
+
+    <h2 class="mb-2 text-center" *ngIf="especialidadSeleccionada">Seleccione un día:</h2>
+    <div class="mb-3 d-flex justify-content-evenly" *ngIf="especialidadSeleccionada">
         <button *ngFor="let dia of arrayDiaSemana" 
-            mat-raised-button [color]="diaSeleccionado === dia? 'accent' : 'primary'"
+            mat-raised-button [disabled]="!getDisabledButton(dia)" [color]="diaSeleccionado === dia? 'accent' : 'primary'"
             (click)="seleccionarDia(dia)">{{dia}}</button>        
     </div>
 
@@ -11,16 +20,8 @@
         <h2 class="mb-2 text-center">Duración de turnos</h2>
         <div class="row ">
             <div class="d-flex justify-content-evenly">
-                <button mat-raised-button [color]="duracionTurno === 10? 'accent' : 'primary'"
-                    (click)="seleccionarDuracion(10)">10min</button>
-                <button mat-raised-button [color]="duracionTurno === 15? 'accent' : 'primary'"
-                    (click)="seleccionarDuracion(15)">15min</button>
-                <button mat-raised-button [color]="duracionTurno === 20? 'accent' : 'primary'"
-                    (click)="seleccionarDuracion(20)">20min</button>
-                <button mat-raised-button [color]="duracionTurno === 25? 'accent' : 'primary'"
-                    (click)="seleccionarDuracion(25)">25min</button>
-                <button mat-raised-button [color]="duracionTurno === 30? 'accent' : 'primary'"
-                    (click)="seleccionarDuracion(30)">30min</button>
+                <button mat-raised-button [color]="duracionTurno === duracionL? 'accent' : 'primary'" *ngFor="let duracionL of duraciones"
+                    (click)="seleccionarDuracion(duracionL)">{{duracionL}}min</button>                                
             </div>
         </div>
 

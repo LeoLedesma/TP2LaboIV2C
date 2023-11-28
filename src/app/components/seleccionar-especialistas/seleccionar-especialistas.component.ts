@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Especialidad } from 'src/app/models/especialidad';
 import { Usuario } from 'src/app/models/usuario';
 import { EspecialidadesService } from 'src/app/services/especialidades.service';
+import { FilesService } from 'src/app/services/files.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
@@ -12,13 +14,16 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class SeleccionarEspecialistasComponent implements OnInit, OnDestroy {
   @Input() especialidad: string | undefined;
   @Input() input: string = '';
-  @Output() onSelectEspecialista: EventEmitter<Usuario> = new EventEmitter();
+  @Output() onSelectEspecialista: EventEmitter<{especialista:Usuario,especialidad:string}> = new EventEmitter();
 
   especialistaSeleccionado!:Usuario;
+  especialidadSeleccionada!:string;
   especialistas: Usuario[] = [];
   especialistasSrch: Usuario[] = [];
   especialistasSub!: Subscription
   isLoading:boolean = true;
+
+  especialidadesArr:Especialidad[] = [];
   ngOnInit(): void {
     
     //recibo especialidad
@@ -37,7 +42,7 @@ export class SeleccionarEspecialistasComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private usuarios: UsuariosService, private especialidades: EspecialidadesService) { }
+  constructor(private usuarios: UsuariosService, private especialidades: EspecialidadesService, private files:FilesService) { }
   ngOnDestroy(): void {
     this.especialistasSub?.unsubscribe;
   }
@@ -55,7 +60,18 @@ export class SeleccionarEspecialistasComponent implements OnInit, OnDestroy {
 
   selectEspecialista(especialista:Usuario){
     this.especialistaSeleccionado = especialista;
-    this.onSelectEspecialista.emit(especialista);
+    this.especialidades.getEspecialidades(especialista.especialidades).then(especialidades => {
+      this.especialidadesArr = especialidades;    
+    })
+  }
+
+  selectEspecialidad(especialidad:string){
+    this.especialidadSeleccionada = especialidad;   
+    this.onSelectEspecialista.emit({especialista:this.especialistaSeleccionado,especialidad:this.especialidadSeleccionada});
+  }
+
+  getImagen(especialidad:string){
+    return this.especialidadesArr.find(e=>e.nombre === especialidad)?.img || '/assets/img/especialidades.png';
   }
 }
 

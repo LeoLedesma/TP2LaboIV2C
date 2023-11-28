@@ -6,9 +6,9 @@ export class Turno implements ICollection {
         public especialidad?: string | undefined,
         public id_paciente?: string | undefined,
         public id_especialista?: string | undefined,
-        public estado: EstadoTurno = EstadoTurno.Pendiente,
         public fechaTurno?: Date,        
-        public reseña?: string) { }
+        public estado: EstadoTurno = EstadoTurno.Pendiente,
+        public reseña: string = '') { }
 }
 
 

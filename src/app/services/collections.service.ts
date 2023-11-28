@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { collection, deleteDoc, doc, DocumentData, DocumentReference, Firestore, getDocs, onSnapshot, orderBy, Query, query, QueryCompositeFilterConstraint, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { ICollection } from '../models/i-collection';
+import { Turno } from '../models/turno';
 
 @Injectable({
   providedIn: 'root'
@@ -77,7 +78,9 @@ export class CollectionsService {
 
   async existsQuery(collectionName: string, querys: QueryCompositeFilterConstraint) {
     let docs = query(collection(this._firestore, collectionName), querys)
+    let hola = await getDocs(docs)
 
+    console.log(hola.docs.map(doc => doc.data() as Turno))
     return !(await getDocs(docs)).empty;
   }
 
@@ -100,7 +103,7 @@ export class CollectionsService {
     });
   }
 
-  getAllWhereSnapshot<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint,order:string): Observable<T[]> {
+  getAllWhereSnapshot<T = ICollection>(collectionName: string, querys: QueryCompositeFilterConstraint,order:string =''): Observable<T[]> {
 
     let queryNew!: Query<DocumentData>;
 

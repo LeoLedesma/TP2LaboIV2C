@@ -23,7 +23,7 @@ import { ListadoHorariosComponent } from './listado-horarios.component';
     MatIconModule,
     MatButtonModule,
     PipesModule
-  ],
+  ], 
   exports:[
     ListadoHorariosComponent
   ]

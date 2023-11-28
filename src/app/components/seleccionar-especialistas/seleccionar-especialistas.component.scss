@@ -27,3 +27,19 @@
 .selectedCard{
     background-color: deepskyblue;
 }
+
+
+.cardEspecialidad{
+    // background-color: rgb(199 234 255);  
+    align-items: center;
+    cursor:pointer;
+}
+
+.imgEspecialidad{
+max-height: 200px;
+
+img {
+    height: 100%;
+    // object-fit: cover;
+  }
+}

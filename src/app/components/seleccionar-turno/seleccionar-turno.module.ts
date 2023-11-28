@@ -1,15 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DirectivesModule } from 'src/app/directives/directives.module';
-import { PipesModule } from 'src/app/pipes/pipes.module';
 import { BusquedaModule } from '../busqueda/busqueda.module';
-import { SeleccionarEspecialistasComponent } from './seleccionar-especialistas.component';
+
+import { PipesModule } from 'src/app/pipes/pipes.module';
+
+import { DirectivesModule } from 'src/app/directives/directives.module';
+import SeleccionarTurnoComponent from './seleccionar-turno.component';
+
 
 
 
 @NgModule({
-  declarations: [SeleccionarEspecialistasComponent],
+  declarations: [SeleccionarTurnoComponent],
   imports: [
     CommonModule,
     BusquedaModule,
@@ -17,6 +20,6 @@ import { SeleccionarEspecialistasComponent } from './seleccionar-especialistas.c
     PipesModule,
     DirectivesModule
   ],
-  exports: [SeleccionarEspecialistasComponent]
+  exports: [SeleccionarTurnoComponent]
 })
-export class SeleccionarEspecialistasModule { }
+export class SeleccionarTurnoModule { }

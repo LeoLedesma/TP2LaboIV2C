@@ -18,6 +18,7 @@ import { PerfilComponent } from './perfil.component';
     HorarioModule,
     ListadoHorariosModule,
     MatIconModule
+
   ]
 })
 export class PerfilModule { }

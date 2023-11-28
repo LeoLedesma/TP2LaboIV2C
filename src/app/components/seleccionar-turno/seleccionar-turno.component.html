@@ -1,0 +1,27 @@
+<div *ngIf="horariosPorDia">
+<div class="row especialistas flex-nowrap overflow-auto mt-2" >
+    <div class="col-3 mb-3" *ngFor="let dia of horariosPorDia">
+      <div class="card" appHoverCard (click)="seleccionarDia(dia)" [ngClass]="{'selectedCard':this.diaSeleccionado == dia.fecha}">
+        <!-- <img class="card-img-top card-img-bottom" [src]="especialista.fotos[0]" alt="Card image cap" style="max-height: 150px; padding-top: 5px; border-radius:5px"> -->
+        <div class="card-body">
+          <h1 class="card-title">{{dia.fecha | formatDate:true}}</h1>
+          <p class="card-text">Horarios disponibles: {{dia.horarios.length}}</p>
+          <p class="card-text">Primer turno: {{dia.horarios[0] | formatDate:false}}</p>
+          <p class="card-text">Ultimo turno: {{dia.horarios[dia.horarios.length-1] | formatDate:false}}</p>
+          <!-- <p class="card-text">Proximo turno: Proximamente...</p> -->
+        </div>        
+      </div>
+    </div> 
+  </div> 
+<div class="row especialistas flex-wrap mt-2" *ngIf="diaSeleccionado">
+    <div class="col-1 mb-3" *ngFor="let horario of horariosPosibles">
+      <div class="card" appHoverCard (click)="seleccionarHorario(horario)" [ngClass]="{'selectedCard':this.horarioSeleccionado == horario}">
+        <!-- <img class="card-img-top card-img-bottom" [src]="especialista.fotos[0]" alt="Card image cap" style="max-height: 150px; padding-top: 5px; border-radius:5px"> -->
+        <div class="card-body">
+          <h1 class="card-title">{{horario | formatDate:false}}</h1>          
+          <!-- <p class="card-text">Proximo turno: Proximamente...</p> -->
+        </div>        
+      </div>
+    </div> 
+  </div> 
+</div>

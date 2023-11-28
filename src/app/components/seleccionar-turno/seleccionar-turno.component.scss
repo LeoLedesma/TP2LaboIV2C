@@ -1,0 +1,19 @@
+.card{
+    background-color: rgb(199 234 255);    
+    max-height: 200px;
+    align-items: center;
+    cursor:pointer;
+}
+
+.card-body{
+    position: relative;
+}   
+
+.especialistas{
+    overflow: auto;
+        white-space: nowrap;
+}
+
+.selectedCard{
+    background-color: deepskyblue;
+}

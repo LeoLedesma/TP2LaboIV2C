@@ -1,14 +1,20 @@
-<table mat-table [dataSource]="horarios" class="mat-elevation-z8">
+<table mat-table [dataSource]="listadoOrdenado()" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Position Column -->
+
+    
     <ng-container matColumnDef="Día de la semana">
         <th class="text-center" mat-header-cell *matHeaderCellDef> Día de la semana </th>
         <td class="text-center" mat-cell *matCellDef="let element"> {{element.dia}} </td>
     </ng-container>
-
+    
+    <ng-container matColumnDef="Especialidad">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Especialidad </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.especialidad}} </td>
+    </ng-container>
     <!-- Name Column -->
     <ng-container matColumnDef="Hora de Inicio">
         <th class="text-center" mat-header-cell *matHeaderCellDef> Hora de Inicio </th>
@@ -31,9 +37,9 @@
         <th class="text-center" mat-header-cell *matHeaderCellDef> Acciones </th>
     <td class="text-center" mat-cell *matCellDef="let element">
         
-            <button mat-mini-fab color="primary" (click)="editar(element)">
+            <!-- <button mat-mini-fab color="primary" (click)="editar(element)">
                 <mat-icon>edit</mat-icon>
-            </button>
+            </button> -->
             <button mat-mini-fab color="warn" (click)="eliminar(element)">
                 <mat-icon>delete</mat-icon>
             </button>
@@ -43,8 +49,8 @@
     
 
     <tr mat-header-row
-        *matHeaderRowDef="['Día de la semana','Hora de Inicio','Hora de Finalización','Duración del Turno','Acciones']"></tr>
+        *matHeaderRowDef="['Día de la semana','Especialidad','Hora de Inicio','Hora de Finalización','Duración del Turno','Acciones']"></tr>
     <tr mat-row
-        *matRowDef="let row; columns: ['Día de la semana','Hora de Inicio','Hora de Finalización','Duración del Turno','Acciones']">
+        *matRowDef="let row; columns: ['Día de la semana','Especialidad','Hora de Inicio','Hora de Finalización','Duración del Turno','Acciones']">
     </tr>
 </table>
