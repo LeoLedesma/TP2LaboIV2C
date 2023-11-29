@@ -20,7 +20,11 @@ export const paginas = {
             {
                 nombre: 'Mis turnos',
                 path: 'turnos/misturnos'
-            }
+            },
+            {
+                nombre: 'Pacientes',
+                path: 'pacientes'
+            },
         ]
     ,
     Paciente:

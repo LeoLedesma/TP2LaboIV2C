@@ -29,6 +29,15 @@ export class TurnosService {
     return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))
   }
 
+  obtenerTurnosRealizadosPorEspecialista(id_especialista:string){
+
+    let querys = [where('id_especialista','==',id_especialista),where('estado','==',EstadoTurno.Realizado)];
+    
+    return this.collection.getAllWhereSnapshot<Turno>(this.collecionName,and(...querys))  
+  
+  }
+
+
   obtenerTurnosOcupadosPorEspecialista(id_especialista:string){
     let querys = [where('id_especialista','==',id_especialista),where('estado','not-in',[EstadoTurno.Cancelado,EstadoTurno.Rechazado])];
     

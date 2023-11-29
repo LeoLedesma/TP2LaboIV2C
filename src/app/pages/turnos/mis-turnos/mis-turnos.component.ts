@@ -16,6 +16,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   misTurnosSubs!: Subscription
   misTurnosArr: Turno[] = []
   misTurnosFiltered: Turno[] = []
+  turnoSeleccionado: Turno | undefined
 
   filtro: string = ''
 
@@ -54,7 +55,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
 
   buscar(input: string) {
     this.filtro = input;
+  }
 
+  onCompletarEncuesta(turno:Turno){
+    this.turnoSeleccionado = turno;
   }
 
 }

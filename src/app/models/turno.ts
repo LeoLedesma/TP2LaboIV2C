@@ -10,17 +10,18 @@ export class Turno implements ICollection {
         public estado: EstadoTurno = EstadoTurno.Pendiente,
         public resenia: string = '',
         public comentario:string = '',
-        public diagnostico:string = '') { }
+        public diagnostico:string = '',
+        public calificacion:number = -1,
+        public encuestaComplete:boolean = false) { }
 }
 
 
 export enum EstadoTurno {
+    Pendiente = 'Pendiente',
+    Aceptado = 'Aceptado',
     Rechazado = 'Rechazado',
     Cancelado = 'Cancelado',
-    Realizado = 'Realizado',
-    Libre = 'Libre',
-    Pendiente = 'Pendiente',
-    Aceptado = 'Aceptado'
+    Realizado = 'Realizado',    
 }
 
 

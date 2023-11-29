@@ -1,12 +1,12 @@
 <div class="d-flex flex-column justify-content-center align-items-center">
-    <h1>{{this.auth.usuarioLogueado?.tipo === 'Administrador' ? 'Turnos' : 'Mis turnos'}}</h1>
+    <h1>Pacientes</h1>
     <div class="col-3 mb-2">        
         <app-busqueda (onEnter)="buscar($event)" (onDebounce)="buscar($event)" [placeholder]="'Busqueda de turno...'"></app-busqueda>
     </div>
     <div class="col-9">
-        <app-listado-turnos [filtro]="filtro" [turnos]="misTurnosArr" (onCompletarEncuesta)="onCompletarEncuesta($event)"></app-listado-turnos>
+        <app-listado-pacientes [filtro]="filtro" ></app-listado-pacientes>
     </div>
 </div>
-<div class="d-flex flex-column justify-content-center align-items-center" *ngIf="turnoSeleccionado">
+<!-- <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="turnoSeleccionado">
     <app-encuesta-atencion [turno]="turnoSeleccionado"></app-encuesta-atencion>
-</div>
+</div> --> 

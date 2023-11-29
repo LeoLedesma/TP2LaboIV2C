@@ -1,0 +1,65 @@
+<div class="mt-5 encuesta p-5" *ngIf="turno">
+    <h1 class="text-center">Encuesta de Atención</h1>
+    <form [formGroup]="encuestaForm" (ngSubmit)="enviarEncuesta()">
+        <label for="calificacion">Calificación:</label>
+        <div class="d-flex">
+            <button mat-mini-fab [color]="calificacionValue < 1 ? 'warn' : 'accent'" type="button"
+                class="d-flex justify-content-center" (click)="setCalificacion(1)">
+                <mat-icon>star</mat-icon>
+            </button>
+
+            <button mat-mini-fab [color]="calificacionValue < 2 ? 'warn' : 'accent'" type="button"
+                class="d-flex justify-content-center" (click)="setCalificacion(2)">
+                <mat-icon>star</mat-icon>
+            </button>
+
+            <button mat-mini-fab [color]="calificacionValue < 3 ? 'warn' : 'accent'" type="button"
+                class="d-flex justify-content-center" (click)="setCalificacion(3)">
+                <mat-icon>star</mat-icon>
+
+            </button>
+
+            <button mat-mini-fab [color]="calificacionValue < 4 ? 'warn' : 'accent'" type="button"
+                class="d-flex justify-content-center" (click)="setCalificacion(4)">
+                <mat-icon>star</mat-icon>
+            </button>
+
+            <button mat-mini-fab [color]="calificacionValue < 5 ? 'warn' : 'accent'" type="button"
+                class="d-flex justify-content-center" (click)="setCalificacion(5)">
+                <mat-icon>star</mat-icon>
+            </button>
+        </div>
+
+        <label class="mt-2">Satisfacción:</label>
+        <div>
+            <mat-radio-group aria-label="Seleccione una opción:" formControlName="satisfaccion">
+                <mat-radio-button value="Insatisfecho">Insatisfecho</mat-radio-button>
+                <mat-radio-button value="Poco satisfecho">Poco satisfecho</mat-radio-button>
+                <mat-radio-button value="Satisfecho">Satisfecho</mat-radio-button>
+                <mat-radio-button value="Algo satisfecho">Algo satisfecho</mat-radio-button>
+                <mat-radio-button value="Muy satisfecho">Muy satisfecho</mat-radio-button>
+            </mat-radio-group>
+        </div>
+
+        <label class="mt-2">Problema resuelto:</label>
+        <div>
+            <mat-slide-toggle formControlName="problemaResuelto">Problema resuelto</mat-slide-toggle>
+        </div>
+
+        <label class="mt-2">Recomendación:</label>
+        <div>
+            <mat-slide-toggle formControlName="recomendacion">Voy a recomendar</mat-slide-toggle>
+        </div>
+
+        <div class="d-flex flex-column mt-2">
+            <label>Comentario:</label>
+            <mat-form-field class="example-full-width">
+                <mat-label>Deje un comentario</mat-label>
+                <textarea matInput placeholder="Deje un comentario" formControlName="comentario"></textarea>
+            </mat-form-field>
+        </div>
+
+
+        <button mat-raised-button type="submit" color="accent" [disabled]="!encuestaForm.valid">Enviar Encuesta</button>
+    </form>
+</div>

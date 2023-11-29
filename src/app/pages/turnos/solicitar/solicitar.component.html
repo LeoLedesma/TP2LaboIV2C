@@ -16,7 +16,7 @@
                 <app-seleccionar-turno (onTurnoSeleccionado)="turnoSeleccionado($event)" [horariosPorDia]="horariosPorDia"></app-seleccionar-turno>
             </div>
 
-            <div class="row" *ngIf="horario.value! && !this.paciente.value">
+            <div class="row" *ngIf="horario.value! && auth.usuarioLogueado?.tipo == 'Administrador'">
                 <app-seleccionar-pacientes (onPacienteSeleccionado)="pacienteSeleccionado($event)" [horarioSeleccionado]="horarioSeleccionado!"></app-seleccionar-pacientes>
             </div>
 

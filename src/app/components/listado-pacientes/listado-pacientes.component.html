@@ -1,0 +1,65 @@
+<table mat-table [dataSource]="filtrarPacientes()" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+
+    
+    <ng-container matColumnDef="nombre">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="apellido">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Apellido </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="edad">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Edad </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.edad}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="dni">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> DNI </th>
+        <td class="text-center" mat-cell *matCellDef="let element"> {{element.documento}} </td>
+    </ng-container>
+
+     <!-- Weight Column -->
+     <ng-container matColumnDef="obraSocial">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Obra Social </th>
+        <td class="text-center estado" mat-cell *matCellDef="let element"> {{element.obraSocial}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
+        <td class="text-center estado" mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Opciones">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Opciones </th>
+    <td class="text-center" mat-cell *matCellDef="let element">        
+            <!-- <button mat-raised-button color="warn" (click)="cancelarTurno(element)" *ngIf="element.estado != EstadoTurno.Realizado && element.estado != EstadoTurno.Rechazado && element.estado != EstadoTurno.Cancelado">
+                Cancelar turno
+            </button>            
+            <button mat-raised-button color="primary" (click)="verComentario(element)" *ngIf="element.comentario != '' && element.estado == EstadoTurno.Realizado">
+                Ver reseña
+            </button>
+            <button mat-raised-button color="primary" (click)="calificarAtencion(element)" *ngIf="element.estado == EstadoTurno.Realizado && element.calificacion == -1">
+                Calificar atención
+            </button>
+            <button mat-raised-button color="primary" (click)="completarEncuesta(element)" *ngIf="element.comentario != '' && element.estado == EstadoTurno.Realizado && !element.encuestaComplete">
+                Completar encuesta
+            </button> -->
+    </td>
+    </ng-container>
+    
+
+    <tr mat-header-row
+        *matHeaderRowDef="['nombre','apellido','edad','dni','obraSocial','email','Opciones']"></tr>
+    <tr mat-row
+        *matRowDef="let row; columns: ['nombre','apellido','edad','dni','obraSocial','email','Opciones']">
+    </tr>
+</table>

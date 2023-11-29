@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule), canActivate: [AuthGuard] },
   { path: 'listados', loadChildren: () => import('./listados/listados.module').then(m => m.ListadosModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Administrador], redirect: '/' } },
   { path: 'turnos', loadChildren: () => import('./turnos/turnos.module').then(m => m.TurnosModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Paciente,TipoUsuario.Administrador,TipoUsuario.Especialista], redirect: '/' } },
+  { path: 'pacientes', loadChildren: () => import('./pacientes/pacientes.module').then(m => m.PacientesModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Especialista], redirect: '/' } },
   { path: 'perfil', loadChildren: () => import('./perfil/perfil.module').then(m => m.PerfilModule),canActivate:[RolesGuard], data: { role: [TipoUsuario.Paciente,TipoUsuario.Administrador,TipoUsuario.Especialista], redirect: '/' } },
   { path: 'auth', loadChildren: () => import('../auth/auth.module').then(m => m.AuthModule) },
   { path: '**', component: ErrorComponent },

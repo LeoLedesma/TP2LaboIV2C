@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { EspecialidadesPipe } from './especialidades.pipe';
 import { FormatDatePipe } from './format-date.pipe';
+import { FormatDateModifPipe } from './format-dateModif.pipe';
 import { FormatHorarioAtencionPipe } from './format-horario-atencion.pipe';
 
 
@@ -8,14 +9,17 @@ import { FormatHorarioAtencionPipe } from './format-horario-atencion.pipe';
     declarations: [
         FormatHorarioAtencionPipe,
         FormatDatePipe,
-        EspecialidadesPipe
+        EspecialidadesPipe,
+        FormatDateModifPipe
+
     ],
     imports: [
     ],
     exports: [
         FormatHorarioAtencionPipe,
         FormatDatePipe,
-        EspecialidadesPipe
+        EspecialidadesPipe,
+        FormatDateModifPipe
     ]
 })
 export class PipesModule { }

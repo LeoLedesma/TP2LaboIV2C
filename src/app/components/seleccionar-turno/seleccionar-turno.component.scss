@@ -1,19 +1,34 @@
-.card{
-    background-color: rgb(199 234 255);    
+.card {
+    background-color: rgb(199 234 255);
     max-height: 200px;
     align-items: center;
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.card-body{
+.card-body {
     position: relative;
-}   
-
-.especialistas{
-    overflow: auto;
-        white-space: nowrap;
 }
 
-.selectedCard{
+.especialistas {
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.selectedCard {
     background-color: deepskyblue;
+}
+
+.cardDia {
+    height: 200px;
+    width: 200px;    
+    border-radius: 0px;
+}
+
+.cardsHora{
+    width: 10%;
+    margin-right: 25px;
+    border-radius: 10px;
+    .cardHora{
+        width: 150px;
+    }
 }

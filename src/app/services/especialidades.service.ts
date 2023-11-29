@@ -29,6 +29,8 @@ export class EspecialidadesService {
 
       getImagesUrl = await this.filesService.saveImages(images!, docRef.id);
       especialidad.img = getImagesUrl[0];
+    }else{
+      especialidad.img = ''
     }
 
     especialidad.id = docRef.id;

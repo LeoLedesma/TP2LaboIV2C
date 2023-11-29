@@ -14,7 +14,7 @@
       <div class="card" appHoverCard (click)="selectEspecialista(especialista)"
         [ngClass]="{'selectedCard':this.especialistaSeleccionado == especialista}">
         <img class="card-img-top card-img-bottom" [src]="especialista.fotos[0]" alt="Card image cap"
-          style="max-height: 150px; padding-top: 5px; border-radius:5px">
+          style="max-height: 150px; padding-top: 5px; border-radius:10px">
         <div class="card-body">
           <h1 class="card-title">Dr. {{especialista.apellido}} {{especialista.nombre}}</h1>
           <p class="card-text text-wrap">{{especialista.especialidades | especialidadesPipe}}</p>
@@ -26,11 +26,11 @@
   <div class="row flex-nowrap overflow-auto mt-2" >
     <ng-container *ngIf="especialistaSeleccionado">
       <div class="col-3 mb-3" *ngFor="let especialidad of especialistaSeleccionado.especialidades">
-        <div class="card" appHoverCard (click)="selectEspecialidad(especialidad)"
-          [ngClass]="{'selectedCard': this.especialidadSeleccionada == especialidad}" style="min-height: inherit; max-height: inherit;">
+        <div class="card" appHoverCard (click)="selectEspecialidad(especialidad)" 
+          [ngClass]="{'selectedCard': this.especialidadSeleccionada == especialidad}" style="min-height: inherit; max-height: inherit;border-radius: 0px;">
           <div class="imgEspecialidad">
             <img class="card-img-top card-img-bottom imgEspecialidad" [src]="getImagen(especialidad)"
-              alt="Card image cap" style="padding-top: 5px; border-radius:5px;width: auto;">
+              alt="Card image cap" style="padding-top: 5px;width: auto; border-radius: 0px;">
           </div>
           <div class="card-body">
             <h1 class="card-title">{{especialidad}}</h1>

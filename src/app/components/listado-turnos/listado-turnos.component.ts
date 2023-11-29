@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
@@ -14,6 +14,8 @@ import { EstadoTurno } from '../../models/turno';
   styleUrls: ['./listado-turnos.component.scss']
 })
 export class ListadoTurnosComponent implements OnInit, OnChanges {
+  @Output() onCompletarEncuesta = new EventEmitter<Turno>()
+  
   constructor(private auth: AuthService, private usuariosService: UsuariosService, private turnosService: TurnosService) { }
 
   userLogged!: Usuario
@@ -61,8 +63,7 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
 
   getEspecialistas() {
     if (this.auth.usuarioLogueado?.tipo == TipoUsuario.Paciente || this.auth.usuarioLogueado?.tipo == TipoUsuario.Administrador) {
-      this.idEspecialistas = this.turnos.map(t => t.id_especialista!)
-      // let id = this.idEspecialistas.filter(id => !this.especialistas.map(e => e.id_user).includes(id))
+      this.idEspecialistas = this.turnos.map(t => t.id_especialista!)      
       if (this.idEspecialistas.length != 0) {
         this.usuariosService.getUsuarios(this.idEspecialistas).then(usuarios => this.especialistas = usuarios);
       }
@@ -75,10 +76,9 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
   getPacientes() {
     if (this.auth.usuarioLogueado?.tipo == TipoUsuario.Especialista || this.auth.usuarioLogueado?.tipo == TipoUsuario.Administrador) {
       this.idPacientes = this.turnos.map(t => t.id_paciente!)
-      let id = this.idPacientes.filter(id => this.pacientes.map(e => e.id_user).includes(id))
-      if (id.length != 0) {
-        this.usuariosService.getUsuarios(id).then(usuarios => this.pacientes = usuarios);
-      }
+      if (this.idPacientes.length != 0) {
+        this.usuariosService.getUsuarios(this.idPacientes).then(usuarios => this.pacientes = usuarios);
+      }            
     } else {
       this.pacientes.push(this.auth.usuarioLogueado!)
     }
@@ -253,7 +253,39 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
   }
 
   calificarAtencion(turno:Turno){
+    Swal.fire({
+      title: 'Calificar atención',
+      icon: 'info',
+      text: "Ingrese su calificación",
+      input: 'range',
+      showCancelButton: true,
+      cancelButtonText: 'Volver',
+      inputValue: 0,
+      inputAttributes: {
+        min: "0",
+        max: "5",
+        step: "0.5"
+       },
+      confirmButtonText: 'Ok'
+    }).then(result => {
+      if (result.isConfirmed) {
+        turno.calificacion = result.value
+        this.turnosService.update(turno).then(res => {
+          Swal.fire({
+            title: 'Calificacion guardada',
+            icon: 'success',
+            text: 'Se ha guardado la calificación correctamente',
+            confirmButtonText: 'Ok'
+          })
+        })
+      }
+    
+    })    
+  }
 
+  completarEncuesta(turno:Turno){
+    this.onCompletarEncuesta.emit(turno)
+  
   }
 
 }

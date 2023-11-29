@@ -26,7 +26,7 @@ export class SolicitarComponent implements OnInit, OnDestroy {
   turnosSub!: Subscription
   horarioSeleccionado:Date | undefined
 
-  constructor(private horariosService: HorariosService, private turnosService: TurnosService,private auth:AuthService) { }
+  constructor(private horariosService: HorariosService, private turnosService: TurnosService,public auth:AuthService) { }
   ngOnDestroy(): void {
     this.turnosSub?.unsubscribe()
   }

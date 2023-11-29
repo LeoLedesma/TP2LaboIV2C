@@ -21,16 +21,16 @@
         <td class="text-center" mat-cell *matCellDef="let element"> {{getPaciente(element.id_paciente)}} </td>
     </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="Estado">
-        <th class="text-center" mat-header-cell *matHeaderCellDef> Estado </th>
-        <td class="text-center estado" mat-cell *matCellDef="let element"> {{element.estado}} </td>
-    </ng-container>
-
     <!-- Symbol Column -->
     <ng-container matColumnDef="Fecha">
         <th class="text-center" mat-header-cell *matHeaderCellDef> Fecha </th>
         <td class="text-center" mat-cell *matCellDef="let element"> {{element.fechaTurno | formatDate:true}} {{element.fechaTurno | formatDate:false}} </td>
+    </ng-container>
+
+     <!-- Weight Column -->
+     <ng-container matColumnDef="Estado">
+        <th class="text-center" mat-header-cell *matHeaderCellDef> Estado </th>
+        <td class="text-center estado" mat-cell *matCellDef="let element"> {{element.estado}} </td>
     </ng-container>
 
     <ng-container matColumnDef="Opciones">
@@ -43,8 +43,11 @@
             <button mat-raised-button color="primary" (click)="verComentario(element)" *ngIf="element.comentario != '' && element.estado == EstadoTurno.Realizado">
                 Ver reseña
             </button>
-            <button mat-raised-button color="primary" (click)="calificarAtencion(element)" *ngIf="element.estado == EstadoTurno.Realizado">
+            <button mat-raised-button color="primary" (click)="calificarAtencion(element)" *ngIf="element.estado == EstadoTurno.Realizado && element.calificacion == -1">
                 Calificar atención
+            </button>
+            <button mat-raised-button color="primary" (click)="completarEncuesta(element)" *ngIf="element.comentario != '' && element.estado == EstadoTurno.Realizado && !element.encuestaComplete">
+                Completar encuesta
             </button>
         </ng-container>
         <ng-container *ngIf="this.userLogged.tipo == TipoUsuario.Especialista">
@@ -75,8 +78,8 @@
     
 
     <tr mat-header-row
-        *matHeaderRowDef="['Especialista','Especialidad','Paciente','Estado','Fecha','Opciones']"></tr>
+        *matHeaderRowDef="['Especialista','Especialidad','Paciente','Fecha','Estado','Opciones']"></tr>
     <tr mat-row
-        *matRowDef="let row; columns: ['Especialista','Especialidad','Paciente','Estado','Fecha','Opciones']">
+        *matRowDef="let row; columns: ['Especialista','Especialidad','Paciente','Fecha','Estado','Opciones']">
     </tr>
 </table>

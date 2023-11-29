@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HorarioModule } from 'src/app/components/altaHorario/horario.module';
 import { ListadoHorariosModule } from 'src/app/components/listado-horarios/listado-horarios.module';
@@ -17,7 +18,8 @@ import { PerfilComponent } from './perfil.component';
     PerfilRoutingModule,
     HorarioModule,
     ListadoHorariosModule,
-    MatIconModule
+    MatIconModule,
+    MatButtonModule
 
   ]
 })
