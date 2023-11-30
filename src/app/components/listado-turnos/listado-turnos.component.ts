@@ -115,11 +115,11 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
       this.turnosShow = this.turnos
         .filter(turno => turno.especialidad?.toLowerCase().includes(filtro) ||
           this.getEspecialista(turno.id_especialista!).toLowerCase().includes(filtro) ||
-          turno.calificacion.toString().includes(filtro)
-          || turno.comentario.toString().includes(filtro)
-          || turno.diagnostico.toString().includes(filtro)
-          || turno.estado.toString().includes(filtro)
-          || turno.resenia.includes(filtro)
+          turno.calificacion?.toString().includes(filtro)
+          || turno.comentario?.toString().includes(filtro)
+          || turno.diagnostico?.toString().includes(filtro)
+          || turno.estado?.toString().includes(filtro)
+          || turno.resenia?.includes(filtro)
           || this.filtrarHistoria(filtro,turno.id_paciente!)
           )
     }
