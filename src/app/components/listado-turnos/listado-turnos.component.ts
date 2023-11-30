@@ -3,9 +3,11 @@ import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
+import { HistoriaClinicaService } from 'src/app/services/historia-clinica.service';
 import { TurnosService } from 'src/app/services/turnos.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import Swal from 'sweetalert2';
+import { HistoriaClinica } from '../../models/historiaClinica';
 import { EstadoTurno } from '../../models/turno';
 
 @Component({
@@ -15,14 +17,16 @@ import { EstadoTurno } from '../../models/turno';
 })
 export class ListadoTurnosComponent implements OnInit, OnChanges {
   @Output() onCompletarEncuesta = new EventEmitter<Turno>()
-  
-  constructor(private auth: AuthService, private usuariosService: UsuariosService, private turnosService: TurnosService) { }
+
+  constructor(private auth: AuthService, private usuariosService: UsuariosService, private turnosService: TurnosService, private HistoriaClinica: HistoriaClinicaService) { }
 
   userLogged!: Usuario
+  historiasClinicas: HistoriaClinica[] = []
   ngOnInit(): void {
     if (this.turnos) {
       this.getEspecialistas();
       this.getPacientes();
+      this.getHistoriasClinicas();
     }
 
     this.userLogged = this.auth.usuarioLogueado!
@@ -63,7 +67,7 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
 
   getEspecialistas() {
     if (this.auth.usuarioLogueado?.tipo == TipoUsuario.Paciente || this.auth.usuarioLogueado?.tipo == TipoUsuario.Administrador) {
-      this.idEspecialistas = this.turnos.map(t => t.id_especialista!)      
+      this.idEspecialistas = this.turnos.map(t => t.id_especialista!)
       if (this.idEspecialistas.length != 0) {
         this.usuariosService.getUsuarios(this.idEspecialistas).then(usuarios => this.especialistas = usuarios);
       }
@@ -78,7 +82,7 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
       this.idPacientes = this.turnos.map(t => t.id_paciente!)
       if (this.idPacientes.length != 0) {
         this.usuariosService.getUsuarios(this.idPacientes).then(usuarios => this.pacientes = usuarios);
-      }            
+      }
     } else {
       this.pacientes.push(this.auth.usuarioLogueado!)
     }
@@ -107,16 +111,47 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
 
   filtrar(filtro: string) {
     filtro = filtro.toLowerCase()
-    if(this.auth.usuarioLogueado?.tipo === TipoUsuario.Paciente){
-      this.turnosShow = this.turnos.filter(turno => turno.especialidad?.toLowerCase().includes(filtro) || this.getEspecialista(turno.id_especialista!).toLowerCase().includes(filtro))
+    if (this.auth.usuarioLogueado?.tipo === TipoUsuario.Paciente || this.auth.usuarioLogueado?.tipo === TipoUsuario.Especialista) {
+      this.turnosShow = this.turnos
+        .filter(turno => turno.especialidad?.toLowerCase().includes(filtro) ||
+          this.getEspecialista(turno.id_especialista!).toLowerCase().includes(filtro) ||
+          turno.calificacion.toString().includes(filtro)
+          || turno.comentario.toString().includes(filtro)
+          || turno.diagnostico.toString().includes(filtro)
+          || turno.estado.toString().includes(filtro)
+          || turno.resenia.includes(filtro)
+          || this.filtrarHistoria(filtro,turno.id_paciente!)
+          )
     }
-    if(this.auth.usuarioLogueado?.tipo === TipoUsuario.Especialista){
-      this.turnosShow = this.turnos.filter(turno => turno.especialidad?.toLowerCase().includes(filtro) || this.getPaciente(turno.id_especialista!).toLowerCase().includes(filtro))
-    }
-    if(this.auth.usuarioLogueado?.tipo === TipoUsuario.Administrador){
+
+    if (this.auth.usuarioLogueado?.tipo === TipoUsuario.Administrador) {
       this.turnosShow = this.turnos.filter(turno => turno.especialidad?.toLowerCase().includes(filtro) || this.getEspecialista(turno.id_especialista!).toLowerCase().includes(filtro))
     }
   }
+
+  getHistoriasClinicas() {
+    this.HistoriaClinica.getAll().then(
+      historias => {
+        this.historiasClinicas = historias
+      }
+    )
+  }
+
+  getHistoriaClinicaPaciente(id_paciente: string) {
+    return this.historiasClinicas.filter(historia => historia.id_paciente = id_paciente)
+
+  }
+
+  filtrarHistoria(filtro: string, id_paciente: string) {
+    let historia = this.getHistoriaClinicaPaciente(id_paciente)
+    //filtrar por todas las key
+    if (historia) {
+      return historia[0].registros.filter(registro => registro.toString().includes(filtro)).length > 0
+    }
+    return false
+  }
+
+
 
   public get EstadoTurno(): typeof EstadoTurno {
     return EstadoTurno;
@@ -160,7 +195,7 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
 
   }
 
-  rechazarTurno(turno:Turno){
+  rechazarTurno(turno: Turno) {
     Swal.fire({
       title: 'Rechazar turno',
       icon: 'question',
@@ -193,8 +228,8 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
     })
   }
 
-  aceptarTurno(turno:Turno){
-    turno.estado = EstadoTurno.Aceptado        
+  aceptarTurno(turno: Turno) {
+    turno.estado = EstadoTurno.Aceptado
     this.turnosService.update(turno).then(res => {
       Swal.fire({
         title: 'Turno aceptado',
@@ -205,28 +240,28 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
     })
   }
 
-  finalizarTurno(turno:Turno){
+  finalizarTurno(turno: Turno) {
     Swal.fire({
       title: 'Finalizar turno',
       icon: 'success',
       text: "Ingrese algun comentario y el diagnostico",
       showCancelButton: true,
-      cancelButtonText: 'Volver',      
+      cancelButtonText: 'Volver',
       html: `
       <label>Comentario:</label>
       <input id="swal-input1" class="swal2-input">
       <label>Diagnostico:</label>
       <input id="swal-input2" class="swal2-input">
     `,
-    focusConfirm: false,
-    preConfirm: () => {
-    return [
-      (document.getElementById('swal-input1') as HTMLInputElement).value,
-      (document.getElementById('swal-input2') as HTMLInputElement).value,
-    ];
-  }
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          (document.getElementById('swal-input1') as HTMLInputElement).value,
+          (document.getElementById('swal-input2') as HTMLInputElement).value,
+        ];
+      }
     }).then(result => {
-      
+
       if (result.isConfirmed) {
         turno.estado = EstadoTurno.Realizado
         turno.comentario = result.value[0]
@@ -243,16 +278,16 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
     })
   }
 
-  verComentario(turno:Turno){
+  verComentario(turno: Turno) {
     Swal.fire({
       title: 'Comentario',
       icon: 'info',
       text: turno.comentario,
       confirmButtonText: 'Ok'
-    })  
+    })
   }
 
-  calificarAtencion(turno:Turno){
+  calificarAtencion(turno: Turno) {
     Swal.fire({
       title: 'Calificar atención',
       icon: 'info',
@@ -265,7 +300,7 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
         min: "0",
         max: "5",
         step: "0.5"
-       },
+      },
       confirmButtonText: 'Ok'
     }).then(result => {
       if (result.isConfirmed) {
@@ -279,13 +314,13 @@ export class ListadoTurnosComponent implements OnInit, OnChanges {
           })
         })
       }
-    
-    })    
+
+    })
   }
 
-  completarEncuesta(turno:Turno){
+  completarEncuesta(turno: Turno) {
     this.onCompletarEncuesta.emit(turno)
-  
+
   }
 
 }

@@ -55,9 +55,9 @@ export class CollectionsService {
     return getDocs(docs).then(res => res.docs.map(doc => doc.data() as T)![0])
   }
 
-  getAll(collectionName: string) {
+  getAll<T = ICollection>(collectionName: string) {
     let collectionRef = collection(this._firestore, collectionName);
-    return getDocs(collectionRef).then(res => res.docs.map(doc => doc.data() as ICollection));
+    return getDocs(collectionRef).then(res => res.docs.map(doc => doc.data() as T));
   }
 
   getAllWhere(collectionName: string, column: string, value: any) {

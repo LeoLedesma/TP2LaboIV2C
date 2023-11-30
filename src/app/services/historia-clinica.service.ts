@@ -23,4 +23,9 @@ export class HistoriaClinicaService {
     let querys = [where("id_paciente","==",id_paciente)]
     return this.collections.getFirstQuery<HistoriaClinica>(this.collectionName,and(...querys));
   }
+
+  getAll(){
+    return this.collections.getAll<HistoriaClinica>(this.collectionName)    
+  
+  }
 }
