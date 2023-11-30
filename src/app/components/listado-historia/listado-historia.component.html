@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-evenly mt-1 mb-1">
+    <button mat-raised-button color="accent" (click)="generatePDF()">Descargar</button>
+</div>
+
+
+<div *ngIf="historia" #invoice id="invoice">
+    <div class="row d-flex justify-content-center">
+        <div class="col-4">
+            <img [src]="'assets/Logo_500.png'" width="300px" height="300px">
+        </div>
+    </div>
+    <h1 class="text-center">Historia Clinica</h1>
+    <h2 class="text-center">Emitido el {{date | formatDate:true}}</h2>
+
+    <table mat-table [dataSource]="historia.registros" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+
+        <ng-container matColumnDef="Especialista">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Especialista </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{getEspecialista(element.id_especialista)}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Especialidad">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Especialidad </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{element.especialidad}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="Fecha">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Fecha </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{element.fecha | formatDate:true}}
+                {{element.fecha | formatDate:false}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="Altura">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Altura </th>
+            <td class="text-center " mat-cell *matCellDef="let element"> {{element.altura}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Peso">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Peso </th>
+            <td class="text-center " mat-cell *matCellDef="let element"> {{element.peso}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Temperatura">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Temperatura </th>
+            <td class="text-center " mat-cell *matCellDef="let element"> {{element.temperatura}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Presiones">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Presiones </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{getPresion(element.presion)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Otros datos">
+            <th class="text-center" mat-header-cell *matHeaderCellDef> Otros Datos </th>
+            <td class="text-center" mat-cell *matCellDef="let element"> {{getClaves(element.claveValor)}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row
+            *matHeaderRowDef="['Especialista', 'Especialidad','Fecha','Altura','Peso', 'Temperatura','Presiones', 'Otros datos']">
+        </tr>
+        <tr mat-row
+            *matRowDef="let row; columns: ['Especialista', 'Especialidad','Fecha','Altura','Peso', 'Temperatura','Presiones', 'Otros datos']">
+        </tr>
+    </table>
+</div>

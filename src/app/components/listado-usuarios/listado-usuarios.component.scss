@@ -1,0 +1,35 @@
+/* tu-componente.component.css */
+.fab-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .custom-fab-button {
+    width: 150px; /* Ajusta el ancho según tus necesidades */
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    position: relative;
+  }
+  
+  .fab-icon {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+
+    img{
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+    }
+  }
+  
+  .fab-label {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px; /* Ajusta el tamaño del texto según tus necesidades */
+  }
+  

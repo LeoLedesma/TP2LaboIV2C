@@ -4,9 +4,9 @@
         <app-busqueda (onEnter)="buscar($event)" (onDebounce)="buscar($event)" [placeholder]="'Busqueda de turno...'"></app-busqueda>
     </div>
     <div class="col-9">
-        <app-listado-turnos [filtro]="filtro" [turnos]="misTurnosArr" (onCompletarEncuesta)="onCompletarEncuesta($event)"></app-listado-turnos>
+        <app-listado-turnos  [filtro]="filtro" [turnos]="misTurnosArr" (onCompletarEncuesta)="onCompletarEncuesta($event)"></app-listado-turnos>
     </div>
 </div>
 <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="turnoSeleccionado">
-    <app-encuesta-atencion [turno]="turnoSeleccionado"></app-encuesta-atencion>
+    <app-encuesta-atencion [@flip2HorTop1] [turno]="turnoSeleccionado"></app-encuesta-atencion>
 </div>

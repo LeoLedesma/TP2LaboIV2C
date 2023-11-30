@@ -14,6 +14,7 @@ import { UsuariosService } from '../../../services/usuarios.service';
 //TODO Agregar botones de acciones, columna de aceptado o no para especialistas o en jumbotron
 export class UsuariosComponent implements OnInit, OnDestroy {
 
+  filtro:string = '';
   usuariosSub!: Subscription
   usuariosArr: Usuario[] = []
   usuario!: Usuario;
@@ -101,5 +102,8 @@ export class UsuariosComponent implements OnInit, OnDestroy {
     return TipoUsuario;
   }
 
+  buscar(input: string) {
+    this.filtro = input;
+  }
 
 }

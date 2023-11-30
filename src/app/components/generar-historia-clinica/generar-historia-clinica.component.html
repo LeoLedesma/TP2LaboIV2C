@@ -1,0 +1,125 @@
+<div class="mt-5 historia p-5">
+  <h1 class="text-center">Agregar datos a historia clinica</h1>
+  <form [formGroup]="this.form" (ngSubmit)="submit()">
+    <div class="row">
+      <div class="col">
+        <label for="altura">Altura</label>
+        <div class="form-group mb-3 mt-2">
+          <input type="number" placeholder="Altura en metros" class="form-control" formControlName="altura" />
+          <ng-container *ngIf="
+              this.altura!.invalid &&
+              (this.altura?.touched || this.altura?.dirty)">
+            <div *ngIf="this.altura!.errors">
+              <label class="text-danger lblMsgError">Altura inválida</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col">
+        <label for="peso">Peso</label>
+        <div class="form-group mb-3 mt-2">
+          <input type="number" placeholder="Peso en kilogramos" class="form-control" formControlName="peso" />
+          <ng-container *ngIf="
+              this.peso!.invalid &&
+              (this.peso?.touched || this.peso?.dirty)
+            ">
+            <div *ngIf="this.peso!.errors">
+              <label class="text-danger lblMsgError">Peso inválido</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="presionSistolica">Presión Sistólica</label>
+        <div class="form-group mb-3 mt-2">
+          <input type="number" placeholder="Presión Sistólica" class="form-control"
+            formControlName="presionSistolica" />
+          <ng-container *ngIf="
+              this.presionSistolica!.invalid &&
+              (this.presionSistolica?.touched || this.presionSistolica?.dirty)
+            ">
+            <div *ngIf="this.presionSistolica!.errors">
+              <label class="text-danger lblMsgError">Presión inválida</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col">
+        <label for="presionDiastolica">Presión Diastólica</label>
+        <div class="form-group mb-3 mt-2">
+          <input type="number" placeholder="Presión Diastólica" class="form-control"
+            formControlName="presionDiastolica" />
+          <ng-container *ngIf="
+              this.presionDiastolica!.invalid &&
+              (this.presionDiastolica?.touched || this.presionDiastolica?.dirty)
+            ">
+            <div *ngIf="this.presionDiastolica!.errors">
+              <label class="text-danger lblMsgError">Presion diastólica inválida</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <label for="temperatura">Temperatura</label>
+        <div class="form-group mb-3 mt-2">
+          <input type="number" placeholder="Temperatura en °C" class="form-control" formControlName="temperatura" />
+          <ng-container *ngIf="
+              this.temperatura!.invalid &&
+              (this.temperatura?.touched || this.temperatura?.dirty)
+            ">
+            <div *ngIf="this.temperatura!.errors?.['required'] || this.temperatura!.errors?.['min']">
+              <label class="text-danger lblMsgError">Temperatura inválida</label>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div formArrayName="claveValor">
+      <h1 *ngIf="getClaveValor.controls.length>0" class="text-center">Datos extra</h1>
+      <mat-card *ngIf="getClaveValor.controls.length>0 && !claveValorValido && getClaveValor.touched" class="cardError">
+        <mat-card-content>Todos los datos son obligatorios. Si no requiere alguno, eliminelo.</mat-card-content>
+    </mat-card>
+      <div *ngFor="let par of getClaveValor.controls; index as i" [formGroupName]="i">
+        <div class="row">
+          <div class="col-5">
+            <label for="key">Dato</label>
+            <div class="form-group mb-3 mt-2">
+              <input type="text" placeholder="Dato" class="form-control" formControlName="key" required/>
+            </div>
+          </div>
+          <div class="col-5">
+            <label for="value">Valor</label>
+            <div class="form-group mb-3 mt-2">
+              <input type="text" placeholder="Valor" class="form-control" formControlName="value" required/>
+            </div>
+          </div>
+          <div class="col-2">
+            <label> </label>
+            <div class="form-group mb-3 mt-2">
+              <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon"
+                (click)="eliminarClaveValor(i)" type="button">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-8 d-flex justify-content-center align-items-center">
+          <button mat-raised-button color="primary" (click)="agregarClaveValor()" type="button" [disabled]="getClaveValor.controls.length ==3"
+            class="btn btn-outline-secondary">Agregar otros datos</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <button mat-raised-button color="accent" type="submit" class="btn btn-outline-secondary mt-2">Guardar</button>
+
+    </div>
+  </form>
+</div>

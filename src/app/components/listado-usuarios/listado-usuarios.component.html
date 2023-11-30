@@ -1,0 +1,5 @@
+    <button mat-fab *ngFor="let persona of personasShow" class="custom-fab-button m-2" (click)="exportarDatos(persona)">
+        <div class="fab-icon"><img [src]="persona.fotos[0]" ></div>
+        <div class="fab-label">{{ persona.nombre }}</div>
+      </button>
+

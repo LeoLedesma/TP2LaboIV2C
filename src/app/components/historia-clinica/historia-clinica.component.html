@@ -1,0 +1,9 @@
+<div *ngIf="historia && especialistas.length > 0">
+    <div class="d-flex justify-content-evenly mt-1 mb-1">      
+        <button mat-raised-button color="accent" (click)="generatePDF()">Descargar</button>
+    </div>
+    
+    <app-listado-historia #invoice id="invoice" [historia]="historia" [especialistas]="especialistas"></app-listado-historia>
+</div>
+
+

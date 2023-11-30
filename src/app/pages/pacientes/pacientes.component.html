@@ -4,9 +4,9 @@
         <app-busqueda (onEnter)="buscar($event)" (onDebounce)="buscar($event)" [placeholder]="'Busqueda de turno...'"></app-busqueda>
     </div>
     <div class="col-9">
-        <app-listado-pacientes [filtro]="filtro" ></app-listado-pacientes>
+        <app-listado-pacientes [filtro]="filtro" (onHistoriaClinica)="onHistoriaClinica($event)"></app-listado-pacientes>
     </div>
 </div>
-<!-- <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="turnoSeleccionado">
-    <app-encuesta-atencion [turno]="turnoSeleccionado"></app-encuesta-atencion>
-</div> --> 
+ <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="pacienteSeleccionado">    
+    <app-generar-historia-clinica [@slideInFromBottom]="animacionActiva ? 'active' : 'inactive'" [historiaClinica]="historiaSeleccionada" [paciente]="pacienteSeleccionado"></app-generar-historia-clinica>
+</div>

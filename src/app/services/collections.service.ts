@@ -36,11 +36,11 @@ export class CollectionsService {
     return updateDoc(newDoc, { ...document });
   }
 
-  getOne(collectionName: string, id: string) {
+  getOne<T = ICollection>(collectionName: string, id: string) {
     let collectionRef = collection(this._firestore, collectionName);
     const document = query(collectionRef, where("id", "==", id));
 
-    return getDocs(document)
+    return getDocs(document).then(res => res.docs.map(doc => doc.data() as T)![0]);
   }
 
   removeOne(collectionName: string, id: string) {

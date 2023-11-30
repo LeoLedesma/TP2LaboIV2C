@@ -1,0 +1,44 @@
+
+.card img {
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+.card{
+    background-color: rgb(199 234 255);
+    min-height: 450px;
+    max-height: 450px;
+    align-items: center;    
+}
+
+.card-body{
+    position: relative;
+}   
+
+.especialistas{
+    overflow: auto;
+        white-space: nowrap;
+}
+
+.selectedCard{
+    background-color: deepskyblue;
+}
+
+
+.cardEspecialidad{
+    // background-color: rgb(199 234 255);  
+    align-items: center;
+    cursor:pointer;
+}
+
+.imgEspecialidad{
+max-height: 200px;
+
+img {
+    height: 100%;
+    // object-fit: cover;
+  }
+}

@@ -11,10 +11,12 @@ import { getApp, initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { StorageModule, getStorage, provideStorage } from '@angular/fire/storage';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { CaptchaValidatorDirective } from './directives/captcha-validator.directive';
 import { LoaderInterceptor } from './interceptors/loader/loader.interceptor';
+
+
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { LoaderInterceptor } from './interceptors/loader/loader.interceptor';
       useValue: {
         siteKey: "6LfzXB0pAAAAADz_ML2ITHk1P49WfcoO4g6YC06M"
       } as RecaptchaSettings
-    }
+    },
+    provideAnimations(),
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,7 @@
-import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 import { Subscription } from 'rxjs';
+import { TipoUsuario } from 'src/app/enums/TipoUsuario.enum';
 import { Turno } from 'src/app/models/turno';
 import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,7 +21,9 @@ export class ListadoPacientesComponent implements OnInit, OnChanges,OnDestroy {
   pacientesArr: Usuario[] = []
   pacientesShow: Usuario[] = [] 
   isLoading:boolean = false
+  
   @Input() filtro:string = ""
+  @Output() onHistoriaClinica = new EventEmitter<Usuario>()
   ngOnInit(): void {    
     this.isLoading = true
 
@@ -32,7 +36,7 @@ export class ListadoPacientesComponent implements OnInit, OnChanges,OnDestroy {
     }    
   }
 
-  constructor(private turnosService: TurnosService, private usuariosService: UsuariosService, private auth: AuthService) { }
+  constructor(private turnosService: TurnosService, private usuariosService: UsuariosService, public auth: AuthService) { }
   ngOnDestroy(): void {
     this.pacientesSub?.unsubscribe()
     this.turnosSub?.unsubscribe()
@@ -42,14 +46,15 @@ export class ListadoPacientesComponent implements OnInit, OnChanges,OnDestroy {
     this.turnosService.obtenerTurnosRealizadosPorEspecialista(this.auth.usuarioLogueado!.id_user).subscribe(turnos => {
 
       let pacientes: string[] = []
+      this.turnosArr = turnos;
+      this.turnosArr.forEach(t => t.fechaTurno = new Date((t.fechaTurno as unknown as Timestamp).toMillis()))
       pacientes = turnos.map(turno => turno.id_paciente!)
       pacientes = [...new Set(pacientes)];
 
-      console.log(turnos)
 
       this.usuariosService.getUsuarios(pacientes).then(pacientes => {
         this.isLoading = false
-        console.log(pacientes);
+
         this.pacientesArr = pacientes.sort((a, b) => a.nombre.localeCompare(b.nombre))});
         this.filtrarPacientes();
     })
@@ -58,18 +63,31 @@ export class ListadoPacientesComponent implements OnInit, OnChanges,OnDestroy {
   filtrarPacientes(){
     
     let filtro = this.filtro.toLowerCase() || '';
-    console.log(filtro)
-    console.log(filtro.length)
+
 
     if(filtro.length > 0){
       this.pacientesShow = this.pacientesArr.filter(p => p.nombre.toLowerCase().includes(filtro))
     }else{
-      console.log(this.pacientesArr);
       this.pacientesShow = this.pacientesArr    
     }
 
-    return this.pacientesShow
-  
+    return this.pacientesShow  
   }
+
+  public get TipoUsuario(): typeof TipoUsuario {
+    return TipoUsuario;
+  }
+
+  agregarHistoriaClinica(paciente:Usuario){
+    this.onHistoriaClinica.emit(paciente)
+  }
+
+  getUltimosTurnosPaciente(id_paciente:string){
+
+    return this.turnosArr.filter(turno => turno.id_paciente === id_paciente).slice(-3)
+
+  }
+
+   
 
 }

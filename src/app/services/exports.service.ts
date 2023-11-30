@@ -8,7 +8,7 @@ export class ExportsService {
 
   constructor() { }
 
-  generateSpreadSheet(data:any, title:string){
+  generarExcel(data:any, title:string){
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);

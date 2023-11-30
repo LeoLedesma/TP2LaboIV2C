@@ -1,18 +1,21 @@
 <div class="container text-center mt-5">
   <h1>Listado de usuarios</h1>
-
-  <div class="centerjustify-content-center">
-    <app-listado-generico [dataSource]="repartidoresProm" [displayedColumns]="displayedColumns" (onClicked)="onListClick($event)" [paginator]="true">     
-    </app-listado-generico>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <h1>Usuarios</h1>
+    <div class="col-3 mb-2">        
+        <app-busqueda (onEnter)="buscar($event)" (onDebounce)="buscar($event)" [placeholder]="'Busqueda de turno...'"></app-busqueda>
+    </div>
+  <div class="center justify-content-center col-10">    
+    <app-listado-usuarios [personasArr]="usuariosArr" [filtro]="filtro"></app-listado-usuarios>
   </div>
 
   <div class="row align-items-md-stretch mt-5">
-    <div class="col-md-6">
+    <div class="col">
       <div class="h-100 p-5 text-bg-dark rounded-3">
         <app-register [formAdministrador]="true"></app-register>
       </div>
     </div>
-    <div class="col-md-6" *ngIf="usuario?.tipo === TipoUsuario.Especialista">
+    <div class="col" *ngIf="usuario?.tipo === TipoUsuario.Especialista">
       <div class="h-100 p-5 bg-body-tertiary border rounded-3">
         <h2>Especialista</h2>
         <div class="d-flex justify-content-center">

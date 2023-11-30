@@ -1,6 +1,6 @@
 import { ICollection } from "./i-collection";
 
-export class Turno implements ICollection {
+export class Turno implements ICollection {    
     constructor(
         public id: string,
         public especialidad?: string | undefined,
